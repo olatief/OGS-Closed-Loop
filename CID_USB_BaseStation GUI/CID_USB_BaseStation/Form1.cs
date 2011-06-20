@@ -15,48 +15,24 @@ using LibUsbDotNet.Main;
 using EC = LibUsbDotNet.Main.ErrorCode;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Drawing;
 
 namespace CID_USB_BaseStation
 {
     public partial class frmMain : Form
     {
-        private const double OVERSAMPLE = 1;
         Stopwatch sw = new Stopwatch();
-        long count = 0;
         private const byte endpoint = 0x02;
-        private UInt16 [] dataIn = new UInt16 [15];
         private UsbDevice mUsbDevice;
         private UsbEndpointReader mEpReader;
         private UsbEndpointWriter mEpWriter;
         private UsbRegDeviceList mRegDevices;
 
-        private ArrayList data = new ArrayList();
-        private UInt32 [] pktStart = new UInt32[10000];
-        private Int32[] pktLoc = new Int32[10000];
-        private UInt16 pktStart_ind = 0;
-
-        private UInt16[] bitValues = new UInt16[1000];
-        private UInt16 bv_ind = 0;
-
         progAll pAll = new progAll();
         progStim pStim = new progStim();
         progAlgo pAlgo = new progAlgo();
 
-        /// <summary>
-        /// Converts bytes into a hexidecimal string
-        /// </summary>
-        /// <param name="data">Bytes to converted to a a hex string.</param>
-        private static StringBuilder GetHexString(byte[] data, int offset, int length)
-        {
-            StringBuilder sb = new StringBuilder(length * 3);
-            for (int i = offset; i < (offset + length); i++)
-            {
-                sb.Append(data[i].ToString("X2") + " ");
-            }
-            return sb;
-        }
-
+        DataLogger dataLogger = DataLogger.Instance;
+        PacketHandler pktHandler;
 
         private void UsbGlobals_UsbErrorEvent(object sender, UsbError e) { Invoke(new UsbErrorEventDelegate(UsbGlobalErrorEvent), new object[] { sender, e }); }
         private void UsbGlobalErrorEvent(object sender, UsbError e) { /* tRecv.AppendText(e + "\r\n");*/ }
@@ -88,7 +64,11 @@ namespace CID_USB_BaseStation
            // tsNumDevices.Text = cboDevices.Items.Count.ToString();
         }
 
-        string[] ledvals = { "0", "20.0", "17.0", "14.0", "12.0","10.0", "8.6", "7.0", "6.0", "5.0", "4.2","3.6","3.0","2.4","1.8" };
+        
+
+        #region VALIDATIONS
+        
+        string[] ledvals = { "0", "20.0", "17.0", "14.0", "12.0", "10.0", "8.6", "7.0", "6.0", "5.0", "4.2", "3.6", "3.0", "2.4", "1.8" };
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -169,29 +149,8 @@ namespace CID_USB_BaseStation
 
             return val;
         }
-        private Int32[] bitsToInt(ref UInt16[] arr)
-        {
-            Int32[] val = new Int32[16];
-            Int32 tmpVal = 0;
 
-            for(short i =0; i < val.Length; ++i)
-            {
-                tmpVal = 0;
-
-                for (short j = 2; j < 11; ++j)
-                {
-                    tmpVal += ((arr[12 * i + j]) << (10-j));
-                }
-
-                if (1 == arr[12 * i + 1]) // negative # (2's complement)
-                {
-                    tmpVal = -1*tmpVal;
-                }
-
-                val[i] = tmpVal;
-            }
-            return val;
-        }
+        #endregion     
 
         #region Nested Types
 
@@ -200,18 +159,19 @@ namespace CID_USB_BaseStation
         private delegate void UsbErrorEventDelegate(object sender, UsbError e);
 
         #endregion
+       
         UInt32 tmr_cnt = 0;
+        
         private void cmdOpen_Click(object sender, EventArgs e)
-        {
-            string raw = "";
-            string allData = "";
-            
+        {   
             if (cmdOpen.Text == "Open")
             {
                 if (cboDevices.SelectedIndex >= 0)
                 {
                     if (openDevice(cboDevices.SelectedIndex))
                     {
+                        pktHandler = new PacketHandler();
+
                         if (!dataLogger.LoggingActivated)
                         {
                             MessageBox.Show("Data will not be saved for this session because no file was selected.");
@@ -223,9 +183,7 @@ namespace CID_USB_BaseStation
                         
                         mEpReader.DataReceivedEnabled = true;
                         cmdOpen.Text = "Close";
-                        pktStart_ind = 0;
                         tmr_cnt = 0;
-                        data.Clear();
                     }
                 }
             }
@@ -237,22 +195,7 @@ namespace CID_USB_BaseStation
                 cmdOpen.Text = "Open";
                 dataLogger.Stop();
                 btnFile.Enabled = true;
-                tRecv.Text = Convert.ToString(sw.ElapsedMilliseconds) + " " + Convert.ToString(tmr_cnt) ;
-
-                
-                /*
-                for (int i = 0; i < pktStart_ind; ++i)
-                {
-                    raw = raw + Convert.ToString(pktStart[i]) + "\t" + Convert.ToString(pktLoc[i]) + Environment.NewLine;
-                }
-                tRaw.Text = raw;
-
-                foreach (Int32 d in data)
-                {
-                    allData = allData + Convert.ToString(d) + Environment.NewLine;
-                }
-                */
-                tConverted.Text = allData;
+                tRecv.Text = Convert.ToString(sw.ElapsedMilliseconds) + "/" + Convert.ToString(tmr_cnt) ;
             }
             cmdOpen.Enabled = true;
         }
@@ -263,8 +206,6 @@ namespace CID_USB_BaseStation
             {
                 if (mUsbDevice.IsOpen)
                 {
-
-
                     if (mEpReader != null)
                     {
                         mEpReader.DataReceivedEnabled = false;
@@ -364,34 +305,15 @@ namespace CID_USB_BaseStation
             Invoke(new OnDataReceivedDelegate(OnDataReceived), new object[] { sender, e }); 
         }
 
-        Int16 odr_cnt = 0;
-        double odr_div = 0;
-        Int16 odr_result = 0;
-        Int16 odr_preamble = 0;
-        bool odr_prevValue = false;
-        bool odr_currValue = false;
-        enum PKTTYPE { VALID = 0, ACQUIRING, INVALID };
-        UInt16[] validPkt = new UInt16[204];
-
-        private void parseSingleChan(EndpointDataEventArgs e)
+        private void OnDataReceived(object sender, EndpointDataEventArgs e)
         {
-            int[] parsedValues = new int[15];
-
-            for (int i = 0; i < parsedValues.Length; i++)
-            {
-                int tempValue = e.Buffer[2*i+1] + (e.Buffer[2*i] << 8);
-              /*  if (tempValue >= 512)
-                {
-                    tempValue = -tempValue;
-                }
-               * */
-                parsedValues[i] = tempValue;
-                dataLogger.LogLine(tempValue);
-            }
-
+            Packet RxPacket = new Packet(e);
+            pktHandler.ParseNewPacket(RxPacket);
+            
             tslStatus.Text = String.Format("Values Written: {0}", dataLogger.NumValuesWritten);
 
-            if ((e.Buffer[30] & 128) != 0) // means its Stimulating
+            
+            if (RxPacket.IsStimulating) // means it was Stimulating
             {
                 tmrStim.Enabled = true;
                 tslStimulating.Text = "Stimulating!!";
@@ -403,187 +325,6 @@ namespace CID_USB_BaseStation
             }
         }
 
-        private void parse16chan(EndpointDataEventArgs e)
-        {
-            string dataRx = "";
-            string dataRaw = "";
-            uint bConvert = 0;
-            PKTTYPE pkt = PKTTYPE.ACQUIRING;
-
-            BitArray bitArray = new BitArray(e.Buffer);
-
-            bitArray.Length = 240; // truncate bitArray;
-
-
-
-            for (int i = 0; i < bitArray.Length; ++i)
-            {
-                ++tmr_cnt;
-
-                odr_currValue = bitArray.Get(i);
-
-                dataLogger.LogLine(odr_currValue ? "1" : "0");
-
-                bitValues[bv_ind & (0x1FF)] = (odr_currValue ? (ushort)1 : (ushort)0);
-                ++bv_ind;
-                if (odr_prevValue == odr_currValue)
-                {
-                    ++odr_cnt;
-                }
-                else
-                {
-                    odr_div = odr_cnt / OVERSAMPLE;
-                    odr_div = Math.Round(odr_div);
-                    odr_result = Convert.ToInt16(odr_div);
-                    //  dataRx = dataRx + Convert.ToString(odr_result) + Environment.NewLine;
-
-                    if (1 == odr_cnt) // checks to see if it's toggled
-                    {
-                        ++odr_preamble;
-                        if (odr_preamble == 11)   // TODO: might be 11
-                        {
-                            if (bv_ind == 204)
-                            {
-                                pkt = PKTTYPE.VALID;
-                                Array.Copy(bitValues, validPkt, 204);
-                                parsePacket(ref validPkt);
-                            }
-                            else
-                            {
-                                pkt = PKTTYPE.INVALID;
-                            }
-
-                            bv_ind = 0;
-                            //  pktLoc[pktStart_ind] = i;
-                            // pktStart[pktStart_ind] = tmr_cnt;
-                            ++pktStart_ind;
-                        }
-                    }
-                    else
-                    {
-                        odr_preamble = 0;
-                    }
-                    odr_cnt = 1;
-
-                }
-
-                odr_prevValue = odr_currValue;
-
-
-                //   dataRaw = dataRaw + Convert.ToString( (odr_currValue ? 1 : 0) ) + Environment.NewLine;
-            }
-            /* for (uint i = 0; i < (e.Count-1)/2; ++i)
-            {
-                dataIn[i] = (UInt16)( (e.Buffer[2 * i + 1]<<8) + (UInt16)(e.Buffer[2 * i]));
-                dataRx = dataRx + Convert.ToString(dataIn[i]) + Environment.NewLine;
-            }
-            */
-            //tConverted.AppendText(dataRx);
-            //tRaw.AppendText(dataRaw);
-            //showBytes(e.Buffer, e.Count);
-        }
-        private void OnDataReceived(object sender, EndpointDataEventArgs e)
-        {
-            parseSingleChan(e);
-            // parse16chan(e);
-        }
-
-        private void parsePacket(ref ushort[] validPkt)
-        {
-            string pkt = "";
-            Int32[] res = bitsToInt(ref validPkt);
-
-
-         //   data.AddRange(res);
-          /*  for(int i = 0; i< validPkt.Length; i++)
-            {
-                pkt = pkt + validPkt[i] + Environment.NewLine;
-            }
-            */
-           
-           tConverted.Text = pkt;
-        }
-
-        private void showBytes(byte[] readBuffer, int uiTransmitted)
-        {
-                // Convert the data to a hex string before displaying
-                tRecv.AppendText(GetHexString(readBuffer, 0, uiTransmitted).ToString());
-           
-        }
-        
-        private void txtDC_TextChanged(object sender, EventArgs e)
-        {
-          /*  Int32 DC = cToInt16(tvalDC.Text) ;
-            if (DC > 100)
-            {
-                tvalDC.Text = "100";
-            }
-            else if (DC < 0)
-            {
-                tvalDC.Text = "0";
-            }
-            */
-        }
-
-        private void tAmplitude_TextChanged(object sender, EventArgs e)
-        {
-            /*
-            Int32 Amplitude = cToInt16(tvalAmplitude.Text);
-            if (Amplitude > 100)
-            {
-                tvalAmplitude.Text = "100";
-            }
-            else if (Amplitude < 0)
-            {
-                tvalAmplitude.Text = "0";
-            }
-            */
-        }
-
-        private void groupBox4_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void chkLockHigh_CheckedChanged(object sender, EventArgs e)
-        {
-            /*
-            if (chkLockHigh.Checked)
-            {
-                tvalHighThresh.Enabled = false;
-                lblHigh.Enabled = false;
-                tvalHighThresh.Text = ( cToInt16(tvalLowThresh.Text) + 100).ToString();
-            }
-            else
-            {
-                tvalHighThresh.Enabled = true;
-                lblHigh.Enabled = true;
-            }
-             * */
-        }
-
-        private void tLowThresh_TextChanged(object sender, EventArgs e)
-        {
-            /*
-            if (chkLockHigh.Checked)
-            {
-                tvalHighThresh.Text = (cToInt16(tvalLowThresh.Text) + 100).ToString();
-            }
-             * */
-        }
-
-        private Int16 cToInt16(string value)
-        {
-            Int16 result;
-            if (Int16.TryParse(value, out result))
-            {
-                return result;
-            }
-            else
-            {
-                return 0;
-            }
-        }
 
         private void btnProgAll_Click(object sender, EventArgs e)
         {
@@ -661,22 +402,10 @@ namespace CID_USB_BaseStation
 
             UInt16[] bits = lines.Select(x => UInt16.Parse(x)).ToArray();
 
-            int[] vals = bitsToInt(ref bits);
+           // int[] vals = bitsToInt(ref bits);
 
             tConverted.Text = "";
-
-            foreach (int val in vals)
-            {
-                tConverted.AppendText(val.ToString() + Environment.NewLine);
-            }
         }
-
-        private void cboDevices_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        DataLogger dataLogger = DataLogger.Instance;
 
         private void btnFile_Click(object sender, EventArgs e)
         {
@@ -725,25 +454,6 @@ namespace CID_USB_BaseStation
             tvals[0].Select();
         }
 
-        private void label9_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label10_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void groupBox3_Enter(object sender, EventArgs e)
-        {
-
-        }
 
         #region DATAPLOTTING
 

@@ -106,7 +106,6 @@
             this.cboDevices.Size = new System.Drawing.Size(389, 21);
             this.cboDevices.TabIndex = 0;
             this.cboDevices.DropDown += new System.EventHandler(this.cboDevices_DropDown);
-            this.cboDevices.SelectedIndexChanged += new System.EventHandler(this.cboDevices_SelectedIndexChanged);
             // 
             // cmdOpen
             // 
@@ -225,7 +224,6 @@
             this.groupBox4.TabIndex = 2;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Seizure Detection Algorithm";
-            this.groupBox4.Enter += new System.EventHandler(this.groupBox4_Enter);
             // 
             // tvalDelay
             // 
@@ -234,7 +232,6 @@
             this.tvalDelay.Size = new System.Drawing.Size(52, 20);
             this.tvalDelay.TabIndex = 13;
             this.tvalDelay.Text = "40";
-            this.tvalDelay.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // label9
             // 
@@ -254,7 +251,6 @@
             this.chkLockHigh.TabIndex = 9;
             this.chkLockHigh.Text = "Lock High Threshold? ";
             this.chkLockHigh.UseVisualStyleBackColor = true;
-            this.chkLockHigh.CheckedChanged += new System.EventHandler(this.chkLockHigh_CheckedChanged);
             // 
             // label5
             // 
@@ -323,7 +319,6 @@
             this.tvalLowThresh.Size = new System.Drawing.Size(101, 20);
             this.tvalLowThresh.TabIndex = 0;
             this.tvalLowThresh.Text = "1000";
-            this.tvalLowThresh.TextChanged += new System.EventHandler(this.tLowThresh_TextChanged);
             // 
             // groupBox3
             // 
@@ -354,7 +349,6 @@
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Stimulation Control";
-            this.groupBox3.Enter += new System.EventHandler(this.groupBox3_Enter);
             // 
             // label13
             // 
@@ -436,7 +430,6 @@
             this.lblCycles.Size = new System.Drawing.Size(38, 13);
             this.lblCycles.TabIndex = 12;
             this.lblCycles.Text = "Cycles";
-            this.lblCycles.Click += new System.EventHandler(this.label10_Click);
             // 
             // tvalCycles
             // 
@@ -454,7 +447,6 @@
             this.lblPulseOff.Size = new System.Drawing.Size(55, 13);
             this.lblPulseOff.TabIndex = 10;
             this.lblPulseOff.Text = "Pulses Off";
-            this.lblPulseOff.Click += new System.EventHandler(this.label9_Click);
             // 
             // tvalPulseOff
             // 
@@ -524,7 +516,6 @@
             this.tvalAmplitude.Size = new System.Drawing.Size(49, 20);
             this.tvalAmplitude.TabIndex = 2;
             this.tvalAmplitude.Text = "1";
-            this.tvalAmplitude.TextChanged += new System.EventHandler(this.tAmplitude_TextChanged);
             // 
             // label1
             // 

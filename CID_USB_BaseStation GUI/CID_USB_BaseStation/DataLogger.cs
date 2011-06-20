@@ -64,7 +64,7 @@ namespace CID_USB_BaseStation
             }
         }
 
-        public void LogLine(string data)
+        public void LogLine<T>(T data)
         {
             if (isFileOpened)
             {
