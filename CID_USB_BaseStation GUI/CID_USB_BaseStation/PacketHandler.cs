@@ -12,7 +12,6 @@ namespace CID_USB_BaseStation
         private byte deviceId = 0;
         private Packet lastPacket = null;
         private int missedPackets;
-        private bool initialized = false;
 
         public int ParseNew(Packet receivedPacket)
         {
