@@ -1,10 +1,10 @@
-C51 COMPILER V9.03   TIMER                                                                 06/14/2011 01:34:30 PAGE 1   
+C51 COMPILER V9.03   TIMER                                                                 06/20/2011 19:43:21 PAGE 1   
 
 
 C51 COMPILER V9.03, COMPILATION OF MODULE TIMER
 OBJECT MODULE PLACED IN timer.OBJ
-COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE timer.c LARGE BROWSE MODC2 MDU_R515 INCDIR(..\..\hal\nrf24l01p;..\..\hal;..
-                    -\..\compiler\c51;..\..\hal\nrf24le1) DEFINE(MCU_NRF24LE1) DEBUG OBJECTEXTEND
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE timer.c LARGE BROWSE MODC2 MDU_R515 INCDIR(..\hal\nrf24l01p;..\hal;..\compi
+                    -ler\c51;..\hal\nrf24le1;..\compiler\common) DEFINE(MCU_NRF24LE1) DEBUG OBJECTEXTEND
 
 line level    source
 
@@ -33,165 +33,189 @@ line level    source
   23          static uint8_t cyclesCount = 3;
   24          
   25          static uint8_t outputDisabled = 0;
-  26          
-  27          void SeizureDetected();
-  28          
-  29          void progSD(uint16_t IEIval, uint8_t nStageval)
-  30          {
-  31   1              IEI = IEIval;
-  32   1              nStage = nStageval;
-  33   1      }
-  34          
-  35          void peakDetect() // called when threshold reached
-  36          {
-  37   1               if(tick > 0)  // last detection was less than IEI (ms) ago
-  38   1               {
-  39   2                      --nStageCount;
-  40   2                      if(nStageCount == 0) // seizure detected
-  41   2                      {
-  42   3                              SeizureDetected();      
-  43   3                      }               
-  44   2               } else {  // reset nStage
-  45   2                      nStageCount = nStage;
-  46   2               }
-  47   1      
-  48   1               tick = IEI;  // reset tick
-  49   1      
-  50   1      }
-  51          
-  52          uint8_t DetectionLock = 0;
-  53          
-  54          void SeizureDetected()
-C51 COMPILER V9.03   TIMER                                                                 06/14/2011 01:34:30 PAGE 2   
+  26          uint8_t isStimulating = 0;
+  27          
+  28          void SeizureDetected();
+  29          void startStim();
+  30          void stopStim();
+  31          
+  32          void progSD(progAlgo* pAlgo)
+  33          {
+  34   1              IEI = pAlgo->IEI;
+  35   1              nStage = pAlgo->nStage;
+  36   1      }
+  37          
+  38          void peakDetect() // called when threshold reached
+  39          {
+  40   1               if(tick > 0)  // last detection was less than IEI (ms) ago
+  41   1               {
+  42   2                      --nStageCount;
+  43   2                      if(nStageCount == 0) // seizure detected
+  44   2                      {
+  45   3                              SeizureDetected();      
+  46   3                      }               
+  47   2               } else {  // reset nStage
+  48   2                      nStageCount = nStage;
+  49   2               }
+  50   1      
+  51   1               tick = IEI;  // reset tick
+  52   1      
+  53   1      }
+  54          
+C51 COMPILER V9.03   TIMER                                                                 06/20/2011 19:43:21 PAGE 2   
 
-  55          {       
-  56   1              nStageCount = nStage;
-  57   1              // DO STUFF
-  58   1      }
-  59          
-  60          
-  61          void progTimer(uint8_t Freq, uint8_t DC)
-  62          {
-  63   1              xdata uint32_t period = 0;
-  64   1              xdata uint32_t period_us = (uint32_t)1e6/((uint32_t)Freq);
-  65   1              period = (uint32_t)period_us*(uint32_t)2/3; // its (2/3)/8
-  66   1              timer_high = DC*period/100;
-  67   1              timer_low = (period - timer_high);
-  68   1              timer_high = 2^16-timer_high/TIMER_TWO_PS;      
-  69   1              timer_low = 2^16-timer_low/TIMER_TWO_PS;
-  70   1      
-  71   1              outputDisabled = 0;
-  72   1              ET2 = 1; //in case it was off
-  73   1      }
-  74          
-  75          void initTimer()
-  76          {
-  77   1              progTimer(30, 10);
-  78   1      /* Configure Timer 2 */
-  79   1           
-  80   1         CRCL = 0xF0;
-  81   1         CRCH = 0xF0;
-  82   1          
-  83   1         CCEN = 0x02;  // Compare enabled
-  84   1            /*T2CON: */
-  85   1         T2PS = 1; // CLK/24 , no reload
-  86   1         T2R1 = 1;
-  87   1        // T2CM = 1;  
-  88   1         T2I0 = 1; // Turn on timer
-  89   1          ET2 = 1; // Enable timer 2 interrupt
-  90   1      
-  91   1      /** Timer 0 Setup **/
+  55          uint8_t DetectionLock = 0;
+  56          
+  57          void SeizureDetected()
+  58          {       
+  59   1              nStageCount = nStage;
+  60   1              // DO STUFF
+  61   1              startStim();
+  62   1      }
+  63          
+  64          void startStim()
+  65          {
+  66   1              isStimulating = 0x80;
+  67   1              outputDisabled = 0;
+  68   1              pulsesOffCount = pulsesOff;
+  69   1              pulsesOnCount = pulsesOn;
+  70   1              cyclesCount = cycles;
+  71   1              T2I0 = 1; // Turn on timer 2
+  72   1          ET2 = 1; // Enable timer 2 interrupt
+  73   1      
+  74   1      }
+  75          
+  76          void stopStim()
+  77          {
+  78   1              isStimulating = 0;
+  79   1              T2I0 = 0; // Turn off timer 2
+  80   1          ET2 = 0; // Disable timer 2 interrupt
+  81   1      }
+  82          
+  83          void progTimer(progStim *pStim)
+  84          {
+  85   1              xdata uint32_t period = 0;
+  86   1              xdata uint32_t period_us = (uint32_t)1e6/((uint32_t)pStim->Freq);
+  87   1              period = (uint32_t)period_us*(uint32_t)2/3; // its (2/3)/8
+  88   1              timer_high = pStim->DC*period/100;
+  89   1              timer_low = (period - timer_high);
+  90   1              timer_high = 2^16-timer_high/TIMER_TWO_PS;      
+  91   1              timer_low = 2^16-timer_low/TIMER_TWO_PS;
   92   1      
-  93   1              TMOD = 0x01; // 16 bit timer for TMR0;
-  94   1              TH0 = 0x7F;
-  95   1              TL0 = 0xFF;
-  96   1              TR0 = 1; //     Tmr0 run control (start)
-  97   1              ET0 = 1; // Enable timer0 interrupt
-  98   1              return;
-  99   1      }
- 100          
- 101          void timer0() interrupt INTERRUPT_T0 // Seizure detection IEI counter (tick)
- 102          {
- 103   1              TH0 = 0x7F;
- 104   1              TL0 = 0xFF;
- 105   1      
- 106   1              if(tick != 0)
- 107   1              {
- 108   2                      --tick;
- 109   2              }
- 110   1      
- 111   1      //      P1_6 ^= 1; 
- 112   1      }
- 113          
- 114          void timer2() interrupt INTERRUPT_T2 // controls stimulation waveform
- 115          {
- 116   1              --timer2scaler;
-C51 COMPILER V9.03   TIMER                                                                 06/14/2011 01:34:30 PAGE 3   
+  93   1              startStim();
+  94   1      }
+  95          
+  96          void initTimer()
+  97          {
+  98   1       //     progTimer(30, 10);
+  99   1      /* Configure Timer 2 */
+ 100   1           
+ 101   1         CRCL = 0xF0;
+ 102   1         CRCH = 0xF0;
+ 103   1          
+ 104   1         CCEN = 0x02;  // Compare enabled
+ 105   1            /*T2CON: */
+ 106   1         T2PS = 1; // CLK/24 , no reload
+ 107   1         T2R1 = 1;
+ 108   1        // T2CM = 1;  
+ 109   1         T2I0 = 1; // Turn on timer
+ 110   1          ET2 = 1; // Enable timer 2 interrupt
+ 111   1      
+ 112   1      /** Timer 0 Setup **/
+ 113   1      
+ 114   1              TMOD = 0x01; // 16 bit timer for TMR0;
+ 115   1              TH0 = 0x7F;
+ 116   1              TL0 = 0xFF;
+C51 COMPILER V9.03   TIMER                                                                 06/20/2011 19:43:21 PAGE 3   
 
- 117   1              if( 0 == timer2scaler )
- 118   1              {
- 119   2                      if(bHighState)
- 120   2                      {
- 121   3                              CRCL = timer_low&0xFF;
- 122   3                              CRCH = timer_low>>8;
- 123   3                      //      prog_led(g_Amplitude);
- 124   3                              
- 125   3                              if(!outputDisabled) P1_6 = 1;
- 126   3                                              
- 127   3                      } 
- 128   2                      else 
- 129   2                      {
- 130   3                              CRCL = timer_high&0xFF;
- 131   3                              CRCH = timer_high>>8;
- 132   3                      //      prog_led(0);
- 133   3                              P1_6 = 0;
- 134   3      
- 135   3                              if(!outputDisabled)
- 136   3                              {
- 137   4                                      --pulsesOnCount;
- 138   4                                      if(0 == pulsesOnCount)
- 139   4                                      {
- 140   5                                              pulsesOnCount = pulsesOn;
- 141   5                                              if(0 == pulsesOff)
- 142   5                                              {
- 143   6                                                      ET2 = 0;
- 144   6                                              }
- 145   5                                              outputDisabled = 1;
- 146   5                                      }
- 147   4                              } else {
- 148   4                                      --pulsesOffCount;
- 149   4                                      if(0 == pulsesOffCount)
- 150   4                                      {
- 151   5                                              pulsesOffCount = pulsesOff;
- 152   5                                              outputDisabled = 0;
- 153   5      
- 154   5                                              --cyclesCount;
- 155   5                                              if(0 == cyclesCount)
- 156   5                                              {
- 157   6                                                      cyclesCount = cycles;
- 158   6                                                      ET2 = 0;
- 159   6                                              }
- 160   5                                      }
- 161   4                              }
- 162   3                      }
- 163   2                       
- 164   2                      timer2scaler = TIMER_TWO_PS; // scales timer by a factor of 8
- 165   2                      bHighState^=1;
- 166   2              }
- 167   1              
- 168   1              TF2 = 0;                        
- 169   1      }
+ 117   1              TR0 = 1; //     Tmr0 run control (start)
+ 118   1              ET0 = 1; // Enable timer0 interrupt
+ 119   1              return;
+ 120   1      }
+ 121          
+ 122          void timer0() interrupt INTERRUPT_T0 // Seizure detection IEI counter (tick)
+ 123          {
+ 124   1              TH0 = 0x7F;
+ 125   1              TL0 = 0xFF;
+ 126   1      
+ 127   1              if(tick != 0)
+ 128   1              {
+ 129   2                      --tick;
+ 130   2              }
+ 131   1      
+ 132   1      //      P1_6 ^= 1; 
+ 133   1      }
+ 134          
+ 135          void timer2() interrupt INTERRUPT_T2 // controls stimulation waveform
+ 136          {
+ 137   1              --timer2scaler;
+ 138   1              if( 0 == timer2scaler )
+ 139   1              {
+ 140   2                      if(bHighState)
+ 141   2                      {
+ 142   3                              CRCL = timer_low&0xFF;
+ 143   3                              CRCH = timer_low>>8;
+ 144   3                      //      prog_led(g_Amplitude);
+ 145   3                              
+ 146   3                              if(!outputDisabled) P1_6 = 1;
+ 147   3                                              
+ 148   3                      } 
+ 149   2                      else 
+ 150   2                      {
+ 151   3                              CRCL = timer_high&0xFF;
+ 152   3                              CRCH = timer_high>>8;
+ 153   3                      //      prog_led(0);
+ 154   3                              P1_6 = 0;
+ 155   3      
+ 156   3                              if(!outputDisabled)
+ 157   3                              {
+ 158   4                                      --pulsesOnCount;
+ 159   4                                      if(0 == pulsesOnCount)
+ 160   4                                      {
+ 161   5                                              pulsesOnCount = pulsesOn;
+ 162   5                                              if(0 == pulsesOff)
+ 163   5                                              {
+ 164   6                                                      ET2 = 0;
+ 165   6                                              }
+ 166   5                                              outputDisabled = 1;
+ 167   5                                      }
+ 168   4                              } else {
+ 169   4                                      --pulsesOffCount;
+ 170   4                                      if(0 == pulsesOffCount)
+ 171   4                                      {
+ 172   5                                              pulsesOffCount = pulsesOff;
+ 173   5                                              outputDisabled = 0;
+ 174   5      
+ 175   5                                              if(cycles != 0)  // run infinte amount of times if cycles is 0
+ 176   5                                              {
+ 177   6                                                      --cyclesCount;
+ 178   6                                                      if(0 == cyclesCount)
+C51 COMPILER V9.03   TIMER                                                                 06/20/2011 19:43:21 PAGE 4   
+
+ 179   6                                                      {
+ 180   7                                                              cyclesCount = cycles;
+ 181   7                                                              ET2 = 0;
+ 182   7                                                      }
+ 183   6                                              }
+ 184   5                                      }
+ 185   4                              }
+ 186   3                      }
+ 187   2                       
+ 188   2                      timer2scaler = TIMER_TWO_PS; // scales timer by a factor of 8
+ 189   2                      bHighState^=1;
+ 190   2              }
+ 191   1              
+ 192   1              TF2 = 0;                        
+ 193   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    525    ----
+   CODE SIZE        =    616    ----
    CONSTANT SIZE    =   ----    ----
-   XDATA SIZE       =     17       9
+   XDATA SIZE       =     18      11
    PDATA SIZE       =   ----    ----
    DATA SIZE        =      3    ----
    IDATA SIZE       =   ----    ----
-C51 COMPILER V9.03   TIMER                                                                 06/14/2011 01:34:30 PAGE 4   
-
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
 

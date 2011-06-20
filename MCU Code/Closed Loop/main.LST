@@ -1,10 +1,10 @@
-C51 COMPILER V9.03   MAIN                                                                  06/14/2011 01:31:44 PAGE 1   
+C51 COMPILER V9.03   MAIN                                                                  06/20/2011 19:43:21 PAGE 1   
 
 
 C51 COMPILER V9.03, COMPILATION OF MODULE MAIN
 OBJECT MODULE PLACED IN main.OBJ
-COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE main.c LARGE BROWSE MODC2 MDU_R515 INCDIR(..\..\hal\nrf24l01p;..\..\hal;..\
-                    -..\compiler\c51;..\..\hal\nrf24le1) DEFINE(MCU_NRF24LE1) DEBUG OBJECTEXTEND
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE main.c LARGE BROWSE MODC2 MDU_R515 INCDIR(..\hal\nrf24l01p;..\hal;..\compil
+                    -er\c51;..\hal\nrf24le1;..\compiler\common) DEFINE(MCU_NRF24LE1) DEBUG OBJECTEXTEND
 
 line level    source
 
@@ -31,25 +31,25 @@ line level    source
   21          void init_radio();
   22          void init_adc();
   23          
-  24          void progTimer(uint8_t Freq, uint8_t DC);
-  25          void prog_led(uint8_t amp);
-  26          
-  27          data uint8_t g_Amplitude = 0;
-  28          data uint8_t acq_block;  // current block thats acquiring data
-  29          data uint8_t payload[2][MAXLENGTH];
-  30          data uint8_t progPayload[32];
-  31          
-  32          data uint8_t *ptr_payload;
-  33          data uint8_t cnt;
-  34          data uint8_t dataNeedsTx;
-  35          data bool procPayload = false;
-  36          
-  37          data progAll *pAll;
-  38          data progStim pStim;
-  39          data progAlgo pAlgo;
-  40          
-  41          uint16_t low_thresh = 500;
-  42          uint16_t high_thresh = 900;
+  24          void prog_led(uint8_t amp);
+  25          
+  26          data uint8_t g_Amplitude = 0;
+  27          data uint8_t acq_block;  // current block thats acquiring data
+  28          data uint8_t payload[2][MAXLENGTH+1];
+  29          data uint8_t progPayload[32];
+  30          
+  31          data uint8_t *ptr_payload;
+  32          data uint8_t cnt;
+  33          data uint8_t dataNeedsTx;
+  34          data bool procPayload = false;
+  35          
+  36          data progAll *pAll;
+  37          data progStim pStim;
+  38          data progAlgo pAlgo;
+  39          
+  40          uint16_t low_thresh = 500;
+  41          uint16_t high_thresh = 900;
+  42          uint8_t pktCount = 0;
   43          
   44          void main()
   45          {
@@ -62,7 +62,7 @@ line level    source
                    USBSLP = 0x01;  // disable usb
                   // P0DIR = (1<<3)|(1<<1)|(1<<0);
                       // P0ALT = 0x0F;
-C51 COMPILER V9.03   MAIN                                                                  06/14/2011 01:31:44 PAGE 2   
+C51 COMPILER V9.03   MAIN                                                                  06/20/2011 19:43:21 PAGE 2   
 
                       // P0EXP = 0x02; // Slave SPI for P0
                       // SSCONF = 0x01; //Enable slave SPI
@@ -112,171 +112,174 @@ line level    source
  100   2                      if(dataNeedsTx)
  101   2                      {
  102   3                              P1_4 = 1;
- 103   3                              hal_nrf_write_tx_payload(payload[((acq_block^(0x01))&(0x01))],MAXLENGTH);
- 104   3                              P1_4 = 0;
- 105   3                              radio_busy = true;
- 106   3                                  // Toggle radio CE signal to start transmission 
- 107   3                          CE_PULSE();
- 108   3                      
- 109   3                          
+ 103   3                              ++pktCount;
+ 104   3                              payload[((acq_block^(0x01))&(0x01))][MAXLENGTH] = (isStimulating) + (pktCount&(0x7F)); 
+ 105   3                              hal_nrf_write_tx_payload(payload[((acq_block^(0x01))&(0x01))],MAXLENGTH+1);
+ 106   3                              P1_4 = 0;
+ 107   3                              radio_busy = true;
+ 108   3                                  // Toggle radio CE signal to start transmission 
+ 109   3                          CE_PULSE();
  110   3                      
- 111   3                          // Wait for radio operation to finish
- 112   3                          while(radio_busy);
- 113   3                              
- 114   3                              if(procPayload)
- 115   3                              {
- 116   4                                      procPayload = false;
-C51 COMPILER V9.03   MAIN                                                                  06/14/2011 01:31:44 PAGE 3   
+ 111   3                          
+ 112   3                      
+ 113   3                          // Wait for radio operation to finish
+ 114   3                          while(radio_busy);
+ 115   3                              
+ 116   3                              if(procPayload)
+C51 COMPILER V9.03   MAIN                                                                  06/20/2011 19:43:21 PAGE 3   
 
- 117   4                                      pAll = (progAll *)progPayload;
- 118   4                              
- 119   4                                      if(pAll->pType == PROGSTIM)
- 120   4                                      {
- 121   5                                              pStim = pAll->pStim;
- 122   5                                              
- 123   5                                              g_Amplitude = pStim.Amplitude;
- 124   5      
- 125   5                                              if(0 == pStim.Freq)
- 126   5                                              {
- 127   6                                                 ET2 = 0;       // disable timer2 interrupt
- 128   6                                                prog_led(g_Amplitude);        
- 129   6                                              }
- 130   5                                              else
- 131   5                                              {
- 132   6                                                      ET2 = 1;
- 133   6                                                      progTimer(pStim.Freq, pStim.DC);
- 134   6                                              }
- 135   5                                      }       
- 136   4                              }
- 137   3                              dataNeedsTx = 0;
- 138   3                      }
- 139   2              }
- 140   1      }
- 141          
- 142          uint8_t lowThreshPassed = 0;
- 143          uint8_t highThreshPassed = 0;
- 144          
- 145          void adc_irq() interrupt INTERRUPT_MISCIRQ      // should only be called for ADC, RNG is disabled
- 146          {       
- 147   1              uint16_t tempVal;
- 148   1                      
- 149   1                      *ptr_payload = ADCDATH;
- 150   1                      ++ptr_payload;
- 151   1                      *ptr_payload = ADCDATL;    // big-endian storage
+ 117   3                              {
+ 118   4                                      procPayload = false;
+ 119   4                                      pAll = (progAll *)progPayload;
+ 120   4                              
+ 121   4                                      if(pAll->pType == PROGSTIM)
+ 122   4                                      {
+ 123   5                                              pStim = pAll->pStim;
+ 124   5                                              
+ 125   5                                              g_Amplitude = pStim.Amplitude;
+ 126   5      
+ 127   5                                              if(0 == pStim.Freq)
+ 128   5                                              {
+ 129   6                                                 ET2 = 0;       // disable timer2 interrupt
+ 130   6                                                prog_led(g_Amplitude);        
+ 131   6                                              }
+ 132   5                                              else
+ 133   5                                              {
+ 134   6                                                      ET2 = 1;
+ 135   6                                                      progTimer(&pStim);
+ 136   6                                              }
+ 137   5                                      }       
+ 138   4                              }
+ 139   3                              dataNeedsTx = 0;
+ 140   3                      }
+ 141   2              }
+ 142   1      }
+ 143          
+ 144          uint8_t lowThreshPassed = 0;
+ 145          uint8_t highThreshPassed = 0;
+ 146          
+ 147          void adc_irq() interrupt INTERRUPT_MISCIRQ      // should only be called for ADC, RNG is disabled
+ 148          {       
+ 149   1              uint16_t tempVal;
+ 150   1                      
+ 151   1                      *ptr_payload = ADCDATH;
  152   1                      ++ptr_payload;
- 153   1      
- 154   1                      tempVal = (ADCDATH << 8) + ADCDATL;
+ 153   1                      *ptr_payload = ADCDATL;    // big-endian storage
+ 154   1                      ++ptr_payload;
  155   1      
- 156   1                      if( tempVal > low_thresh)
- 157   1                      {
- 158   2                              lowThreshPassed = 1;
- 159   2                      } else {
- 160   2                              lowThreshPassed = 0;
- 161   2                              highThreshPassed = 0;
- 162   2                      }
- 163   1      
- 164   1                      if(lowThreshPassed && !highThreshPassed && tempVal > high_thresh)
- 165   1                      {
- 166   2                                      // P1_6 ^= 1;
- 167   2                                              peakDetect();
- 168   2                                      lowThreshPassed = 0;
- 169   2                                      highThreshPassed = 1;
- 170   2                      }
- 171   1                      cnt -= 2; 
- 172   1              
- 173   1                      if(cnt==0)
- 174   1                      {
- 175   2                              cnt = MAXLENGTH;
- 176   2                              acq_block &= 1;
- 177   2                              acq_block ^= 1; // toggle current acquisition block
- 178   2                              ptr_payload = payload[acq_block];  // reset data pointer
-C51 COMPILER V9.03   MAIN                                                                  06/14/2011 01:31:44 PAGE 4   
+ 156   1                      tempVal = (ADCDATH << 8) + ADCDATL;
+ 157   1      
+ 158   1                      if( tempVal > low_thresh)
+ 159   1                      {
+ 160   2                              lowThreshPassed = 1;
+ 161   2                      } else {
+ 162   2                              lowThreshPassed = 0;
+ 163   2                              highThreshPassed = 0;
+ 164   2                      }
+ 165   1      
+ 166   1                      if(lowThreshPassed && !highThreshPassed && tempVal > high_thresh)
+ 167   1                      {
+ 168   2                                      // P1_6 ^= 1;
+ 169   2                                              peakDetect();
+ 170   2                                      lowThreshPassed = 0;
+ 171   2                                      highThreshPassed = 1;
+ 172   2                      }
+ 173   1                      cnt -= 2; 
+ 174   1              
+ 175   1                      if(cnt==0)
+ 176   1                      {
+ 177   2                              cnt = MAXLENGTH;
+ 178   2                              acq_block &= 1;
+C51 COMPILER V9.03   MAIN                                                                  06/20/2011 19:43:21 PAGE 4   
 
- 179   2                              dataNeedsTx = 1; 
- 180   2                      }       
- 181   1      }
- 182          
- 183          void init_adc()
- 184          {
- 185   1         hal_adc_set_input_channel(HAL_ADC_INP_AIN0);                     
- 186   1         hal_adc_set_reference(HAL_ADC_REF_VDD);                        
- 187   1         hal_adc_set_acq_window(HAL_ADC_AQW_12US);
- 188   1         hal_adc_set_input_mode(HAL_ADC_SINGLE);                             
- 189   1         hal_adc_set_conversion_mode(HAL_ADC_CONTINOUS);               
- 190   1         hal_adc_set_resolution(HAL_ADC_RES_12BIT);                          
- 191   1         hal_adc_set_data_just(HAL_ADC_JUST_RIGHT);
- 192   1         hal_adc_set_sampling_rate(HAL_ADC_4KSPS);
- 193   1         
- 194   1         MISC = 1; // Enable ADC interrupt through MISC interrupt 
- 195   1      }
- 196          
- 197          void init_radio()
- 198          {
- 199   1        // Enable the radio clock
- 200   1        RFCKEN = 1;
- 201   1        // Enable RF interrupt
- 202   1        RF = 1;
- 203   1          // Power up radio
- 204   1        hal_nrf_set_power_mode(HAL_NRF_PWR_UP);
- 205   1      
- 206   1              hal_nrf_enable_ack_payload(1);
- 207   1              hal_nrf_enable_dynamic_payload(1);
- 208   1              hal_nrf_setup_dynamic_payload(1); // Set up PIPE 0 to handle dynamic lengths
- 209   1      
- 210   1          // Configure radio as primary receiver (PTX) 
- 211   1        hal_nrf_set_operation_mode(HAL_NRF_PTX);
- 212   1       
- 213   1            // Set payload width to 32 bytes
- 214   1      //  hal_nrf_set_rx_payload_width(HAL_NRF_PIPE0, MAXLENGTH);
- 215   1         // Enable global interrupt
- 216   1        EA = 1;
- 217   1      }
- 218          
- 219          // Radio interrupt
- 220          void rf_irq() interrupt INTERRUPT_RFIRQ
- 221          {
- 222   1        uint8_t irq_flags;
- 223   1      
- 224   1        // Read and clear IRQ flags from radio
- 225   1        irq_flags = hal_nrf_get_clear_irq_flags(); 
+ 179   2                              acq_block ^= 1; // toggle current acquisition block
+ 180   2                              ptr_payload = payload[acq_block];  // reset data pointer
+ 181   2                              dataNeedsTx = 1; 
+ 182   2                      }       
+ 183   1      }
+ 184          
+ 185          void init_adc()
+ 186          {
+ 187   1         hal_adc_set_input_channel(HAL_ADC_INP_AIN0);                     
+ 188   1         hal_adc_set_reference(HAL_ADC_REF_VDD);                        
+ 189   1         hal_adc_set_acq_window(HAL_ADC_AQW_12US);
+ 190   1         hal_adc_set_input_mode(HAL_ADC_SINGLE);                             
+ 191   1         hal_adc_set_conversion_mode(HAL_ADC_CONTINOUS);               
+ 192   1         hal_adc_set_resolution(HAL_ADC_RES_12BIT);                          
+ 193   1         hal_adc_set_data_just(HAL_ADC_JUST_RIGHT);
+ 194   1         hal_adc_set_sampling_rate(HAL_ADC_4KSPS);
+ 195   1         
+ 196   1         MISC = 1; // Enable ADC interrupt through MISC interrupt 
+ 197   1      }
+ 198          
+ 199          void init_radio()
+ 200          {
+ 201   1        // Enable the radio clock
+ 202   1        RFCKEN = 1;
+ 203   1        // Enable RF interrupt
+ 204   1        RF = 1;
+ 205   1          // Power up radio
+ 206   1        hal_nrf_set_power_mode(HAL_NRF_PWR_UP);
+ 207   1      
+ 208   1              hal_nrf_enable_ack_payload(1);
+ 209   1              hal_nrf_enable_dynamic_payload(1);
+ 210   1              hal_nrf_setup_dynamic_payload(1); // Set up PIPE 0 to handle dynamic lengths
+ 211   1              hal_nrf_set_rf_channel(125); // 2525 MHz
+ 212   1         //hal_nrf_set_auto_retr(3, 200); // Retry 5x
+ 213   1          // Configure radio as primary receiver (PTX) 
+ 214   1        hal_nrf_set_operation_mode(HAL_NRF_PTX);
+ 215   1       
+ 216   1            // Set payload width to 32 bytes
+ 217   1      //  hal_nrf_set_rx_payload_width(HAL_NRF_PIPE0, MAXLENGTH);
+ 218   1         // Enable global interrupt
+ 219   1        EA = 1;
+ 220   1      }
+ 221          
+ 222          // Radio interrupt
+ 223          void rf_irq() interrupt INTERRUPT_RFIRQ
+ 224          {
+ 225   1        uint8_t irq_flags;
  226   1      
- 227   1        switch(irq_flags)
- 228   1        {
- 229   2          // Transmission success
- 230   2              case ( (1 << HAL_NRF_RX_DR) | (1 << HAL_NRF_TX_DS) ):     // We rx payload packet
- 231   2                      procPayload = true;
- 232   2                      // Read payload
- 233   2                      while(!hal_nrf_rx_fifo_empty())
- 234   2                      {
- 235   3                      hal_nrf_read_rx_payload(progPayload);
- 236   3                      }
- 237   2                      radio_busy = false;
- 238   2          case (1 << HAL_NRF_TX_DS):
- 239   2            radio_busy = false;
- 240   2            // Data has been sent
-C51 COMPILER V9.03   MAIN                                                                  06/14/2011 01:31:44 PAGE 5   
+ 227   1        // Read and clear IRQ flags from radio
+ 228   1        irq_flags = hal_nrf_get_clear_irq_flags(); 
+ 229   1      
+ 230   1        switch(irq_flags)
+ 231   1        {
+ 232   2          // Transmission success
+ 233   2              case ( (1 << HAL_NRF_RX_DR) | (1 << HAL_NRF_TX_DS) ):     // We rx payload packet
+ 234   2                      procPayload = true;
+ 235   2                      // Read payload
+ 236   2                      while(!hal_nrf_rx_fifo_empty())
+ 237   2                      {
+ 238   3                      hal_nrf_read_rx_payload(progPayload);
+ 239   3                      }
+ 240   2                      radio_busy = false;
+C51 COMPILER V9.03   MAIN                                                                  06/20/2011 19:43:21 PAGE 5   
 
- 241   2            break;
- 242   2          // Transmission failed (maximum re-transmits)
- 243   2          case (1 << HAL_NRF_MAX_RT):
- 244   2            // When a MAX_RT interrupt occurs the TX payload will not be removed from the TX FIFO. 
- 245   2            // If the packet is to be discarded this must be done manually by flushing the TX FIFO.
- 246   2            // Alternatively, CE_PULSE() can be called re-starting transmission of the payload.
- 247   2            // (Will only be possible after the radio irq flags are cleared) 
- 248   2            hal_nrf_flush_tx();
- 249   2            radio_busy = false;
- 250   2            break;
- 251   2        }
- 252   1      }
- 253          
+ 241   2          case (1 << HAL_NRF_TX_DS):
+ 242   2            radio_busy = false;
+ 243   2            // Data has been sent
+ 244   2            break;
+ 245   2          // Transmission failed (maximum re-transmits)
+ 246   2          case (1 << HAL_NRF_MAX_RT):
+ 247   2            // When a MAX_RT interrupt occurs the TX payload will not be removed from the TX FIFO. 
+ 248   2            // If the packet is to be discarded this must be done manually by flushing the TX FIFO.
+ 249   2            // Alternatively, CE_PULSE() can be called re-starting transmission of the payload.
+ 250   2            // (Will only be possible after the radio irq flags are cleared) 
+ 251   2            hal_nrf_flush_tx();
+ 252   2            radio_busy = false;
+ 253   2            break;
+ 254   2        }
+ 255   1      }
+ 256          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    613    ----
+   CODE SIZE        =    653    ----
    CONSTANT SIZE    =   ----    ----
-   XDATA SIZE       =      6       2
+   XDATA SIZE       =      7       2
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =    114    ----
+   DATA SIZE        =    116    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.

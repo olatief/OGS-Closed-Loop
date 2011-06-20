@@ -23,13 +23,16 @@ static uint8_t cycles = 3;
 static uint8_t cyclesCount = 3;
 
 static uint8_t outputDisabled = 0;
+uint8_t isStimulating = 0;
 
 void SeizureDetected();
+void startStim();
+void stopStim();
 
-void progSD(uint16_t IEIval, uint8_t nStageval)
+void progSD(progAlgo* pAlgo)
 {
-	IEI = IEIval;
-	nStage = nStageval;
+	IEI = pAlgo->IEI;
+	nStage = pAlgo->nStage;
 }
 
 void peakDetect() // called when threshold reached
@@ -55,26 +58,44 @@ void SeizureDetected()
 {	
 	nStageCount = nStage;
 	// DO STUFF
+	startStim();
 }
 
+void startStim()
+{
+	isStimulating = 0x80;
+	outputDisabled = 0;
+	pulsesOffCount = pulsesOff;
+	pulsesOnCount = pulsesOn;
+	cyclesCount = cycles;
+	T2I0 = 1; // Turn on timer 2
+    ET2 = 1; // Enable timer 2 interrupt
 
-void progTimer(uint8_t Freq, uint8_t DC)
+}
+
+void stopStim()
+{
+	isStimulating = 0;
+	T2I0 = 0; // Turn off timer 2
+    ET2 = 0; // Disable timer 2 interrupt
+}
+
+void progTimer(progStim *pStim)
 {
 	xdata uint32_t period = 0;
-	xdata uint32_t period_us = (uint32_t)1e6/((uint32_t)Freq);
+	xdata uint32_t period_us = (uint32_t)1e6/((uint32_t)pStim->Freq);
 	period = (uint32_t)period_us*(uint32_t)2/3; // its (2/3)/8
-	timer_high = DC*period/100;
+	timer_high = pStim->DC*period/100;
 	timer_low = (period - timer_high);
 	timer_high = 2^16-timer_high/TIMER_TWO_PS;	
 	timer_low = 2^16-timer_low/TIMER_TWO_PS;
 
-	outputDisabled = 0;
-	ET2 = 1; //in case it was off
+	startStim();
 }
 
 void initTimer()
 {
- 	progTimer(30, 10);
+ //	progTimer(30, 10);
 /* Configure Timer 2 */
      
    CRCL = 0xF0;
@@ -151,11 +172,14 @@ void timer2() interrupt INTERRUPT_T2 // controls stimulation waveform
 					pulsesOffCount = pulsesOff;
 					outputDisabled = 0;
 
-					--cyclesCount;
-					if(0 == cyclesCount)
+					if(cycles != 0)	 // run infinte amount of times if cycles is 0
 					{
-						cyclesCount = cycles;
-						ET2 = 0;
+						--cyclesCount;
+						if(0 == cyclesCount)
+						{
+							cyclesCount = cycles;
+							ET2 = 0;
+						}
 					}
 				}
 			}

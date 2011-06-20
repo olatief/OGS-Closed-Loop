@@ -137,7 +137,7 @@
             <RestoreToolbox>1</RestoreToolbox>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>-1</TargetSelection>
+          <TargetSelection>9</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -295,7 +295,7 @@
               <MiscControls></MiscControls>
               <Define>MCU_NRF24LE1</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\hal\nrf24l01p;..\..\hal;..\..\compiler\c51;..\..\hal\nrf24le1</IncludePath>
+              <IncludePath>..\hal\nrf24l01p;..\hal;..\compiler\c51;..\hal\nrf24le1;..\compiler\common</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -380,22 +380,22 @@
             <File>
               <FileName>hal_nrf.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\hal\nrf24l01p\hal_nrf.c</FilePath>
-            </File>
-            <File>
-              <FileName>hal_nrf_hw.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\hal\nrf24le1\hal_nrf_hw.c</FilePath>
-            </File>
-            <File>
-              <FileName>hal_spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\hal\nrf24le1\hal_spi.c</FilePath>
+              <FilePath>..\hal\nrf24l01p\hal_nrf.c</FilePath>
             </File>
             <File>
               <FileName>hal_adc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\hal\nrf24le1\hal_adc.c</FilePath>
+              <FilePath>..\hal\nrf24le1\hal_adc.c</FilePath>
+            </File>
+            <File>
+              <FileName>hal_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\hal\nrf24le1\hal_spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>hal_nrf_hw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\hal\nrf24le1\hal_nrf_hw.c</FilePath>
             </File>
           </Files>
         </Group>

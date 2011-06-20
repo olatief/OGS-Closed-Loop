@@ -21,12 +21,11 @@ data bool radio_busy;
 void init_radio();
 void init_adc();
 
-void progTimer(uint8_t Freq, uint8_t DC);
 void prog_led(uint8_t amp);
 
 data uint8_t g_Amplitude = 0;
 data uint8_t acq_block;	 // current block thats acquiring data
-data uint8_t payload[2][MAXLENGTH];
+data uint8_t payload[2][MAXLENGTH+1];
 data uint8_t progPayload[32];
 
 data uint8_t *ptr_payload;
@@ -40,6 +39,7 @@ data progAlgo pAlgo;
 
 uint16_t low_thresh = 500;
 uint16_t high_thresh = 900;
+uint8_t pktCount = 0;
 
 void main()
 {
@@ -100,7 +100,9 @@ void main()
 		if(dataNeedsTx)
 		{
 			P1_4 = 1;
-			hal_nrf_write_tx_payload(payload[((acq_block^(0x01))&(0x01))],MAXLENGTH);
+			++pktCount;
+			payload[((acq_block^(0x01))&(0x01))][MAXLENGTH] = (isStimulating) + (pktCount&(0x7F)); 
+			hal_nrf_write_tx_payload(payload[((acq_block^(0x01))&(0x01))],MAXLENGTH+1);
 			P1_4 = 0;
 			radio_busy = true;
 			    // Toggle radio CE signal to start transmission 
@@ -130,7 +132,7 @@ void main()
 					else
 					{
 						ET2 = 1;
-						progTimer(pStim.Freq, pStim.DC);
+						progTimer(&pStim);
 					}
 				}	
 			}
@@ -206,7 +208,8 @@ void init_radio()
   	hal_nrf_enable_ack_payload(1);
 	hal_nrf_enable_dynamic_payload(1);
 	hal_nrf_setup_dynamic_payload(1); // Set up PIPE 0 to handle dynamic lengths
-
+//	hal_nrf_set_rf_channel(125); // 2525 MHz
+   //hal_nrf_set_auto_retr(3, 200); // Retry 5x
     // Configure radio as primary receiver (PTX) 
   hal_nrf_set_operation_mode(HAL_NRF_PTX);
  

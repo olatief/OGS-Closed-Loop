@@ -1,10 +1,10 @@
-C51 COMPILER V9.03   HAL_DIGIPOT                                                           06/14/2011 01:31:44 PAGE 1   
+C51 COMPILER V9.03   HAL_DIGIPOT                                                           06/20/2011 19:43:21 PAGE 1   
 
 
 C51 COMPILER V9.03, COMPILATION OF MODULE HAL_DIGIPOT
 OBJECT MODULE PLACED IN hal_digipot.OBJ
-COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE hal_digipot.c LARGE BROWSE MODC2 MDU_R515 INCDIR(..\..\hal\nrf24l01p;..\..\
-                    -hal;..\..\compiler\c51;..\..\hal\nrf24le1) DEFINE(MCU_NRF24LE1) DEBUG OBJECTEXTEND
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE hal_digipot.c LARGE BROWSE MODC2 MDU_R515 INCDIR(..\hal\nrf24l01p;..\hal;..
+                    -\compiler\c51;..\hal\nrf24le1;..\compiler\common) DEFINE(MCU_NRF24LE1) DEBUG OBJECTEXTEND
 
 line level    source
 

@@ -10,13 +10,13 @@ void prog_led(uint8_t amp)
 		amp = 14;
 
 	amp = (amp<<1);
-	P1_6 = 0;
+	LED_CTRL_PIN = 0;
 
 	for(il = 1; il<amp; ++il)
 	{
 		_nop_();
 		_nop_();
-		P1_6 ^= 0x01;			
+		LED_CTRL_PIN ^= 0x01;			
 	}
 
 }

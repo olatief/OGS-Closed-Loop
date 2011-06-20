@@ -295,7 +295,7 @@
               <MiscControls></MiscControls>
               <Define>MCU_NRF24LE1</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\hal\nrf24l01p;..\..\hal;..\..\compiler\c51;..\..\hal\nrf24le1</IncludePath>
+              <IncludePath>..\hal\nrf24l01p;...\hal;..\compiler\c51;...\hal\nrf24le1</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
