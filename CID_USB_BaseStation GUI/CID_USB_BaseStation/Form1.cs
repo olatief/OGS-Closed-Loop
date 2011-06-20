@@ -454,6 +454,19 @@ namespace CID_USB_BaseStation
             tvals[0].Select();
         }
 
+        private void tmrStim_Tick(object sender, EventArgs e)
+        {
+            tslStimulating.Text = "Stimulating!!";
+            if (tslStimulating.ForeColor == Color.Blue)
+            {
+                tslStimulating.ForeColor = Color.Red;
+            }
+            else
+            {
+                tslStimulating.ForeColor = Color.Blue;
+            }
+
+        }
 
         #region DATAPLOTTING
 
@@ -512,43 +525,5 @@ namespace CID_USB_BaseStation
         }
         #endregion
 
-        private void cmdDraw_Click(object sender, EventArgs e)
-        {
-            Int16 [] adcVals = new Int16[50];
-            int i = 0;
-            // gereate sine wave data
-            for (i = 0; i < adcVals.Length; ++i)
-            {
-                adcVals[i] = Convert.ToInt16(100*Math.Sin(2 * Math.PI * (i) /5));
-            }
-
-            DrawData(adcVals);
-        }
-
-        private void tmrStim_Tick(object sender, EventArgs e)
-        {
-            tslStimulating.Text = "Stimulating!!";
-            if (tslStimulating.ForeColor == Color.Blue)
-            {
-                tslStimulating.ForeColor = Color.Red;
-            }
-            else
-            {
-                tslStimulating.ForeColor = Color.Blue;
-            }
-
-        }
-
-        private void cmdTestStim_Click(object sender, EventArgs e)
-        {
-            if (tmrStim.Enabled)
-            {
-                tmrStim.Enabled = false;
-            }
-            else
-            {
-                tmrStim.Enabled = true;
-            }
-        }
     }
 }

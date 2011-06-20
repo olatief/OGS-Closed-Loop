@@ -7,16 +7,23 @@ namespace CID_USB_BaseStation
 {
     public static class WirelessStats
     {
+        private static long startTime;
+        private static long stopTime;
+        private static long numDroppedPackets;
+        private static long numSuccessRxPackets;
 
-        public static long startTime;
-        public static long stopTime;
-        public static long numDroppedPackets;
-        public static long numSuccessRxPackets;
+        public static long StartTime { set; get; }
+        public static long StopTime { set; get; }
+        public static long NumDroppedPackets { set; get; }
+        public static long NumSuccessRxPackets { set; get; }
 
         public static void Reset()
         {
-            startTime = System.DateTime.Now.Ticks;
-            stopTime = -1;
+            StartTime = System.DateTime.Now.Ticks;
+            StopTime = -1;
+
+            NumDroppedPackets = 0;
+            NumSuccessRxPackets = 0;
         }
     }
 }
