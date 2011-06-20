@@ -17,31 +17,34 @@ namespace CID_USB_BaseStation
 
         public PacketHandler()
         {
-            
+            WirelessStats.Instance.Reset();  
         }
 
-        public int[] ParseNewPacket(Packet receivedPacket)
+        public void ParseNewPacket(Packet receivedPacket)
         {
-            int [] parsedValues;
-            missedPackets = receivedPacket.Count - lastPacket.Count - 1;
+           // int [] parsedValues;
+            if (lastPacket != null)
+            {
+                missedPackets = receivedPacket.Count - lastPacket.Count - 1;
 
-            if (receivedPacket.Count <= lastPacket.Count) // check for overflow since count only goes to 128;
-            {
-                missedPackets += 127;
-            }
+                if (receivedPacket.Count <= lastPacket.Count) // check for overflow since count only goes to 128;
+                {
+                    missedPackets += 128;
+                }
 
-            if (missedPackets == 0)
-            {
-                WirelessStats.numSuccessRxPackets++;
+                if (missedPackets == 0)
+                {
+                    WirelessStats.Instance.NumSuccessRxPackets++;
+                }
+                else
+                {
+                    WirelessStats.Instance.NumDroppedPackets += missedPackets;
+                }
+               //// parsedValues = parseSingleChan(receivedPacket);
             }
-            else
-            {
-                WirelessStats.numDroppedPackets += missedPackets;
-            }
-            parsedValues = parseSingleChan(receivedPacket);
             lastPacket = receivedPacket;
-            
-            return parsedValues;
+
+            return ;
         }
 
         private int[] parseSingleChan(Packet pkt)

@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.cboDevices = new System.Windows.Forms.ComboBox();
             this.cmdOpen = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -38,7 +37,6 @@
             this.tslStimulating = new System.Windows.Forms.ToolStripStatusLabel();
             this.tRecv = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.tConverted = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.pnlProg = new System.Windows.Forms.Panel();
             this.btnProgAll = new System.Windows.Forms.Button();
@@ -46,6 +44,7 @@
             this.tvalDelay = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.chkLockHigh = new System.Windows.Forms.CheckBox();
+            this.btnProgAlgo = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.tvalIEI = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -76,8 +75,6 @@
             this.tvalAmplitude = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tvalDC = new System.Windows.Forms.TextBox();
-            this.btnProgAlgo = new System.Windows.Forms.Button();
-            this.tRaw = new System.Windows.Forms.TextBox();
             this.btnConvert = new System.Windows.Forms.Button();
             this.txtFilename = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -88,6 +85,11 @@
             this.cmdDraw = new System.Windows.Forms.Button();
             this.tmrStim = new System.Windows.Forms.Timer(this.components);
             this.cmdTestStim = new System.Windows.Forms.Button();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.lblSuccessStat = new System.Windows.Forms.Label();
+            this.lblDroppedStat = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
             this.statusStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -96,6 +98,7 @@
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picPlot)).BeginInit();
+            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // cboDevices
@@ -123,9 +126,9 @@
             this.tsStatus,
             this.tslStatus,
             this.tslStimulating});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 639);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 662);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(710, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1285, 22);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -165,14 +168,6 @@
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "USB Devices";
-            // 
-            // tConverted
-            // 
-            this.tConverted.Location = new System.Drawing.Point(815, 162);
-            this.tConverted.Multiline = true;
-            this.tConverted.Name = "tConverted";
-            this.tConverted.Size = new System.Drawing.Size(188, 320);
-            this.tConverted.TabIndex = 5;
             // 
             // groupBox2
             // 
@@ -251,6 +246,16 @@
             this.chkLockHigh.TabIndex = 9;
             this.chkLockHigh.Text = "Lock High Threshold? ";
             this.chkLockHigh.UseVisualStyleBackColor = true;
+            // 
+            // btnProgAlgo
+            // 
+            this.btnProgAlgo.Location = new System.Drawing.Point(21, 180);
+            this.btnProgAlgo.Name = "btnProgAlgo";
+            this.btnProgAlgo.Size = new System.Drawing.Size(115, 21);
+            this.btnProgAlgo.TabIndex = 4;
+            this.btnProgAlgo.Text = "Program Algo";
+            this.btnProgAlgo.UseVisualStyleBackColor = true;
+            this.btnProgAlgo.Click += new System.EventHandler(this.btnProgAlgo_Click);
             // 
             // label5
             // 
@@ -536,28 +541,9 @@
             this.tvalDC.Validating += new System.ComponentModel.CancelEventHandler(this.OnValidationTest);
             this.tvalDC.Validated += new System.EventHandler(this.OnValidated);
             // 
-            // btnProgAlgo
-            // 
-            this.btnProgAlgo.Location = new System.Drawing.Point(21, 180);
-            this.btnProgAlgo.Name = "btnProgAlgo";
-            this.btnProgAlgo.Size = new System.Drawing.Size(115, 21);
-            this.btnProgAlgo.TabIndex = 4;
-            this.btnProgAlgo.Text = "Program Algo";
-            this.btnProgAlgo.UseVisualStyleBackColor = true;
-            this.btnProgAlgo.Click += new System.EventHandler(this.btnProgAlgo_Click);
-            // 
-            // tRaw
-            // 
-            this.tRaw.Location = new System.Drawing.Point(1009, 159);
-            this.tRaw.Multiline = true;
-            this.tRaw.Name = "tRaw";
-            this.tRaw.Size = new System.Drawing.Size(188, 358);
-            this.tRaw.TabIndex = 7;
-            this.tRaw.Text = resources.GetString("tRaw.Text");
-            // 
             // btnConvert
             // 
-            this.btnConvert.Location = new System.Drawing.Point(827, 86);
+            this.btnConvert.Location = new System.Drawing.Point(850, 83);
             this.btnConvert.Name = "btnConvert";
             this.btnConvert.Size = new System.Drawing.Size(69, 21);
             this.btnConvert.TabIndex = 8;
@@ -599,9 +585,9 @@
             // picPlot
             // 
             this.picPlot.Enabled = false;
-            this.picPlot.Location = new System.Drawing.Point(527, 170);
+            this.picPlot.Location = new System.Drawing.Point(534, 134);
             this.picPlot.Name = "picPlot";
-            this.picPlot.Size = new System.Drawing.Size(264, 250);
+            this.picPlot.Size = new System.Drawing.Size(414, 271);
             this.picPlot.TabIndex = 12;
             this.picPlot.TabStop = false;
             this.picPlot.Visible = false;
@@ -630,20 +616,68 @@
             this.cmdTestStim.UseVisualStyleBackColor = true;
             this.cmdTestStim.Click += new System.EventHandler(this.cmdTestStim_Click);
             // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.lblSuccessStat);
+            this.groupBox5.Controls.Add(this.lblDroppedStat);
+            this.groupBox5.Controls.Add(this.label15);
+            this.groupBox5.Controls.Add(this.label14);
+            this.groupBox5.Location = new System.Drawing.Point(521, 420);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(502, 207);
+            this.groupBox5.TabIndex = 15;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Wireless Stats";
+            // 
+            // lblSuccessStat
+            // 
+            this.lblSuccessStat.AutoSize = true;
+            this.lblSuccessStat.Location = new System.Drawing.Point(145, 61);
+            this.lblSuccessStat.Name = "lblSuccessStat";
+            this.lblSuccessStat.Size = new System.Drawing.Size(13, 13);
+            this.lblSuccessStat.TabIndex = 3;
+            this.lblSuccessStat.Text = "0";
+            // 
+            // lblDroppedStat
+            // 
+            this.lblDroppedStat.AutoSize = true;
+            this.lblDroppedStat.Location = new System.Drawing.Point(145, 35);
+            this.lblDroppedStat.Name = "lblDroppedStat";
+            this.lblDroppedStat.Size = new System.Drawing.Size(13, 13);
+            this.lblDroppedStat.TabIndex = 2;
+            this.lblDroppedStat.Text = "0";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(16, 61);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(104, 13);
+            this.label15.TabIndex = 1;
+            this.label15.Text = "Successful Packets:";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(16, 36);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(93, 13);
+            this.label14.TabIndex = 0;
+            this.label14.Text = "Dropped Packets:";
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(710, 661);
+            this.ClientSize = new System.Drawing.Size(1285, 684);
+            this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.cmdTestStim);
             this.Controls.Add(this.cmdDraw);
             this.Controls.Add(this.btnFile);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.txtFilename);
             this.Controls.Add(this.btnConvert);
-            this.Controls.Add(this.tRaw);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.tConverted);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.tRecv);
             this.Controls.Add(this.statusStrip1);
@@ -663,6 +697,8 @@
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picPlot)).EndInit();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -676,7 +712,6 @@
         private System.Windows.Forms.ToolStripStatusLabel tsStatus;
         private System.Windows.Forms.TextBox tRecv;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox tConverted;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Panel pnlProg;
         private System.Windows.Forms.GroupBox groupBox3;
@@ -699,7 +734,6 @@
         private System.Windows.Forms.Button btnProgAll;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox tvalFreq;
-        private System.Windows.Forms.TextBox tRaw;
         private System.Windows.Forms.Button btnConvert;
         private System.Windows.Forms.TextBox txtFilename;
         private System.Windows.Forms.Label label7;
@@ -728,6 +762,11 @@
         private System.Windows.Forms.ToolStripStatusLabel tslStimulating;
         private System.Windows.Forms.Timer tmrStim;
         private System.Windows.Forms.Button cmdTestStim;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label lblSuccessStat;
+        private System.Windows.Forms.Label lblDroppedStat;
     }
 }
 

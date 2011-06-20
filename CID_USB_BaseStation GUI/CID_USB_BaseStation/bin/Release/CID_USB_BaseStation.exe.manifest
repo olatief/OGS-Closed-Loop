@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="CID_USB_BaseStation.exe" size="33792">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="CID_USB_BaseStation.exe" size="34816">
       <assemblyIdentity name="CID_USB_BaseStation" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>CYf2jHjpNNekiiJB8byCGYhy1tk=</dsig:DigestValue>
+        <dsig:DigestValue>LwhKBiHgRhzsusJboo4Bj0mavKk=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -61,7 +61,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>zzHkOEbxylmJn9uGaAUj4tnLZ0I=</dsig:DigestValue>
+        <dsig:DigestValue>aJUKlXWhkuqwrsYU9T8uLlQ7nqs=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

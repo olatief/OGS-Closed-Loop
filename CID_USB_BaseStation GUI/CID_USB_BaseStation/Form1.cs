@@ -395,18 +395,6 @@ namespace CID_USB_BaseStation
 
         }
 
-        private void btnConvert_Click(object sender, EventArgs e)
-        {
-            string s = tRaw.Text;
-            string[] lines = s.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
-
-            UInt16[] bits = lines.Select(x => UInt16.Parse(x)).ToArray();
-
-           // int[] vals = bitsToInt(ref bits);
-
-            tConverted.Text = "";
-        }
-
         private void btnFile_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
@@ -452,6 +440,9 @@ namespace CID_USB_BaseStation
                 tval.Select(); // Validate
             }
             tvals[0].Select();
+
+            lblDroppedStat.DataBindings.Add("Text", WirelessStats.Instance, "NumDroppedPackets");
+            lblSuccessStat.DataBindings.Add("Text", WirelessStats.Instance, "NumSuccessRxPackets");
         }
 
         private void tmrStim_Tick(object sender, EventArgs e)

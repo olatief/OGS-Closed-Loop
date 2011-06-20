@@ -24,7 +24,7 @@ namespace CID_USB_BaseStation
         {
             Int16[] adcVals = new Int16[50];
             int i = 0;
-            // gereate sine wave data
+            // generate sine wave data
             for (i = 0; i < adcVals.Length; ++i)
             {
                 adcVals[i] = Convert.ToInt16(100 * Math.Sin(2 * Math.PI * (i) / 5));
@@ -33,5 +33,16 @@ namespace CID_USB_BaseStation
             DrawData(adcVals);
         }
 
+        private void btnConvert_Click(object sender, EventArgs e)
+        {
+            // string s = tRaw.Text;
+            // string[] lines = s.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+
+            // UInt16[] bits = lines.Select(x => UInt16.Parse(x)).ToArray();
+
+            // int[] vals = bitsToInt(ref bits);
+
+            //  tConverted.Text = "";
+        }
     }
 }
