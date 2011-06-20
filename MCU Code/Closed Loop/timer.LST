@@ -1,0 +1,199 @@
+C51 COMPILER V9.03   TIMER                                                                 06/14/2011 01:34:30 PAGE 1   
+
+
+C51 COMPILER V9.03, COMPILATION OF MODULE TIMER
+OBJECT MODULE PLACED IN timer.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE timer.c LARGE BROWSE MODC2 MDU_R515 INCDIR(..\..\hal\nrf24l01p;..\..\hal;..
+                    -\..\compiler\c51;..\..\hal\nrf24le1) DEFINE(MCU_NRF24LE1) DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include "hardware.h"
+   2          #include "timer.h"
+   3          #include "led.h"
+   4          
+   5          #define PERIOD_MS 100
+   6          #define TIMER_TWO_PS 8   // Pre-scaler fot rimer 2 to get lower stimulation frequencies
+   7          
+   8          
+   9          static xdata uint16_t timer_high = 0;
+  10          static xdata uint16_t timer_low = 0;
+  11          static xdata uint8_t bHighState = 0;
+  12          static xdata uint16_t IEI = 400;
+  13          static xdata uint8_t nStage = 5;
+  14          
+  15          static data uint16_t tick = 0;
+  16          static data uint8_t nStageCount = 0;
+  17          static uint8_t timer2scaler = TIMER_TWO_PS;
+  18          static uint8_t pulsesOn = 10;
+  19          static uint8_t pulsesOnCount = 10;
+  20          static uint8_t pulsesOff = 10;
+  21          static uint8_t pulsesOffCount = 10;
+  22          static uint8_t cycles = 3;
+  23          static uint8_t cyclesCount = 3;
+  24          
+  25          static uint8_t outputDisabled = 0;
+  26          
+  27          void SeizureDetected();
+  28          
+  29          void progSD(uint16_t IEIval, uint8_t nStageval)
+  30          {
+  31   1              IEI = IEIval;
+  32   1              nStage = nStageval;
+  33   1      }
+  34          
+  35          void peakDetect() // called when threshold reached
+  36          {
+  37   1               if(tick > 0)  // last detection was less than IEI (ms) ago
+  38   1               {
+  39   2                      --nStageCount;
+  40   2                      if(nStageCount == 0) // seizure detected
+  41   2                      {
+  42   3                              SeizureDetected();      
+  43   3                      }               
+  44   2               } else {  // reset nStage
+  45   2                      nStageCount = nStage;
+  46   2               }
+  47   1      
+  48   1               tick = IEI;  // reset tick
+  49   1      
+  50   1      }
+  51          
+  52          uint8_t DetectionLock = 0;
+  53          
+  54          void SeizureDetected()
+C51 COMPILER V9.03   TIMER                                                                 06/14/2011 01:34:30 PAGE 2   
+
+  55          {       
+  56   1              nStageCount = nStage;
+  57   1              // DO STUFF
+  58   1      }
+  59          
+  60          
+  61          void progTimer(uint8_t Freq, uint8_t DC)
+  62          {
+  63   1              xdata uint32_t period = 0;
+  64   1              xdata uint32_t period_us = (uint32_t)1e6/((uint32_t)Freq);
+  65   1              period = (uint32_t)period_us*(uint32_t)2/3; // its (2/3)/8
+  66   1              timer_high = DC*period/100;
+  67   1              timer_low = (period - timer_high);
+  68   1              timer_high = 2^16-timer_high/TIMER_TWO_PS;      
+  69   1              timer_low = 2^16-timer_low/TIMER_TWO_PS;
+  70   1      
+  71   1              outputDisabled = 0;
+  72   1              ET2 = 1; //in case it was off
+  73   1      }
+  74          
+  75          void initTimer()
+  76          {
+  77   1              progTimer(30, 10);
+  78   1      /* Configure Timer 2 */
+  79   1           
+  80   1         CRCL = 0xF0;
+  81   1         CRCH = 0xF0;
+  82   1          
+  83   1         CCEN = 0x02;  // Compare enabled
+  84   1            /*T2CON: */
+  85   1         T2PS = 1; // CLK/24 , no reload
+  86   1         T2R1 = 1;
+  87   1        // T2CM = 1;  
+  88   1         T2I0 = 1; // Turn on timer
+  89   1          ET2 = 1; // Enable timer 2 interrupt
+  90   1      
+  91   1      /** Timer 0 Setup **/
+  92   1      
+  93   1              TMOD = 0x01; // 16 bit timer for TMR0;
+  94   1              TH0 = 0x7F;
+  95   1              TL0 = 0xFF;
+  96   1              TR0 = 1; //     Tmr0 run control (start)
+  97   1              ET0 = 1; // Enable timer0 interrupt
+  98   1              return;
+  99   1      }
+ 100          
+ 101          void timer0() interrupt INTERRUPT_T0 // Seizure detection IEI counter (tick)
+ 102          {
+ 103   1              TH0 = 0x7F;
+ 104   1              TL0 = 0xFF;
+ 105   1      
+ 106   1              if(tick != 0)
+ 107   1              {
+ 108   2                      --tick;
+ 109   2              }
+ 110   1      
+ 111   1      //      P1_6 ^= 1; 
+ 112   1      }
+ 113          
+ 114          void timer2() interrupt INTERRUPT_T2 // controls stimulation waveform
+ 115          {
+ 116   1              --timer2scaler;
+C51 COMPILER V9.03   TIMER                                                                 06/14/2011 01:34:30 PAGE 3   
+
+ 117   1              if( 0 == timer2scaler )
+ 118   1              {
+ 119   2                      if(bHighState)
+ 120   2                      {
+ 121   3                              CRCL = timer_low&0xFF;
+ 122   3                              CRCH = timer_low>>8;
+ 123   3                      //      prog_led(g_Amplitude);
+ 124   3                              
+ 125   3                              if(!outputDisabled) P1_6 = 1;
+ 126   3                                              
+ 127   3                      } 
+ 128   2                      else 
+ 129   2                      {
+ 130   3                              CRCL = timer_high&0xFF;
+ 131   3                              CRCH = timer_high>>8;
+ 132   3                      //      prog_led(0);
+ 133   3                              P1_6 = 0;
+ 134   3      
+ 135   3                              if(!outputDisabled)
+ 136   3                              {
+ 137   4                                      --pulsesOnCount;
+ 138   4                                      if(0 == pulsesOnCount)
+ 139   4                                      {
+ 140   5                                              pulsesOnCount = pulsesOn;
+ 141   5                                              if(0 == pulsesOff)
+ 142   5                                              {
+ 143   6                                                      ET2 = 0;
+ 144   6                                              }
+ 145   5                                              outputDisabled = 1;
+ 146   5                                      }
+ 147   4                              } else {
+ 148   4                                      --pulsesOffCount;
+ 149   4                                      if(0 == pulsesOffCount)
+ 150   4                                      {
+ 151   5                                              pulsesOffCount = pulsesOff;
+ 152   5                                              outputDisabled = 0;
+ 153   5      
+ 154   5                                              --cyclesCount;
+ 155   5                                              if(0 == cyclesCount)
+ 156   5                                              {
+ 157   6                                                      cyclesCount = cycles;
+ 158   6                                                      ET2 = 0;
+ 159   6                                              }
+ 160   5                                      }
+ 161   4                              }
+ 162   3                      }
+ 163   2                       
+ 164   2                      timer2scaler = TIMER_TWO_PS; // scales timer by a factor of 8
+ 165   2                      bHighState^=1;
+ 166   2              }
+ 167   1              
+ 168   1              TF2 = 0;                        
+ 169   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    525    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =     17       9
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      3    ----
+   IDATA SIZE       =   ----    ----
+C51 COMPILER V9.03   TIMER                                                                 06/14/2011 01:34:30 PAGE 4   
+
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

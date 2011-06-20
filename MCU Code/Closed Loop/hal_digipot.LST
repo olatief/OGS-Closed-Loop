@@ -1,0 +1,46 @@
+C51 COMPILER V9.03   HAL_DIGIPOT                                                           06/14/2011 01:31:44 PAGE 1   
+
+
+C51 COMPILER V9.03, COMPILATION OF MODULE HAL_DIGIPOT
+OBJECT MODULE PLACED IN hal_digipot.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE hal_digipot.c LARGE BROWSE MODC2 MDU_R515 INCDIR(..\..\hal\nrf24l01p;..\..\
+                    -hal;..\..\compiler\c51;..\..\hal\nrf24le1) DEFINE(MCU_NRF24LE1) DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include "hardware.h"
+   2          
+   3          
+   4          uint8_t hal_digi_init()
+   5          {
+   6   1              hal_spi_master_init(SPI_CLK_DIV2, HAL_SPI_MODE_0, HAL_SPI_MSB_LSB);
+   7   1              // hal_spi_clkdivider_t ck, hal_spi_mode_t mode, hal_spi_byte_order_t bo);
+   8   1      
+   9   1              return 0;
+  10   1      }
+  11          
+  12          uint8_t hal_digi_write(uint16_t value)
+  13          {
+  14   1         uint8_t byte0 = (value>>8)&(0x03); // first 2 bits
+  15   1         uint8_t byte1 = (value)&(0xFF);
+  16   1        
+  17   1      //      POT_CS = 0; 
+  18   1         hal_spi_master_read_write(byte0);
+  19   1         hal_spi_master_read_write(byte1);
+  20   1        // POT_CS = 1;
+  21   1         return 0;
+  22   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     40    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----       1
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

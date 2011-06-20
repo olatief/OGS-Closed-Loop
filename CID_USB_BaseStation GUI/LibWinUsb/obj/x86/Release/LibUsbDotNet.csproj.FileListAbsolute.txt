@@ -1,0 +1,6 @@
+C:\Users\Omar\Dropbox\OGS-Closed-Loop\CID_USB_BaseStation GUI\LibWinUsb\bin\x86\Release\LibUsbDotNet.dll
+C:\Users\Omar\Dropbox\OGS-Closed-Loop\CID_USB_BaseStation GUI\LibWinUsb\bin\x86\Release\LibUsbDotNet.pdb
+C:\Users\Omar\Dropbox\OGS-Closed-Loop\CID_USB_BaseStation GUI\LibWinUsb\bin\x86\Release\LibUsbDotNet.xml
+C:\Users\Omar\Dropbox\OGS-Closed-Loop\CID_USB_BaseStation GUI\LibWinUsb\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Users\Omar\Dropbox\OGS-Closed-Loop\CID_USB_BaseStation GUI\LibWinUsb\obj\x86\Release\LibUsbDotNet.dll
+C:\Users\Omar\Dropbox\OGS-Closed-Loop\CID_USB_BaseStation GUI\LibWinUsb\obj\x86\Release\LibUsbDotNet.pdb

@@ -1,0 +1,12 @@
+"STARTUP.obj",
+"main.obj",
+"hal_digipot.obj",
+"timer.obj",
+"led.obj",
+".\hal_nrf.obj",
+".\hal_nrf_hw.obj",
+".\hal_spi.obj",
+".\hal_adc.obj" 
+TO "closedLoop" 
+RAMSIZE(256) 
+DISABLEWARNING (15,16) 
