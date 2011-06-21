@@ -1,0 +1,303 @@
+C51 COMPILER V9.03   HAL_DELAY                                                             06/20/2011 20:16:57 PAGE 1   
+
+
+C51 COMPILER V9.03, COMPILATION OF MODULE HAL_DELAY
+OBJECT MODULE PLACED IN .\hal_delay.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE ..\hal\hal_delay.c LARGE BROWSE INCDIR(.;..\compiler\c51;..\hal\nrf24lu1p;.
+                    -.\hal\nrf24l01p;..\hal;..\compiler\common) DEFINE(MCU_NRF24LU1P) DEBUG OBJECTEXTEND CODE LISTINCLUDE SYMBOLS PRINT(.\hal
+                    -_delay.lst) PREPRINT(.\hal_delay.i) OBJECT(.\hal_delay.obj)
+
+line level    source
+
+   1          /* Copyright (c) 2009 Nordic Semiconductor. All Rights Reserved.
+   2           *
+   3           * The information contained herein is property of Nordic Semiconductor ASA.
+   4           * Terms and conditions of usage are described in detail in NORDIC
+   5           * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
+   6           *
+   7           * Licensees are granted free, non-transferable use of the information. NO
+   8           * WARRENTY of ANY KIND is provided. This heading must NOT be removed from
+   9           * the file.
+  10           *
+  11           * $LastChangedRevision: 133 $
+  12           */
+  13          
+  14          /** @file
+  15           * @brief delay routine which is more or less exact within + - 2us.
+  16           * @defgroup hal_nrf24le1_hal_delay Delay routine
+  17           * @{
+  18           * @ingroup hal_nrf24le1
+  19           *
+  20           *
+  21           * Delay routine which accesses registers directly.
+  22           *
+  23          */
+  24          
+  25          #include "hal_delay.h"
+   1      =1  #ifndef __HAL_DELAY_H
+   2      =1  #define __HAL_DELAY_H 
+   3      =1  #include "stdint.h"
+   1      =2  /* Copyright (c) 2007 Nordic Semiconductor. All Rights Reserved.
+   2      =2   *
+   3      =2   * The information contained herein is property of Nordic Semiconductor ASA.
+   4      =2   * Terms and conditions of usage are described in detail in NORDIC
+   5      =2   * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT. 
+   6      =2   *
+   7      =2   * Licensees are granted free, non-transferable use of the information. NO
+   8      =2   * WARRENTY of ANY KIND is provided. This heading must NOT be removed from
+   9      =2   * the file.
+  10      =2   *
+  11      =2   * $LastChangedRevision: 186 $
+  12      =2   */
+  13      =2  
+  14      =2  /** @file
+  15      =2   * Type definitions for firmware projects developed at Nordic Semiconductor.
+  16      =2   *
+  17      =2   * Standard storage classes in C, such as @c char, @c int, and @c long, are not always
+  18      =2   * interpreted in the same way by the compiler. The types here are defined by their
+  19      =2   * bit length and signed/unsigned property, as their names indicate. The correlation
+  20      =2   * between the name and properties of the storage class should be true, regardless of
+  21      =2   * the compiler being used.
+  22      =2   */
+  23      =2  
+  24      =2  #ifndef __STDINT_H__
+  25      =2  #define __STDINT_H__
+C51 COMPILER V9.03   HAL_DELAY                                                             06/20/2011 20:16:57 PAGE 2   
+
+  26      =2  
+  27      =2  #ifdef __C51__
+  28      =2  
+  29      =2  typedef unsigned char uint8_t;        ///< 8 bit unsigned int
+  30      =2  
+  31      =2  typedef signed char int8_t;          ///< 8 bit signed int
+  32      =2  
+  33      =2  typedef unsigned int uint16_t;        ///< 16 bit unsigned int
+  34      =2  
+  35      =2  typedef signed int int16_t;          ///< 16 bit signed int
+  36      =2  
+  37      =2  typedef unsigned long uint32_t;       ///< 32 bit unsigned int
+  38      =2  
+  39      =2  typedef signed long int32_t;         ///< 32 bit signed int
+  40      =2  
+  41      =2  #endif // __C51__
+  42      =2  
+  43      =2  #ifndef NULL
+  44      =2  #define NULL (void*)0
+  45      =2  #endif
+  46      =2  
+  47      =2  #endif // __STDINT_H__
+   4      =1  
+   5      =1  /* This function overflows at 65535 us. 
+   6      =1   * For Keil C51 compiler, this function is accurate down to 10 us, with deviantion of upto 2 us.
+   7      =1   *
+   8      =1   * For the IAR 8051 C compiler, the function is not as accurate before hitting about 500 us.
+   9      =1   * Over this number, it seem to have a deviation of about 5 to 10 us.
+  10      =1   */
+  11      =1  void delay_us(uint16_t us);
+  12      =1  
+  13      =1  /* Function for looping "delay_us"
+  14      =1   * 
+  15      =1   */
+  16      =1  void delay_ms(uint16_t ms);
+  17      =1  
+  18      =1  #define delay_s(x)  delay_ms((uint16_t)1000 * (uint16_t)x)
+  19      =1  #endif
+  26          #include "memdefs.h"
+   1      =1  #ifndef MEMDEFS_H_
+   2      =1  #define MEMDEFS_H_
+   3      =1  
+   4      =1  #ifdef __C51__
+   5      =1  #define __no_init 
+   6      =1  #endif /*__C51__*/
+   7      =1  
+   8      =1  #ifdef __ICC8051__
+           =1 
+           =1 #define idata __idata
+           =1 #define xdata __xdata
+           =1 #define code __code
+           =1 #define data __data
+           =1 #define pdata __pdata
+           =1 #define _at_ @
+           =1 #define _nop_() __no_operation()
+           =1 #define bit __bit
+           =1 __sfr __no_init volatile unsigned int CRC @ 0xCA;
+           =1 __sfr __no_init volatile unsigned int T2  @ 0xCC;
+           =1 
+           =1 #define reentrant 
+           =1 #if __DATA_MODEL__ == __DATA_MODEL_LARGE__
+           =1   #warning "if not using large data model: reentrant procedures must be declared using IAR syntax"
+C51 COMPILER V9.03   HAL_DELAY                                                             06/20/2011 20:16:57 PAGE 3   
+
+           =1 #endif /*__DATA_MODEL__ == __DATA_MODEL_LARGE__*/
+           =1 
+           =1 #define CLKCTRL CLKFCTL
+           =1 
+           =1 #ifndef NULL
+           =1 #define NULL _NULL
+           =1 #endif /*NULL*/
+           =1 
+           =1 #endif /*__ICC8051__*/
+  33      =1  
+  34      =1  #endif /*MEMDEFS_H_*/
+  27          //#include <stdint.h>
+  28          //#include "assertions.h"
+  29          
+  30          #ifdef __C51__
+  31          #include <intrins.h>
+   1      =1  /*--------------------------------------------------------------------------
+   2      =1  INTRINS.H
+   3      =1  
+   4      =1  Intrinsic functions for C51.
+   5      =1  Copyright (c) 1988-2010 Keil Elektronik GmbH and ARM Germany GmbH
+   6      =1  All rights reserved.
+   7      =1  --------------------------------------------------------------------------*/
+   8      =1  
+   9      =1  #ifndef __INTRINS_H__
+  10      =1  #define __INTRINS_H__
+  11      =1  
+  12      =1  extern void          _nop_     (void);
+  13      =1  extern bit           _testbit_ (bit);
+  14      =1  extern unsigned char _cror_    (unsigned char, unsigned char);
+  15      =1  extern unsigned int  _iror_    (unsigned int,  unsigned char);
+  16      =1  extern unsigned long _lror_    (unsigned long, unsigned char);
+  17      =1  extern unsigned char _crol_    (unsigned char, unsigned char);
+  18      =1  extern unsigned int  _irol_    (unsigned int,  unsigned char);
+  19      =1  extern unsigned long _lrol_    (unsigned long, unsigned char);
+  20      =1  extern unsigned char _chkfloat_(float);
+  21      =1  #if !defined (__CX2__)
+  22      =1  extern void          _push_    (unsigned char _sfr);
+  23      =1  extern void          _pop_     (unsigned char _sfr);
+  24      =1  #endif
+  25      =1  
+  26      =1  #endif
+  27      =1  
+  32          #elif __ICC8051__
+              #include <intrinsics.h>
+              #warning Not tested properly for IAR.
+              #endif
+  36          
+  37          void delay_us(uint16_t us)
+  38          {
+  39   1        do
+  40   1        {
+  41   2          _nop_();
+  42   2          _nop_();
+  43   2          _nop_();
+  44   2          _nop_();
+  45   2          _nop_();
+  46   2        } while (--us);
+  47   1      }
+  48          
+  49          void delay_ms(uint16_t ms)
+  50          {
+C51 COMPILER V9.03   HAL_DELAY                                                             06/20/2011 20:16:57 PAGE 4   
+
+  51   1        do
+  52   1        {
+  53   2          delay_us(250);
+  54   2          delay_us(250);
+  55   2          delay_us(250);
+  56   2          delay_us(250);
+  57   2        } while (--ms);
+  58   1      }
+  59          
+  60          /** @} */
+C51 COMPILER V9.03   HAL_DELAY                                                             06/20/2011 20:16:57 PAGE 5   
+
+ASSEMBLY LISTING OF GENERATED OBJECT CODE
+
+
+             ; FUNCTION L?0011 (BEGIN)
+0000 7FFA              MOV     R7,#0FAH
+0002 7E00              MOV     R6,#00H
+0004 120000      R     LCALL   _delay_us
+0007 7FFA              MOV     R7,#0FAH
+0009 7E00              MOV     R6,#00H
+             ; FUNCTION _delay_us (BEGIN)
+                                           ; SOURCE LINE # 37
+;---- Variable 'us' assigned to Register 'R6/R7' ----
+                                           ; SOURCE LINE # 38
+000B         ?C0003:
+                                           ; SOURCE LINE # 40
+                                           ; SOURCE LINE # 41
+000B 00                NOP     
+                                           ; SOURCE LINE # 42
+000C 00                NOP     
+                                           ; SOURCE LINE # 43
+000D 00                NOP     
+                                           ; SOURCE LINE # 44
+000E 00                NOP     
+                                           ; SOURCE LINE # 45
+000F 00                NOP     
+                                           ; SOURCE LINE # 46
+0010 EF                MOV     A,R7
+0011 1F                DEC     R7
+0012 7001              JNZ     ?C0009
+0014 1E                DEC     R6
+0015         ?C0009:
+0015 14                DEC     A
+0016 4E                ORL     A,R6
+0017 70F2              JNZ     ?C0003
+                                           ; SOURCE LINE # 47
+0019 22                RET     
+             ; FUNCTION _delay_us (END)
+
+             ; FUNCTION _delay_ms (BEGIN)
+                                           ; SOURCE LINE # 49
+;---- Variable 'ms' assigned to Register 'R4/R5' ----
+0000 AD07              MOV     R5,AR7
+0002 AC06              MOV     R4,AR6
+                                           ; SOURCE LINE # 50
+0004         ?C0007:
+                                           ; SOURCE LINE # 52
+                                           ; SOURCE LINE # 53
+                                           ; SOURCE LINE # 54
+0004 120000      R     LCALL   L?0011
+                                           ; SOURCE LINE # 55
+                                           ; SOURCE LINE # 56
+0007 120000      R     LCALL   L?0011
+                                           ; SOURCE LINE # 57
+000A ED                MOV     A,R5
+000B 1D                DEC     R5
+000C 7001              JNZ     ?C0010
+000E 1C                DEC     R4
+000F         ?C0010:
+000F 14                DEC     A
+0010 4C                ORL     A,R4
+0011 70F1              JNZ     ?C0007
+                                           ; SOURCE LINE # 58
+C51 COMPILER V9.03   HAL_DELAY                                                             06/20/2011 20:16:57 PAGE 6   
+
+0013 22                RET     
+             ; FUNCTION _delay_ms (END)
+
+C51 COMPILER V9.03   HAL_DELAY                                                             06/20/2011 20:16:57 PAGE 7   
+
+NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
+====                                    =====   ======  ====    ======  ====
+
+
+uint16_t . . . . . . . . . . . . . . .  TYPEDEF  -----  U_INT    -----  2
+int32_t. . . . . . . . . . . . . . . .  TYPEDEF  -----  LONG     -----  4
+int16_t. . . . . . . . . . . . . . . .  TYPEDEF  -----  INT      -----  2
+uint8_t. . . . . . . . . . . . . . . .  TYPEDEF  -----  U_CHAR   -----  1
+_delay_ms. . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+  ms . . . . . . . . . . . . . . . . .  * REG *  DATA   U_INT    0004H  2
+int8_t . . . . . . . . . . . . . . . .  TYPEDEF  -----  CHAR     -----  1
+_delay_us. . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     000BH  -----
+  us . . . . . . . . . . . . . . . . .  * REG *  DATA   U_INT    0006H  2
+uint32_t . . . . . . . . . . . . . . .  TYPEDEF  -----  U_LONG   -----  4
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     46    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

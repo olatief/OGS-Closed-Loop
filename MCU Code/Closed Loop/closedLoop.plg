@@ -689,3 +689,9 @@ linking...
 Program Size: data=128.0 xdata=98 code=5246
 creating hex file from "closedLoop"...
 "closedLoop" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Omar\\Dropbox\\OGS-Closed-Loop\\MCU Code\\Closed Loop\\closedLoop" 
+nRFProbe Flash programming v2.0.0.7089
+Copyright (C) 2008-2010 Nordic Semiconductor
+Flash Erase Done
+Flash Write Done: 5246 bytes programmed.
+Flash Verify Done: 5246 bytes verified.

@@ -768,8 +768,8 @@ USB_ISR()
         bc_ptr = CALCULATE_BC_IN_PTR(ep);
     
         // Call registered callback
-        ret = i_endpoint_in_isr[ep - 1](buf_ptr, bc_ptr);
-        usb_process_ep_response(ret, cs_ptr, bc_ptr);
+       // ret = i_endpoint_in_isr[ep - 1](buf_ptr, bc_ptr);
+        usb_process_ep_response(0x60, cs_ptr, bc_ptr);
         break;
       case INT_EP1OUT:
       case INT_EP2OUT:
@@ -787,7 +787,8 @@ USB_ISR()
         bc_ptr = CALCULATE_BC_OUT_PTR(ep);
 
         // Call registered callback
-        ret = (i_endpoint_out_isr[ep - 1])(buf_ptr, bc_ptr);
+        // ret = (i_endpoint_out_isr[ep - 1])(buf_ptr, bc_ptr);
+		ret = ep_1_out_cb(buf_ptr,bc_ptr);
         usb_process_ep_response(ret, cs_ptr, bc_ptr);
         break;
     default:

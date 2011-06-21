@@ -1,0 +1,325 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+C:\Users\Omar\Dropbox\OGS-Closed-Loop\MCU Code\USB_RX\usb_rx.uvproj
+Project File Date:  06/20/2011
+
+<h2>Output:</h2>
+Build target 'Target 1'
+compiling main.c...
+\Users\Omar\Dropbox\OGS-Closed-Loop\MCU Code\hal\nrf24lu1p\hal_usb.h(87): error C320: "USB_DESC_TEMPLATE not defined. Please include a file with g_usb_string_desc, g_usb_conf_desc and g_usb_dev_desc defined" 
+\Users\Omar\Dropbox\OGS-Closed-Loop\MCU Code\hal\nrf24lu1p\hal_usb.h(193): error C141: syntax error near 'usb_descs_templ_t'
+\Users\Omar\Dropbox\OGS-Closed-Loop\MCU Code\hal\nrf24lu1p\hal_usb.h(193): error C129: missing ';' before 'descs'
+main.c(15): warning C318: can't open file 'nordic_common.h'
+..\hal\nrf24lu1p\hal_nrf_hw.h(25): warning C318: can't open file 'nrf24lu1p.h'
+compiling hal_usb.c...
+..\..\hal\nrf24lu1p\hal_usb.c(1): error C318: can't open file '..\..\hal\nrf24lu1p\hal_usb.c'
+compiling hal_nrf.c...
+..\..\hal\nrf24l01p\hal_nrf.c(1): error C318: can't open file '..\..\hal\nrf24l01p\hal_nrf.c'
+compiling hal_nrf_hw.c...
+..\..\hal\nrf24lu1p\hal_nrf_hw.c(1): error C318: can't open file '..\..\hal\nrf24lu1p\hal_nrf_hw.c'
+compiling cklf.c...
+..\..\hal\nrf24lu1p\cklf.c(1): error C318: can't open file '..\..\hal\nrf24lu1p\cklf.c'
+compiling cpu.c...
+..\..\hal\nrf24lu1p\cpu.c(1): error C318: can't open file '..\..\hal\nrf24lu1p\cpu.c'
+Target not created
+Build target 'Target 1'
+compiling main.c...
+\Users\Omar\Dropbox\OGS-Closed-Loop\MCU Code\hal\nrf24lu1p\hal_usb.h(87): error C320: "USB_DESC_TEMPLATE not defined. Please include a file with g_usb_string_desc, g_usb_conf_desc and g_usb_dev_desc defined" 
+\Users\Omar\Dropbox\OGS-Closed-Loop\MCU Code\hal\nrf24lu1p\hal_usb.h(193): error C141: syntax error near 'usb_descs_templ_t'
+\Users\Omar\Dropbox\OGS-Closed-Loop\MCU Code\hal\nrf24lu1p\hal_usb.h(193): error C129: missing ';' before 'descs'
+main.c(15): warning C318: can't open file 'nordic_common.h'
+..\hal\nrf24lu1p\hal_nrf_hw.h(25): warning C318: can't open file 'nrf24lu1p.h'
+compiling cklf.c...
+..\hal\nrf24lu1p\cklf.c(18): warning C318: can't open file 'nrf24lu1p.h'
+..\hal\nrf24lu1p\cklf.c(25): error C202: 'REGXH': undefined identifier
+..\hal\nrf24lu1p\cklf.c(26): error C202: 'REGXL': undefined identifier
+..\hal\nrf24lu1p\cklf.c(27): error C202: 'REGXC': undefined identifier
+..\hal\nrf24lu1p\cklf.c(34): error C202: 'REGXC': undefined identifier
+..\hal\nrf24lu1p\cklf.c(35): error C202: 'REGXH': undefined identifier
+..\hal\nrf24lu1p\cklf.c(37): error C202: 'REGXL': undefined identifier
+..\hal\nrf24lu1p\cklf.c(43): error C202: 'WRTCDIS': undefined identifier
+..\hal\nrf24lu1p\cklf.c(48): error C202: 'WRTCDIS': undefined identifier
+..\hal\nrf24lu1p\cklf.c(49): error C202: 'WUF': undefined identifier
+..\hal\nrf24lu1p\cklf.c(50): error C202: 'WGTIMER': undefined identifier
+..\hal\nrf24lu1p\cklf.c(51): error C202: 'WRTCLAT': undefined identifier
+..\hal\nrf24lu1p\cklf.c(56): error C202: 'RRTC': undefined identifier
+..\hal\nrf24lu1p\cklf.c(61): error C202: 'RGTIMER': undefined identifier
+..\hal\nrf24lu1p\cklf.c(66): error C202: 'WUF': undefined identifier
+..\hal\nrf24lu1p\cklf.c(68): error C202: 'WUF': undefined identifier
+..\hal\nrf24lu1p\cklf.c(74): error C202: 'WWD': undefined identifier
+..\hal\nrf24lu1p\cklf.c(79): error C202: 'WWD': undefined identifier
+..\hal\nrf24lu1p\cklf.c(84): error C202: 'WWCON1': undefined identifier
+..\hal\nrf24lu1p\cklf.c(85): error C202: 'WWCON0': undefined identifier
+compiling cpu.c...
+..\hal\nrf24lu1p\cpu.c(18): warning C318: can't open file 'nrf24lu1p.h'
+..\hal\nrf24lu1p\cpu.c(19): warning C318: can't open file 'nordic_common.h'
+..\hal\nrf24lu1p\cpu.c(24): error C202: 'PWRDWN': undefined identifier
+..\hal\nrf24lu1p\cpu.c(29): error C202: 'CLKCTL': undefined identifier
+..\hal\nrf24lu1p\cpu.c(32): error C202: 'BIT_6': undefined identifier
+..\hal\nrf24lu1p\cpu.c(33): error C202: 'BIT_6': undefined identifier
+..\hal\nrf24lu1p\cpu.c(35): error C202: 'F0': undefined identifier
+..\hal\nrf24lu1p\cpu.c(36): error C202: 'EA': undefined identifier
+..\hal\nrf24lu1p\cpu.c(37): error C202: 'CLKCTL': undefined identifier
+..\hal\nrf24lu1p\cpu.c(38): error C202: 'EA': undefined identifier
+compiling hal_nrf_hw.c...
+..\hal\nrf24lu1p\hal_nrf_hw.h(25): warning C318: can't open file 'nrf24lu1p.h'
+..\hal\nrf24lu1p\hal_nrf_hw.c(23): warning C318: can't open file 'nrf24lu1p.h'
+..\hal\nrf24lu1p\hal_nrf_hw.c(27): error C202: 'RFDAT': undefined identifier
+..\hal\nrf24lu1p\hal_nrf_hw.c(28): error C202: 'RFSPIF': undefined identifier
+..\hal\nrf24lu1p\hal_nrf_hw.c(30): error C202: 'RFSPIF': undefined identifier
+..\hal\nrf24lu1p\hal_nrf_hw.c(31): error C202: 'RFDAT': undefined identifier
+compiling hal_usb.c...
+..\hal\nrf24lu1p\hal_usb.c(17): warning C318: can't open file 'nrf24lu1p.h'
+..\hal\nrf24lu1p\hal_usb.c(26): warning C318: can't open file 'nordic_common.h'
+..\hal\nrf24lu1p\hal_usb.h(87): error C320: "USB_DESC_TEMPLATE not defined. Please include a file with g_usb_string_desc, g_usb_conf_desc and g_usb_dev_desc defined" 
+..\hal\nrf24lu1p\hal_usb.h(193): error C141: syntax error near 'usb_descs_templ_t'
+..\hal\nrf24lu1p\hal_usb.h(193): error C129: missing ';' before 'descs'
+..\hal\nrf24lu1p\hal_usb.c(29): warning C318: can't open file 'hal_delay.h'
+compiling hal_nrf.c...
+..\hal\nrf24l01p\hal_nrf.c(26): warning C318: can't open file 'nordic_common.h'
+..\hal\nrf24lu1p\hal_nrf_hw.h(25): warning C318: can't open file 'nrf24lu1p.h'
+..\hal\nrf24l01p\hal_nrf.c(273): error C202: 'BIT_6': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(275): error C202: 'BIT_6': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(283): error C202: 'BIT_6': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(284): error C202: 'BIT_3': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(297): error C202: 'BIT_6': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(328): error C202: 'BIT_6': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(332): error C202: 'BIT_6': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(496): error C202: 'BIT_7': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(610): error C202: 'BIT_3': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(683): error C202: 'BIT_3': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(688): error C202: 'RFCSN': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(690): error C202: 'RFCSN': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(700): error C202: 'RFCSN': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(702): error C202: 'RFCSN': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(707): error C202: 'RFCSN': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(709): error C202: 'RFCSN': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(716): error C202: 'RFCSN': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(718): error C202: 'RFCSN': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(745): error C202: 'RFCSN': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(747): error C202: 'RFDAT': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(747): error C202: 'RFSPIF': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(748): error C202: 'RFSPIF': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(749): error C202: 'RFDAT': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(751): error C202: 'RFDAT': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(751): error C202: 'RFSPIF': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(752): error C202: 'RFSPIF': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(753): error C202: 'RFDAT': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(755): error C202: 'RFCSN': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(768): error C202: 'RFCSN': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(770): error C202: 'RFDAT': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(770): error C202: 'RFSPIF': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(771): error C202: 'RFSPIF': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(772): error C202: 'RFDAT': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(774): error C202: 'RFDAT': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(774): error C202: 'RFSPIF': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(775): error C202: 'RFSPIF': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(776): error C202: 'RFDAT': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(778): error C202: 'RFCSN': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(818): error C202: 'RFCSN': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(826): error C202: 'RFCSN': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(843): error C202: 'RFDAT': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(843): error C202: 'RFSPIF': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(843): error C202: 'RFSPIF': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(843): error C202: 'RFDAT': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(848): error C202: 'RFDAT': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(848): error C202: 'RFSPIF': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(848): error C202: 'RFSPIF': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(848): error C202: 'RFDAT': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(853): error C202: 'RFDAT': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(853): error C202: 'RFSPIF': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(853): error C202: 'RFSPIF': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(853): error C202: 'RFDAT': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(858): error C202: 'RFDAT': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(858): error C202: 'RFSPIF': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(858): error C202: 'RFSPIF': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(858): error C202: 'RFDAT': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(861): error C202: 'RFCSN': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(886): error C202: 'RFCSN': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(887): error C202: 'RFDAT': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(887): error C202: 'RFSPIF': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(892): error C202: 'RFSPIF': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(892): error C202: 'RFDAT': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(892): error C202: 'RFDAT': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(892): error C202: 'RFSPIF': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(897): error C202: 'RFSPIF': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(897): error C202: 'RFDAT': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(897): error C202: 'RFDAT': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(897): error C202: 'RFSPIF': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(902): error C202: 'RFSPIF': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(902): error C202: 'RFDAT': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(902): error C202: 'RFDAT': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(902): error C202: 'RFSPIF': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(907): error C202: 'RFSPIF': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(907): error C202: 'RFDAT': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(907): error C202: 'RFDAT': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(907): error C202: 'RFSPIF': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(910): error C202: 'RFSPIF': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(911): error C202: 'RFDAT': undefined identifier
+..\hal\nrf24l01p\hal_nrf.c(912): error C202: 'RFCSN': undefined identifier
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+\Users\Omar\Dropbox\OGS-Closed-Loop\MCU Code\hal\nrf24lu1p\hal_usb.h(87): error C320: "USB_DESC_TEMPLATE not defined. Please include a file with g_usb_string_desc, g_usb_conf_desc and g_usb_dev_desc defined" 
+\Users\Omar\Dropbox\OGS-Closed-Loop\MCU Code\hal\nrf24lu1p\hal_usb.h(193): error C141: syntax error near 'usb_descs_templ_t'
+\Users\Omar\Dropbox\OGS-Closed-Loop\MCU Code\hal\nrf24lu1p\hal_usb.h(193): error C129: missing ';' before 'descs'
+main.c(33): warning C317: attempt to redefine macro 'MSB'
+main.c(34): warning C317: attempt to redefine macro 'LSB'
+compiling usb_desc_bulk.c...
+compiling cklf.c...
+compiling cpu.c...
+compiling hal_nrf_hw.c...
+compiling hal_usb.c...
+..\hal\nrf24lu1p\hal_usb.h(87): error C320: "USB_DESC_TEMPLATE not defined. Please include a file with g_usb_string_desc, g_usb_conf_desc and g_usb_dev_desc defined" 
+..\hal\nrf24lu1p\hal_usb.h(193): error C141: syntax error near 'usb_descs_templ_t'
+..\hal\nrf24lu1p\hal_usb.h(193): error C129: missing ';' before 'descs'
+compiling hal_nrf.c...
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+main.c(33): warning C317: attempt to redefine macro 'MSB'
+main.c(34): warning C317: attempt to redefine macro 'LSB'
+main.c(116): error C202: 'ep_1_out_cb': undefined identifier
+compiling usb_desc_bulk.c...
+compiling cklf.c...
+compiling cpu.c...
+compiling hal_nrf_hw.c...
+compiling hal_usb.c...
+compiling hal_nrf.c...
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+main.c(33): warning C317: attempt to redefine macro 'MSB'
+main.c(34): warning C317: attempt to redefine macro 'LSB'
+main.c(116): error C202: 'ep_1_out_cb': undefined identifier
+compiling usb_desc_bulk.c...
+compiling cklf.c...
+compiling cpu.c...
+compiling hal_nrf_hw.c...
+compiling hal_usb.c...
+..\hal\nrf24lu1p\hal_usb.c(791): warning C206: 'ep_1_out_cb': missing function-prototype
+..\hal\nrf24lu1p\hal_usb.c(791): error C267: 'ep_1_out_cb': requires ANSI-style prototype
+compiling hal_nrf.c...
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+main.c(33): warning C317: attempt to redefine macro 'MSB'
+main.c(34): warning C317: attempt to redefine macro 'LSB'
+main.c(402): warning C280: 'req': unreferenced local variable
+main.c(447): warning C280: 'adr_ptr': unreferenced local variable
+main.c(447): warning C280: 'size': unreferenced local variable
+main.c(453): warning C280: 'adr_ptr': unreferenced local variable
+main.c(453): warning C280: 'size': unreferenced local variable
+compiling usb_desc_bulk.c...
+compiling cklf.c...
+compiling cpu.c...
+compiling hal_nrf_hw.c...
+compiling hal_usb.c...
+compiling hal_nrf.c...
+linking...
+*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  _DELAY_MS
+    MODULE:  .\hal_usb.obj (HAL_USB)
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  _DELAY_MS
+    MODULE:  .\hal_usb.obj (HAL_USB)
+    ADDRESS: 090DH
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  _DELAY_MS
+    MODULE:  .\hal_usb.obj (HAL_USB)
+    ADDRESS: 1A6CH
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  _DELAY_MS
+    MODULE:  .\hal_usb.obj (HAL_USB)
+    ADDRESS: 11CCH
+Program Size: data=95.0 xdata=626 code=7301
+creating hex file from "usb_rx"...
+"usb_rx" - 0 Error(s), 11 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+main.c(33): warning C317: attempt to redefine macro 'MSB'
+main.c(34): warning C317: attempt to redefine macro 'LSB'
+main.c(402): warning C280: 'req': unreferenced local variable
+main.c(447): warning C280: 'adr_ptr': unreferenced local variable
+main.c(447): warning C280: 'size': unreferenced local variable
+main.c(453): warning C280: 'adr_ptr': unreferenced local variable
+main.c(453): warning C280: 'size': unreferenced local variable
+compiling usb_desc_bulk.c...
+compiling cklf.c...
+compiling cpu.c...
+compiling hal_nrf_hw.c...
+compiling hal_usb.c...
+compiling hal_nrf.c...
+compiling hal_delay.c...
+linking...
+Program Size: data=95.0 xdata=626 code=7347
+creating hex file from "usb_rx"...
+"usb_rx" - 0 Error(s), 7 Warning(s).
+Load "C:\\Users\\Omar\\Dropbox\\OGS-Closed-Loop\\MCU Code\\USB_RX\\usb_rx" 
+nRFProbe Flash programming v2.0.0.7089
+Copyright (C) 2008-2010 Nordic Semiconductor
+*** Error: Unable to initialize target
+Load "C:\\Users\\Omar\\Dropbox\\OGS-Closed-Loop\\MCU Code\\USB_RX\\usb_rx" 
+nRFProbe Flash programming v2.0.0.7089
+Copyright (C) 2008-2010 Nordic Semiconductor
+*** Error: Unable to initialize target
+Load "C:\\Users\\Omar\\Dropbox\\OGS-Closed-Loop\\MCU Code\\USB_RX\\usb_rx" 
+nRFProbe Flash programming v2.0.0.7089
+Copyright (C) 2008-2010 Nordic Semiconductor
+*** Error: Unable to initialize target
+Load "C:\\Users\\Omar\\Dropbox\\OGS-Closed-Loop\\MCU Code\\USB_RX\\usb_rx" 
+nRFProbe Flash programming v2.0.0.7089
+Copyright (C) 2008-2010 Nordic Semiconductor
+*** Error: Unable to initialize target
+Load "C:\\Users\\Omar\\Dropbox\\OGS-Closed-Loop\\MCU Code\\USB_RX\\usb_rx" 
+nRFProbe Flash programming v2.0.0.7089
+Copyright (C) 2008-2010 Nordic Semiconductor
+*** Error: Unable to initialize target
+Load "C:\\Users\\Omar\\Dropbox\\OGS-Closed-Loop\\MCU Code\\USB_RX\\usb_rx" 
+nRFProbe Flash programming v2.0.0.7089
+Copyright (C) 2008-2010 Nordic Semiconductor
+Flash Erase Done
+Flash Write Done: 7347 bytes programmed.
+Flash Verify Done: 7347 bytes verified.
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+main.c(33): warning C317: attempt to redefine macro 'MSB'
+main.c(34): warning C317: attempt to redefine macro 'LSB'
+main.c(404): warning C280: 'req': unreferenced local variable
+main.c(449): warning C280: 'adr_ptr': unreferenced local variable
+main.c(449): warning C280: 'size': unreferenced local variable
+main.c(455): warning C280: 'adr_ptr': unreferenced local variable
+main.c(455): warning C280: 'size': unreferenced local variable
+compiling usb_desc_bulk.c...
+compiling cklf.c...
+compiling cpu.c...
+compiling hal_nrf_hw.c...
+compiling hal_usb.c...
+compiling hal_nrf.c...
+compiling hal_delay.c...
+linking...
+Program Size: data=95.0 xdata=625 code=7352
+creating hex file from "usb_rx"...
+"usb_rx" - 0 Error(s), 7 Warning(s).
+Load "C:\\Users\\Omar\\Dropbox\\OGS-Closed-Loop\\MCU Code\\USB_RX\\usb_rx" 
+nRFProbe Flash programming v2.0.0.7089
+Copyright (C) 2008-2010 Nordic Semiconductor
+Flash Erase Done
+Flash Write Done: 7352 bytes programmed.
+Flash Verify Done: 7352 bytes verified.
+*** Error: No nRF device found!
+Load "C:\\Users\\Omar\\Dropbox\\OGS-Closed-Loop\\MCU Code\\USB_RX\\usb_rx" 
+nRFProbe Flash programming v2.0.0.7089
+Copyright (C) 2008-2010 Nordic Semiconductor
+Flash Erase Done
+Flash Write Done: 7352 bytes programmed.
+Flash Verify Done: 7352 bytes verified.

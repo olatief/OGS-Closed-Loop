@@ -82,6 +82,7 @@
 
 #include "hal_usb_desc.h"
 #include "config.h" 
+#include "usb_desc_bulk.h"
 
 #ifndef USB_DESC_TEMPLATE
 #error "USB_DESC_TEMPLATE not defined. Please include a file with g_usb_string_desc, g_usb_conf_desc and g_usb_dev_desc defined" 
@@ -148,6 +149,8 @@ typedef enum {
     DATA,          /**< Data is available */
     EMPTY_RESPONSE /**< Send an empty response */
 } hal_usb_dev_req_resp_t;
+
+uint8_t ep_1_out_cb(uint8_t xdata *, uint8_t xdata *) reentrant;
 
 /** Callback function that is called when a class request is received.
  *  The type of class request is determined by the interface the request is for. If interface 1 is a HID interface the request is a HID class request.
