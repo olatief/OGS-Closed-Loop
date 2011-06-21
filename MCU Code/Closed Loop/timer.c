@@ -21,6 +21,7 @@ static uint8_t pulsesOff = 10;
 static uint8_t pulsesOffCount = 10;
 static uint8_t cycles = 3;
 static uint8_t cyclesCount = 3;
+static data uint8_t g_Amplitude = 0;
 
 static uint8_t outputDisabled = 0;
 uint8_t isStimulating = 0;
@@ -90,6 +91,10 @@ void progTimer(progStim *pStim)
 	timer_high = 2^16-timer_high/TIMER_TWO_PS;	
 	timer_low = 2^16-timer_low/TIMER_TWO_PS;
 
+	pulsesOff = pStim->PulseOff;
+	pulsesOn = pStim->PulseOn;
+	cycles = pStim->Cycles;
+	g_Amplitude = pStim->Amplitude;
 	startStim();
 }
 
@@ -159,11 +164,21 @@ void timer2() interrupt INTERRUPT_T2 // controls stimulation waveform
 				if(0 == pulsesOnCount)
 				{
 					pulsesOnCount = pulsesOn;
-					if(0 == pulsesOff)
+					if(0 != pulsesOff)
 					{
-						ET2 = 0;
+						// ET2 = 0;
+						outputDisabled = 1;
+					} else {
+						if(cycles != 0)	 // run infinte amount of times if cycles is 0
+						{
+							--cyclesCount;
+							if(0 == cyclesCount)
+							{
+								cyclesCount = cycles;
+								stopStim();
+							}
+						}
 					}
-					outputDisabled = 1;
 				}
 			} else {
 				--pulsesOffCount;
@@ -178,7 +193,7 @@ void timer2() interrupt INTERRUPT_T2 // controls stimulation waveform
 						if(0 == cyclesCount)
 						{
 							cyclesCount = cycles;
-							ET2 = 0;
+							stopStim();
 						}
 					}
 				}

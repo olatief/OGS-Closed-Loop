@@ -20,6 +20,7 @@ namespace CID_USB_BaseStation
         public byte PulseOn;
         public byte PulseOff;
         public byte Cycles;
+
     };
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]

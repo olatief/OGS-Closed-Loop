@@ -9,6 +9,7 @@
 #include "hal_nrf_hw.h"
 #include "hal_adc.h"
 #include "timer.h"
+#include "led.h"
 
 #define SIZEOFPROG 11
 
@@ -21,12 +22,9 @@ data bool radio_busy;
 void init_radio();
 void init_adc();
 
-void prog_led(uint8_t amp);
-
-data uint8_t g_Amplitude = 0;
 data uint8_t acq_block;	 // current block thats acquiring data
 data uint8_t payload[2][MAXLENGTH+1];
-data uint8_t progPayload[32];
+data uint8_t progPayload[15];
 
 data uint8_t *ptr_payload;
 data uint8_t cnt;
@@ -122,12 +120,12 @@ void main()
 				{
 					pStim = pAll->pStim;
 					
-					g_Amplitude = pStim.Amplitude;
+					// g_Amplitude = pStim.Amplitude;
 
 					if(0 == pStim.Freq)
 					{
 					   ET2 = 0;	  // disable timer2 interrupt
-					  prog_led(g_Amplitude);	
+					   prog_led(pStim.Amplitude);	
 					}
 					else
 					{

@@ -30,6 +30,9 @@ sbit P1_6 = P1^6;
              uint8_t Amplitude;
              uint8_t DC;
 			 uint8_t Freq;
+			 uint8_t PulseOn;
+        	 uint8_t PulseOff;
+        	 uint8_t Cycles;
         } progStim;
 
         typedef struct 
@@ -38,6 +41,7 @@ sbit P1_6 = P1^6;
             uint16_t low;
             uint16_t IEI;
             uint8_t nStage;
+			uint8_t delay;
         } progAlgo;
 
         typedef struct 
