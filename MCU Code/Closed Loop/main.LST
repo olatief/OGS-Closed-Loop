@@ -1,10 +1,10 @@
-C51 COMPILER V9.03   MAIN                                                                  06/20/2011 19:43:21 PAGE 1   
+C51 COMPILER V9.03   MAIN                                                                  06/20/2011 21:06:48 PAGE 1   
 
 
 C51 COMPILER V9.03, COMPILATION OF MODULE MAIN
 OBJECT MODULE PLACED IN main.OBJ
-COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE main.c LARGE BROWSE MODC2 MDU_R515 INCDIR(..\hal\nrf24l01p;..\hal;..\compil
-                    -er\c51;..\hal\nrf24le1;..\compiler\common) DEFINE(MCU_NRF24LE1) DEBUG OBJECTEXTEND
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE main.c LARGE MODC2 MDU_R515 INCDIR(..\hal\nrf24l01p;..\hal;..\compiler\c51;
+                    -..\hal\nrf24le1;..\compiler\common) DEFINE(MCU_NRF24LE1)
 
 line level    source
 
@@ -62,7 +62,7 @@ line level    source
                    USBSLP = 0x01;  // disable usb
                   // P0DIR = (1<<3)|(1<<1)|(1<<0);
                       // P0ALT = 0x0F;
-C51 COMPILER V9.03   MAIN                                                                  06/20/2011 19:43:21 PAGE 2   
+C51 COMPILER V9.03   MAIN                                                                  06/20/2011 21:06:48 PAGE 2   
 
                       // P0EXP = 0x02; // Slave SPI for P0
                       // SSCONF = 0x01; //Enable slave SPI
@@ -126,7 +126,7 @@ line level    source
  114   3                          while(radio_busy);
  115   3                              
  116   3                              if(procPayload)
-C51 COMPILER V9.03   MAIN                                                                  06/20/2011 19:43:21 PAGE 3   
+C51 COMPILER V9.03   MAIN                                                                  06/20/2011 21:06:48 PAGE 3   
 
  117   3                              {
  118   4                                      procPayload = false;
@@ -190,7 +190,7 @@ line level    source
  176   1                      {
  177   2                              cnt = MAXLENGTH;
  178   2                              acq_block &= 1;
-C51 COMPILER V9.03   MAIN                                                                  06/20/2011 19:43:21 PAGE 4   
+C51 COMPILER V9.03   MAIN                                                                  06/20/2011 21:06:48 PAGE 4   
 
  179   2                              acq_block ^= 1; // toggle current acquisition block
  180   2                              ptr_payload = payload[acq_block];  // reset data pointer
@@ -254,7 +254,7 @@ line level    source
  238   3                      hal_nrf_read_rx_payload(progPayload);
  239   3                      }
  240   2                      radio_busy = false;
-C51 COMPILER V9.03   MAIN                                                                  06/20/2011 19:43:21 PAGE 5   
+C51 COMPILER V9.03   MAIN                                                                  06/20/2011 21:06:48 PAGE 5   
 
  241   2          case (1 << HAL_NRF_TX_DS):
  242   2            radio_busy = false;

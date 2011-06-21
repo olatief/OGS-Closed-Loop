@@ -8,5 +8,5 @@
 ".\hal_spi.obj",
 ".\hal_nrf_hw.obj" 
 TO "closedLoop" 
-RAMSIZE(256) 
+NOPRINT RAMSIZE(256) 
 DISABLEWARNING (15,16) 

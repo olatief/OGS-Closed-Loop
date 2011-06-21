@@ -208,7 +208,7 @@ void init_radio()
   	hal_nrf_enable_ack_payload(1);
 	hal_nrf_enable_dynamic_payload(1);
 	hal_nrf_setup_dynamic_payload(1); // Set up PIPE 0 to handle dynamic lengths
-//	hal_nrf_set_rf_channel(125); // 2525 MHz
+	hal_nrf_set_rf_channel(125); // 2525 MHz
    //hal_nrf_set_auto_retr(3, 200); // Retry 5x
     // Configure radio as primary receiver (PTX) 
   hal_nrf_set_operation_mode(HAL_NRF_PTX);

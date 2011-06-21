@@ -203,10 +203,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>2</ColumnNumber>
+      <ColumnNumber>34</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>27</TopLine>
-      <CurrentLine>41</CurrentLine>
+      <TopLine>1</TopLine>
+      <CurrentLine>1</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\main.c</PathWithFileName>
       <FilenameWithoutPath>main.c</FilenameWithoutPath>
@@ -280,10 +280,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>8</ColumnNumber>
+      <ColumnNumber>62</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>768</TopLine>
-      <CurrentLine>791</CurrentLine>
+      <TopLine>16</TopLine>
+      <CurrentLine>25</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\hal\nrf24lu1p\hal_usb.c</PathWithFileName>
       <FilenameWithoutPath>hal_usb.c</FilenameWithoutPath>
@@ -302,12 +302,26 @@
       <PathWithFileName>..\hal\nrf24l01p\hal_nrf.c</PathWithFileName>
       <FilenameWithoutPath>hal_nrf.c</FilenameWithoutPath>
     </File>
+    <File>
+      <GroupNumber>0</GroupNumber>
+      <FileNumber>0</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <Focus>0</Focus>
+      <ColumnNumber>0</ColumnNumber>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <TopLine>0</TopLine>
+      <CurrentLine>0</CurrentLine>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\hal\hal_delay.c</PathWithFileName>
+      <FilenameWithoutPath>hal_delay.c</FilenameWithoutPath>
+    </File>
   </Group>
 
   <AlienFiles>
     <PathWithFilename>C:\Users\Omar\Dropbox\OGS-Closed-Loop\MCU Code\hal\nrf24lu1p\hal_usb.h</PathWithFilename>
     <TopLine>145</TopLine>
-    <CurrentLine>152</CurrentLine>
+    <CurrentLine>155</CurrentLine>
     <Constant>0</Constant>
     <WindowPosition>
       <length>0</length>
@@ -384,7 +398,7 @@
 
   <AlienFiles>
     <PathWithFilename>C:\Users\Omar\Dropbox\OGS-Closed-Loop\MCU Code\USB_RX\config.h</PathWithFilename>
-    <TopLine>4</TopLine>
+    <TopLine>1</TopLine>
     <CurrentLine>16</CurrentLine>
     <Constant>0</Constant>
     <WindowPosition>
@@ -413,13 +427,13 @@
     <ActiveMDIGroup>0</ActiveMDIGroup>
     <MDIGroup>
       <Size>100</Size>
-      <ActiveTab>4</ActiveTab>
+      <ActiveTab>0</ActiveTab>
       <Documents>
         <Doc>
           <Name>.\main.c</Name>
-          <ColumnNumber>34</ColumnNumber>
-          <TopLine>1</TopLine>
-          <CurrentLine>1</CurrentLine>
+          <ColumnNumber>1</ColumnNumber>
+          <TopLine>205</TopLine>
+          <CurrentLine>242</CurrentLine>
         </Doc>
         <Doc>
           <Name>.\STARTUP.A51</Name>
@@ -440,27 +454,27 @@
           <CurrentLine>20</CurrentLine>
         </Doc>
         <Doc>
-          <Name>..\hal\nrf24lu1p\hal_usb.h</Name>
-          <ColumnNumber>0</ColumnNumber>
+          <Name>\Users\Omar\Dropbox\OGS-Closed-Loop\MCU Code\hal\nrf24lu1p\hal_usb.h</Name>
+          <ColumnNumber>95</ColumnNumber>
           <TopLine>145</TopLine>
-          <CurrentLine>152</CurrentLine>
+          <CurrentLine>155</CurrentLine>
         </Doc>
         <Doc>
-          <Name>..\hal\nrf24lu1p\hal_usb_desc.h</Name>
+          <Name>\Users\Omar\Dropbox\OGS-Closed-Loop\MCU Code\hal\nrf24lu1p\hal_usb_desc.h</Name>
           <ColumnNumber>26</ColumnNumber>
           <TopLine>13</TopLine>
           <CurrentLine>16</CurrentLine>
         </Doc>
         <Doc>
           <Name>..\hal\nrf24lu1p\hal_usb.c</Name>
-          <ColumnNumber>65</ColumnNumber>
+          <ColumnNumber>62</ColumnNumber>
           <TopLine>16</TopLine>
-          <CurrentLine>16</CurrentLine>
+          <CurrentLine>25</CurrentLine>
         </Doc>
         <Doc>
           <Name>config.h</Name>
           <ColumnNumber>52</ColumnNumber>
-          <TopLine>4</TopLine>
+          <TopLine>1</TopLine>
           <CurrentLine>16</CurrentLine>
         </Doc>
       </Documents>

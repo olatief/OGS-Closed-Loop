@@ -1,11 +1,11 @@
-C51 COMPILER V9.03   HAL_NRF_HW                                                            06/20/2011 19:43:22 PAGE 1   
+C51 COMPILER V9.03   HAL_NRF_HW                                                            06/20/2011 21:06:49 PAGE 1   
 
 
 C51 COMPILER V9.03, COMPILATION OF MODULE HAL_NRF_HW
 OBJECT MODULE PLACED IN .\hal_nrf_hw.obj
-COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE ..\hal\nrf24le1\hal_nrf_hw.c LARGE BROWSE MODC2 MDU_R515 INCDIR(..\hal\nrf2
-                    -4l01p;..\hal;..\compiler\c51;..\hal\nrf24le1;..\compiler\common) DEFINE(MCU_NRF24LE1) DEBUG OBJECTEXTEND PRINT(.\hal_nrf
-                    -_hw.lst) OBJECT(.\hal_nrf_hw.obj)
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE ..\hal\nrf24le1\hal_nrf_hw.c LARGE MODC2 MDU_R515 INCDIR(..\hal\nrf24l01p;.
+                    -.\hal;..\compiler\c51;..\hal\nrf24le1;..\compiler\common) DEFINE(MCU_NRF24LE1) PRINT(.\hal_nrf_hw.lst) OBJECT(.\hal_nrf_
+                    -hw.obj)
 
 line level    source
 

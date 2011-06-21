@@ -1,11 +1,10 @@
-C51 COMPILER V9.03   HAL_ADC                                                               06/20/2011 19:43:22 PAGE 1   
+C51 COMPILER V9.03   HAL_ADC                                                               06/20/2011 21:06:49 PAGE 1   
 
 
 C51 COMPILER V9.03, COMPILATION OF MODULE HAL_ADC
 OBJECT MODULE PLACED IN .\hal_adc.obj
-COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE ..\hal\nrf24le1\hal_adc.c LARGE BROWSE MODC2 MDU_R515 INCDIR(..\hal\nrf24l0
-                    -1p;..\hal;..\compiler\c51;..\hal\nrf24le1;..\compiler\common) DEFINE(MCU_NRF24LE1) DEBUG OBJECTEXTEND PRINT(.\hal_adc.ls
-                    -t) OBJECT(.\hal_adc.obj)
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE ..\hal\nrf24le1\hal_adc.c LARGE MODC2 MDU_R515 INCDIR(..\hal\nrf24l01p;..\h
+                    -al;..\compiler\c51;..\hal\nrf24le1;..\compiler\common) DEFINE(MCU_NRF24LE1) PRINT(.\hal_adc.lst) OBJECT(.\hal_adc.obj)
 
 line level    source
 
@@ -62,9 +61,9 @@ line level    source
   51          { // Update "rate" bits
   52   1        ADCCON2 = ((ADCCON2 & 0xE3) | (((uint8_t)(rate) << 2) & ~0xE3));
   53   1      }
-C51 COMPILER V9.03   HAL_ADC                                                               06/20/2011 19:43:22 PAGE 2   
-
   54          
+C51 COMPILER V9.03   HAL_ADC                                                               06/20/2011 21:06:49 PAGE 2   
+
   55          
   56          void hal_adc_set_power_down_delay(hal_adc_power_down_delay_t pdd)
   57          { // Update "rate" bits
@@ -126,9 +125,9 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-C51 COMPILER V9.03   HAL_ADC                                                               06/20/2011 19:43:22 PAGE 3   
-
    DATA SIZE        =   ----    ----
+C51 COMPILER V9.03   HAL_ADC                                                               06/20/2011 21:06:49 PAGE 3   
+
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
