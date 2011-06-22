@@ -132,6 +132,13 @@ void main()
 						ET2 = 1;
 						progTimer(&pStim);
 					}
+				} 
+				if(pAll->pType == PROGALGO)
+				{
+					pAlgo = pAll->pAlgo;
+					low_thresh = pAlgo.low;
+					high_thresh = pAlgo.high;
+					progSD(&pAlgo);
 				}	
 			}
 			dataNeedsTx = 0;
@@ -164,7 +171,7 @@ void adc_irq() interrupt INTERRUPT_MISCIRQ	// should only be called for ADC, RNG
 		if(lowThreshPassed && !highThreshPassed && tempVal > high_thresh)
 		{
 				// P1_6 ^= 1;
-					peakDetect();
+				peakDetect();
 				lowThreshPassed = 0;
 				highThreshPassed = 1;
 		}

@@ -198,10 +198,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>8</ColumnNumber>
+      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>103</TopLine>
-      <CurrentLine>123</CurrentLine>
+      <CurrentLine>128</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\main.c</PathWithFileName>
       <FilenameWithoutPath>main.c</FilenameWithoutPath>
@@ -314,6 +314,32 @@
   </Group>
 
   <AlienFiles>
+    <PathWithFilename>C:\Users\Omar\Dropbox\OGS-Closed-Loop\MCU Code\Closed Loop\led.h</PathWithFilename>
+    <TopLine>1</TopLine>
+    <CurrentLine>2</CurrentLine>
+    <Constant>0</Constant>
+    <WindowPosition>
+      <length>0</length>
+      <flags>0</flags>
+      <showCmd>0</showCmd>
+      <MinPosition>
+        <xPos>0</xPos>
+        <yPos>0</yPos>
+      </MinPosition>
+      <MaxPosition>
+        <xPos>0</xPos>
+        <yPos>0</yPos>
+      </MaxPosition>
+      <NormalPosition>
+        <Top>0</Top>
+        <Left>0</Left>
+        <Right>0</Right>
+        <Bottom>0</Bottom>
+      </NormalPosition>
+    </WindowPosition>
+  </AlienFiles>
+
+  <AlienFiles>
     <PathWithFilename>C:\Users\Omar\Dropbox\OGS-Closed-Loop\MCU Code\hal\nrf24l01p\hal_nrf.h</PathWithFilename>
     <TopLine>158</TopLine>
     <CurrentLine>182</CurrentLine>
@@ -393,7 +419,7 @@
 
   <AlienFiles>
     <PathWithFilename>C:\Users\Omar\Dropbox\OGS-Closed-Loop\MCU Code\Closed Loop\hardware.h</PathWithFilename>
-    <TopLine>11</TopLine>
+    <TopLine>20</TopLine>
     <CurrentLine>44</CurrentLine>
     <Constant>0</Constant>
     <WindowPosition>
@@ -443,32 +469,6 @@
     </WindowPosition>
   </AlienFiles>
 
-  <AlienFiles>
-    <PathWithFilename>C:\Users\Omar\Dropbox\OGS-Closed-Loop\MCU Code\Closed Loop\led.h</PathWithFilename>
-    <TopLine>1</TopLine>
-    <CurrentLine>2</CurrentLine>
-    <Constant>0</Constant>
-    <WindowPosition>
-      <length>0</length>
-      <flags>0</flags>
-      <showCmd>0</showCmd>
-      <MinPosition>
-        <xPos>0</xPos>
-        <yPos>0</yPos>
-      </MinPosition>
-      <MaxPosition>
-        <xPos>0</xPos>
-        <yPos>0</yPos>
-      </MaxPosition>
-      <NormalPosition>
-        <Top>0</Top>
-        <Left>0</Left>
-        <Right>0</Right>
-        <Bottom>0</Bottom>
-      </NormalPosition>
-    </WindowPosition>
-  </AlienFiles>
-
   <MDIGroups>
     <Orientation>1</Orientation>
     <ActiveMDIGroup>0</ActiveMDIGroup>
@@ -478,15 +478,15 @@
       <Documents>
         <Doc>
           <Name>.\main.c</Name>
-          <ColumnNumber>32</ColumnNumber>
-          <TopLine>103</TopLine>
-          <CurrentLine>128</CurrentLine>
+          <ColumnNumber>30</ColumnNumber>
+          <TopLine>102</TopLine>
+          <CurrentLine>140</CurrentLine>
         </Doc>
         <Doc>
           <Name>.\timer.c</Name>
-          <ColumnNumber>7</ColumnNumber>
-          <TopLine>1</TopLine>
-          <CurrentLine>17</CurrentLine>
+          <ColumnNumber>11</ColumnNumber>
+          <TopLine>13</TopLine>
+          <CurrentLine>33</CurrentLine>
         </Doc>
         <Doc>
           <Name>timer.h</Name>
@@ -503,7 +503,7 @@
         <Doc>
           <Name>hardware.h</Name>
           <ColumnNumber>17</ColumnNumber>
-          <TopLine>11</TopLine>
+          <TopLine>20</TopLine>
           <CurrentLine>44</CurrentLine>
         </Doc>
         <Doc>
@@ -531,7 +531,7 @@
           <CurrentLine>182</CurrentLine>
         </Doc>
         <Doc>
-          <Name>C:\Users\Omar\Dropbox\OGS-Closed-Loop\MCU Code\Closed Loop\led.h</Name>
+          <Name>led.h</Name>
           <ColumnNumber>27</ColumnNumber>
           <TopLine>1</TopLine>
           <CurrentLine>2</CurrentLine>
