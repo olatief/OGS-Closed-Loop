@@ -22,7 +22,7 @@ namespace CID_USB_BaseStation
 
         public void ParseNewPacket(Packet receivedPacket)
         {
-           // int [] parsedValues;
+            int [] parsedValues;
             if (lastPacket != null)
             {
                 missedPackets = receivedPacket.Count - lastPacket.Count - 1;
@@ -40,7 +40,9 @@ namespace CID_USB_BaseStation
                 {
                     WirelessStats.Instance.NumDroppedPackets += missedPackets;
                 }
-               //// parsedValues = parseSingleChan(receivedPacket);
+               
+                parsedValues = parseSingleChan(receivedPacket);
+                Scope.CurrentScope.AddRawADCtoQueue(parsedValues);
             }
             lastPacket = receivedPacket;
 
@@ -50,17 +52,17 @@ namespace CID_USB_BaseStation
         private int[] parseSingleChan(Packet pkt)
         {
             int[] parsedValues = new int[15];
-
+            int tempValue;
             for (int i = 0; i < parsedValues.Length; i++)
             {
-                int tempValue = pkt.Buffer[2*i+1] + (pkt.Buffer[2*i] << 8);
+                tempValue = pkt.Buffer[2*i+1] + (pkt.Buffer[2*i] << 8);
               /*  if (tempValue >= 512)
                 {
                     tempValue = -tempValue;
                 }
                * */
-                parsedValues[i] = tempValue;
-                logger.LogLine(tempValue);
+                parsedValues[i] = 2048-tempValue;
+                logger.LogLine(parsedValues[i]);
             }
 
             return parsedValues;

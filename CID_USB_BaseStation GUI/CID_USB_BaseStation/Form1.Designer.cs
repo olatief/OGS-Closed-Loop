@@ -90,6 +90,9 @@
             this.lblDroppedStat = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
+            this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
+            this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
+            this.vScrollTrigger = new System.Windows.Forms.VScrollBar();
             this.statusStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -585,12 +588,13 @@
             // picPlot
             // 
             this.picPlot.Enabled = false;
-            this.picPlot.Location = new System.Drawing.Point(534, 134);
+            this.picPlot.Location = new System.Drawing.Point(583, 146);
             this.picPlot.Name = "picPlot";
-            this.picPlot.Size = new System.Drawing.Size(414, 271);
+            this.picPlot.Size = new System.Drawing.Size(365, 218);
             this.picPlot.TabIndex = 12;
             this.picPlot.TabStop = false;
             this.picPlot.Visible = false;
+            this.picPlot.Click += new System.EventHandler(this.picPlot_Click);
             // 
             // cmdDraw
             // 
@@ -665,11 +669,47 @@
             this.label14.TabIndex = 0;
             this.label14.Text = "Dropped Packets:";
             // 
+            // hScrollBar1
+            // 
+            this.hScrollBar1.LargeChange = 20;
+            this.hScrollBar1.Location = new System.Drawing.Point(583, 383);
+            this.hScrollBar1.Maximum = 1000;
+            this.hScrollBar1.Name = "hScrollBar1";
+            this.hScrollBar1.Size = new System.Drawing.Size(365, 17);
+            this.hScrollBar1.TabIndex = 16;
+            this.hScrollBar1.Value = 500;
+            this.hScrollBar1.ValueChanged += new System.EventHandler(this.hScroll_ValueChanged);
+            // 
+            // vScrollBar1
+            // 
+            this.vScrollBar1.LargeChange = 20;
+            this.vScrollBar1.Location = new System.Drawing.Point(970, 146);
+            this.vScrollBar1.Maximum = 1000;
+            this.vScrollBar1.Name = "vScrollBar1";
+            this.vScrollBar1.Size = new System.Drawing.Size(19, 218);
+            this.vScrollBar1.TabIndex = 17;
+            this.vScrollBar1.Value = 500;
+            this.vScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.vScroll_ValueChanged);
+            // 
+            // vScrollTrigger
+            // 
+            this.vScrollTrigger.LargeChange = 20;
+            this.vScrollTrigger.Location = new System.Drawing.Point(540, 146);
+            this.vScrollTrigger.Maximum = 1000;
+            this.vScrollTrigger.Name = "vScrollTrigger";
+            this.vScrollTrigger.Size = new System.Drawing.Size(19, 218);
+            this.vScrollTrigger.TabIndex = 18;
+            this.vScrollTrigger.Value = 500;
+            this.vScrollTrigger.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Trigger_KeyDown);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1285, 684);
+            this.Controls.Add(this.vScrollTrigger);
+            this.Controls.Add(this.vScrollBar1);
+            this.Controls.Add(this.hScrollBar1);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.cmdTestStim);
             this.Controls.Add(this.cmdDraw);
@@ -682,6 +722,7 @@
             this.Controls.Add(this.tRecv);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.picPlot);
+            this.DoubleBuffered = true;
             this.Name = "frmMain";
             this.Text = "CID USB Base Station";
             this.Activated += new System.EventHandler(this.frmMain_Activated);
@@ -767,6 +808,9 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label lblSuccessStat;
         private System.Windows.Forms.Label lblDroppedStat;
+        private System.Windows.Forms.VScrollBar vScrollBar1;
+        private System.Windows.Forms.HScrollBar hScrollBar1;
+        private System.Windows.Forms.VScrollBar vScrollTrigger;
     }
 }
 

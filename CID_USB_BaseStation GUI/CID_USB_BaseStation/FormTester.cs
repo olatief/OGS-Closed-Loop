@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace CID_USB_BaseStation
 {
     public partial class frmMain : Form
     {
+        Scope scope;
+
         private void cmdTestStim_Click(object sender, EventArgs e)
         {
+            
             if (tmrStim.Enabled)
             {
                 tmrStim.Enabled = false;
@@ -22,15 +26,16 @@ namespace CID_USB_BaseStation
 
         private void cmdDraw_Click(object sender, EventArgs e)
         {
-            Int16[] adcVals = new Int16[50];
+            int[] adcVals = new int[1000];
+
             int i = 0;
             // generate sine wave data
             for (i = 0; i < adcVals.Length; ++i)
             {
-                adcVals[i] = Convert.ToInt16(100 * Math.Sin(2 * Math.PI * (i) / 5));
+                adcVals[i] = Convert.ToInt32(1000 * Math.Sin(2 * Math.PI * (i) / 50));
             }
 
-            DrawData(adcVals);
+            scope.AddRawADCtoQueue(adcVals);
         }
 
         private void btnConvert_Click(object sender, EventArgs e)

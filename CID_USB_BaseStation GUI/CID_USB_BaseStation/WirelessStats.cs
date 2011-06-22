@@ -42,8 +42,8 @@ namespace CID_USB_BaseStation
 
         public void Reset()
         {
-            StartTime = System.DateTime.Now.Ticks;
-            StopTime = -1;
+            startTime = System.DateTime.Now.Ticks;
+            stopTime = -1;
 
             NumDroppedPackets = 0;
             NumSuccessRxPackets = 0;

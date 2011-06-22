@@ -72,6 +72,8 @@ namespace CID_USB_BaseStation
 
         private void Form1_Load(object sender, EventArgs e)
         {
+         //   this.DoubleBuffered = true;
+            scope = new Scope(picPlot.Location, picPlot.Size, this);
             tvalDC.Tag = validate(10, 90, delegate(Int32 val) { pStim.DC = (byte)val; });
             tvalAmplitude.Tag = validate(0, 14, delegate(Int32 val) { pStim.Amplitude = (byte)val; tEstLedCurrent.Text = ledvals[val]; });
             tvalFreq.Tag = validate(0, 200, delegate(Int32 val) { pStim.Freq = (byte)val; ComputeTimes(); });
@@ -515,6 +517,26 @@ namespace CID_USB_BaseStation
  
         }
         #endregion
+
+        private void picPlot_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void hScroll_ValueChanged(object sender, EventArgs e)
+        {
+            scope.XScrollLocation = hScrollBar1.Value;
+        }
+
+        private void vScroll_ValueChanged(object sender, ScrollEventArgs e)
+        {
+            scope.YScrollLocation = vScrollBar1.Value;
+        }
+
+        private void Trigger_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
 
     }
 }

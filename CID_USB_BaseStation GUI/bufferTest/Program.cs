@@ -1,164 +1,174 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Collections;
+using System.ComponentModel;
 using System.Windows.Forms;
+using System.Data;
 
-namespace BufferingExample
+namespace DoubleBuffer
 {
-    public class BufferingExample : Form
+    /// <summary>
+    /// Summary description for Form1.
+    /// </summary>
+    public class Form1 : System.Windows.Forms.Form
     {
-        private BufferedGraphicsContext context;
-        private BufferedGraphics grafx;
-
-        private byte bufferingMode;
-        private string[] bufferingModeStrings = 
-		{ "Draw to Form without OptimizedDoubleBufferring control style",
-		  "Draw to Form using OptimizedDoubleBuffering control style",
-		  "Draw to HDC for form" };
 
         private System.Windows.Forms.Timer timer1;
-        private byte count;
+        private System.ComponentModel.IContainer components;
+        private System.Windows.Forms.CheckBox checkBox1;
 
-        public BufferingExample()
-            : base()
+        float _angle;
+        bool _doBuffer;
+
+        public Form1()
         {
-            // Configure the Form for this example.
-            this.Text = "User double buffering";
-            this.MouseDown += new MouseEventHandler(this.MouseDownHandler);
-            this.Resize += new EventHandler(this.OnResize);
-            this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
+            //
+            // Required for Windows Form Designer support
+            //
+            InitializeComponent();
 
-            // Configure a timer to draw graphics updates.
-            timer1 = new System.Windows.Forms.Timer();
-            timer1.Interval = 200;
-            timer1.Tick += new EventHandler(this.OnTimer);
-
-            bufferingMode = 2;
-            count = 0;
-
-            // Retrieves the BufferedGraphicsContext for the 
-            // current application domain.
-            context = BufferedGraphicsManager.Current;
-
-            // Sets the maximum size for the primary graphics buffer
-            // of the buffered graphics context for the application
-            // domain.  Any allocation requests for a buffer larger 
-            // than this will create a temporary buffered graphics 
-            // context to host the graphics buffer.
-            context.MaximumBuffer = new Size(this.Width + 1, this.Height + 1);
-
-            // Allocates a graphics buffer the size of this form
-            // using the pixel format of the Graphics created by 
-            // the Form.CreateGraphics() method, which returns a 
-            // Graphics object that matches the pixel format of the form.
-            grafx = context.Allocate(this.CreateGraphics(),
-                 new Rectangle(0, 0, this.Width, this.Height));
-
-            // Draw the first frame to the buffer.
-            DrawToBuffer(grafx.Graphics);
+            //
+            // TODO: Add any constructor code after InitializeComponent call
+            //
         }
 
-        private void MouseDownHandler(object sender, MouseEventArgs e)
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        protected override void Dispose(bool disposing)
         {
-            if (e.Button == MouseButtons.Right)
+            if (disposing)
             {
-                // Cycle the buffering mode.
-                if (++bufferingMode > 2)
-                    bufferingMode = 0;
-
-                // If the previous buffering mode used 
-                // the OptimizedDoubleBuffering ControlStyle,
-                // disable the control style.
-                if (bufferingMode == 1)
-                    this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
-
-                // If the current buffering mode uses
-                // the OptimizedDoubleBuffering ControlStyle,
-                // enabke the control style.
-                if (bufferingMode == 2)
-                    this.SetStyle(ControlStyles.OptimizedDoubleBuffer, false);
-
-                // Cause the background to be cleared and redraw.
-                count = 6;
-                DrawToBuffer(grafx.Graphics);
-                this.Refresh();
+                if (components != null)
+                {
+                    components.Dispose();
+                }
             }
-            else
-            {
-                // Toggle whether the redraw timer is active.
-                if (timer1.Enabled)
-                    timer1.Stop();
-                else
-                    timer1.Start();
-            }
+            base.Dispose(disposing);
         }
 
-        private void OnTimer(object sender, EventArgs e)
+        #region Windows Form Designer generated code
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
         {
-            // Draw randomly positioned ellipses to the buffer.
-            DrawToBuffer(grafx.Graphics);
+            this.components = new System.ComponentModel.Container();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.SuspendLayout();
+            //
+            // timer1
+            //
+            this.timer1.Enabled = true;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            //
+            // checkBox1
+            //
+            this.checkBox1.Location = new System.Drawing.Point(8, 8);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.TabIndex = 0;
+            this.checkBox1.Text = "Double Buffer";
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            //
+            // Form1
+            //
+            this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
+            this.ClientSize = new System.Drawing.Size(292, 273);
+            this.Controls.Add(this.checkBox1);
+            this.Name = "Form1";
+            this.Text = "Form1";
+            this.ResumeLayout(false);
 
-            // If in bufferingMode 2, draw to the form's HDC.
-            if (bufferingMode == 2)
-                // Render the graphics buffer to the form's HDC.
-                grafx.Render(Graphics.FromHwnd(this.Handle));
-            // If in bufferingMode 0 or 1, draw in the paint method.
-            else
-                this.Refresh();
+        }
+        #endregion
+
+        /// <summary>
+        /// The main entry point for the application.
+        /// </summary>
+        [STAThread]
+        static void Main()
+        {
+            Application.Run(new Form1());
         }
 
-        private void OnResize(object sender, EventArgs e)
+        private void timer1_Tick(object sender, System.EventArgs e)
         {
-            // Re-create the graphics buffer for a new window size.
-            context.MaximumBuffer = new Size(this.Width + 1, this.Height + 1);
-            if (grafx != null)
-            {
-                grafx.Dispose();
-                grafx = null;
-            }
-            grafx = context.Allocate(this.CreateGraphics(),
-                new Rectangle(0, 0, this.Width, this.Height));
-
-            // Cause the background to be cleared and redraw.
-            count = 6;
-            DrawToBuffer(grafx.Graphics);
-            this.Refresh();
+            _angle += 3;
+            if (_angle > 359)
+                _angle = 0;
+            Invalidate();
         }
 
-        private void DrawToBuffer(Graphics g)
-        {
-            // Clear the graphics buffer every five updates.
-            if (++count > 5)
-            {
-                count = 0;
-                grafx.Graphics.FillRectangle(Brushes.Black, 0, 0, this.Width, this.Height);
-            }
-
-            // Draw randomly positioned and colored ellipses.
-            Random rnd = new Random();
-            for (int i = 0; i < 20; i++)
-            {
-                int px = rnd.Next(20, this.Width - 40);
-                int py = rnd.Next(20, this.Height - 40);
-                g.DrawEllipse(new Pen(Color.FromArgb(rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255)), 1),
-                    px, py, px + rnd.Next(0, this.Width - px - 20), py + rnd.Next(0, this.Height - py - 20));
-            }
-
-            // Draw information strings.
-            g.DrawString("Buffering Mode: " + bufferingModeStrings[bufferingMode], new Font("Arial", 8), Brushes.White, 10, 10);
-            g.DrawString("Right-click to cycle buffering mode", new Font("Arial", 8), Brushes.White, 10, 22);
-            g.DrawString("Left-click to toggle timed display refresh", new Font("Arial", 8), Brushes.White, 10, 34);
-        }
+        private Bitmap _backBuffer;
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            grafx.Render(e.Graphics);
+            if (_backBuffer == null)
+            {
+                _backBuffer = new Bitmap(this.ClientSize.Width, this.ClientSize.Height);
+            }
+
+            Graphics g = null;
+            if (_doBuffer)
+                g = Graphics.FromImage(_backBuffer);
+            else
+                g = e.Graphics;
+
+            g.Clear(Color.White);
+
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+
+            Matrix mx = new Matrix();
+            mx.Rotate(_angle, MatrixOrder.Append);
+            mx.Translate(this.ClientSize.Width / 2, this.ClientSize.Height / 2, MatrixOrder.Append);
+            g.Transform = mx;
+            g.FillRectangle(Brushes.Red, -100, -100, 200, 200);
+
+            mx = new Matrix();
+            mx.Rotate(-_angle, MatrixOrder.Append);
+            mx.Translate(this.ClientSize.Width / 2, this.ClientSize.Height / 2, MatrixOrder.Append);
+            g.Transform = mx;
+            g.FillRectangle(Brushes.Green, -75, -75, 149, 149);
+
+            mx = new Matrix();
+            mx.Rotate(_angle * 2, MatrixOrder.Append);
+            mx.Translate(this.ClientSize.Width / 2, this.ClientSize.Height / 2, MatrixOrder.Append);
+            g.Transform = mx;
+            g.FillRectangle(Brushes.Blue, -50, -50, 100, 100);
+
+            if (_doBuffer)
+            {
+                g.Dispose();
+
+                //Copy the back buffer to the screen
+
+                e.Graphics.DrawImageUnscaled(_backBuffer, 0, 0);
+            }
+
+            //base.OnPaint (e); //optional but not recommended
         }
 
-        [STAThread]
-        public static void Main(string[] args)
+        protected override void OnPaintBackground(PaintEventArgs pevent)
         {
-            Application.Run(new BufferingExample());
+            //Don't allow the background to paint
+        }
+
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            if (_backBuffer != null)
+            {
+                _backBuffer.Dispose();
+                _backBuffer = null;
+            }
+            base.OnSizeChanged(e);
+        }
+
+        private void checkBox1_CheckedChanged(object sender, System.EventArgs e)
+        {
+            _doBuffer = this.checkBox1.Checked;
         }
     }
 }
