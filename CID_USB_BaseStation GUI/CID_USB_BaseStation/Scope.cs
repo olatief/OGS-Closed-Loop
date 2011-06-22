@@ -27,10 +27,11 @@ namespace CID_USB_BaseStation
         private float yRange;
 
         private Queue<int> rawADCQueue = new Queue<int>(100);
-        private int [] lastPlottedValues;
+        private List<int> lastPlottedValues = new List<int>();
         private int triggerLine = 0; 
         private bool triggerLineDisplayed = false;
         public bool TriggerLineDisplayed { set; get; }
+        private bool triggerFound = false;
 
         public int TriggerLine { get { return triggerLine; } }
         public float YScrollLocation 
@@ -59,7 +60,7 @@ namespace CID_USB_BaseStation
         private Pen mDataPen = new Pen(Color.Navy, 2);
         private Form scopeForm;
         private System.Timers.Timer tmrUpdate = new System.Timers.Timer(refreshRate);
-        
+        private List<int> adcValuestoPlot = new List<int>();
 
         public Scope(Point location, Size size, Form scopeForm)
         {
@@ -69,7 +70,7 @@ namespace CID_USB_BaseStation
             currentScope = this;
             ScopeExtents = new Rectangle(location, size);
             PlottingExtents = ScopeExtents; // TODO: change this to make plotting area smaller for axis info
-            lastPlottedValues = new int[PlottingExtents.Width];
+            lastPlottedValues.Capacity = PlottingExtents.Width;
             minYrange = size.Height;
             minXrange = 1000*size.Width/Fs;
             YScrollLocation = 500;
@@ -77,36 +78,56 @@ namespace CID_USB_BaseStation
           //  tmrUpdate.Elapsed += new ElapsedEventHandler(Timer_Tick);
            // tmrUpdate.Enabled = true;
         }
-
+        
+        
         public void AddRawADCtoQueue(int[] newVals)
         {
             int countThreshold = Convert.ToInt32(PlottingExtents.Width*xScalingFactor); // This is the number of values that we can display on our Scope
-            int[] adcValuestoPlot = new int[countThreshold];
-           
+
+            int prevADCValue; // for zero crossing algorithm;
+            
+            //adcValuestoPlot = adcValuestoPlot ?? new int[countThreshold]; // if its null then assign it a new block otherwise we want to continue filling it form where we left off
+
             for (int i = 0; i < newVals.Length; ++i)
             {
                 rawADCQueue.Enqueue(newVals[i]);
             }
 
+            if (triggerFound)
+            {
+                adcValuestoPlot.Clear();
+                adcValuestoPlot.Capacity = countThreshold; 
+            }
             // dont dequeue values until we have enough points we can plot on the screen
+            prevADCValue = 0;
             if (rawADCQueue.Count > countThreshold)
             {
+               
                 for (int i = 0; i < countThreshold; i++)
                 {
-                    adcValuestoPlot[i] = rawADCQueue.Dequeue();
+                    adcValuestoPlot.Add(rawADCQueue.Dequeue()); // will overflow on decreasing horizontal scaling
+                    if (!triggerFound && adcValuestoPlot[i] > triggerLine && prevADCValue <= triggerLine)
+                    {
+                        triggerFound = true;
+                        if ((i + countThreshold) > rawADCQueue.Count) return; // so we dont overflow the queue. it quits and waits for more data to come in on the next round
+                        i = 0; // reset i so we can dequeue more values starting from this point. makes everything in sync
+                    }
+                    prevADCValue = adcValuestoPlot[i];
                 }
 
                 DrawRawADC(adcValuestoPlot);
+                // adcValuestoPlot = null; // reset
+                triggerFound = false; // reset so that it can search for the next trigger
             }
         }
 
-        private void DrawRawADC(int[] adcVals)
+        private void DrawRawADC(List<int> adcVals)
         {
             int[] convertedToPixels = new int[PlottingExtents.Width];
             float sum;
             lastPlottedValues = adcVals;
 
-            for(int i = 0; i < Math.Min(convertedToPixels.Length, (int)(adcVals.Length/xScalingFactor)); i++)
+            for(int i = 0; i < Math.Min(convertedToPixels.Length, (int)(adcVals.Count/xScalingFactor)); i++)
             {
                 // Naive Downsample. TODO: use a more DSP way to downsample.
                 // Average

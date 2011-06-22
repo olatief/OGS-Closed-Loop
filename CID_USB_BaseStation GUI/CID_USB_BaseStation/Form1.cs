@@ -36,12 +36,14 @@ namespace CID_USB_BaseStation
 
         private void UsbGlobals_UsbErrorEvent(object sender, UsbError e) { Invoke(new UsbErrorEventDelegate(UsbGlobalErrorEvent), new object[] { sender, e }); }
         private void UsbGlobalErrorEvent(object sender, UsbError e) { /* tRecv.AppendText(e + "\r\n");*/ }
+        Scope scope;
 
         public frmMain()
         {
             
             InitializeComponent();
             UsbDevice.UsbErrorEvent += UsbGlobals_UsbErrorEvent;
+            scope = new Scope(picPlot.Location, picPlot.Size, this);
         }
 
         private void cboDevices_DropDown(object sender, EventArgs e)
@@ -73,7 +75,7 @@ namespace CID_USB_BaseStation
         private void Form1_Load(object sender, EventArgs e)
         {
          //   this.DoubleBuffered = true;
-            scope = new Scope(picPlot.Location, picPlot.Size, this);
+            
             tvalDC.Tag = validate(10, 90, delegate(Int32 val) { pStim.DC = (byte)val; });
             tvalAmplitude.Tag = validate(0, 14, delegate(Int32 val) { pStim.Amplitude = (byte)val; tEstLedCurrent.Text = ledvals[val]; });
             tvalFreq.Tag = validate(0, 200, delegate(Int32 val) { pStim.Freq = (byte)val; ComputeTimes(); });
@@ -86,6 +88,8 @@ namespace CID_USB_BaseStation
             tvalPulseOff.Tag = validate(1, 250, delegate(Int32 val) { pStim.PulseOff = (byte)val; ComputeTimes(); });
             tvalCycles.Tag = validate(0, 250, delegate(Int32 val) { pStim.Cycles = (byte)val; ComputeTimes(); });
             tvalDelay.Tag = validate(0, 40 * 250, delegate(Int32 val) { pAlgo.delay = (byte)(val / 40); tvalDelay.Text = Convert.ToString(pAlgo.delay * 40); });
+           
+
         }
 
         private void ComputeTimes()

@@ -9,7 +9,6 @@ namespace CID_USB_BaseStation
 {
     public partial class frmMain : Form
     {
-        Scope scope;
 
         private void cmdTestStim_Click(object sender, EventArgs e)
         {
