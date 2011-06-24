@@ -50,6 +50,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>A7334AF901514CA2C9F3E656BF2DA79102122C1C</ManifestCertificateThumbprint>
@@ -87,15 +88,17 @@
     <Compile Include="FormTester.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Oscilloscope.cs" />
     <Compile Include="Packet.cs" />
     <Compile Include="PacketHandler.cs" />
     <Compile Include="progParameters.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scope.cs" />
+    <Compile Include="QueuedBackgroundWorker.cs" />
     <Compile Include="WirelessStats.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

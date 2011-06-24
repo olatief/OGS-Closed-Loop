@@ -15,7 +15,7 @@
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>LibUsbDotNet.snk</AssemblyOriginatorKeyFile>
     <PublishUrl>publish\</PublishUrl>
@@ -33,6 +33,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -70,7 +71,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <OutputPath>bin\x86\Release\</OutputPath>
+    <OutputPath>..\CID_USB_BaseStation\bin\Release\</OutputPath>
     <DefineConstants>TRACE;LIBUSBDOTNET</DefineConstants>
     <DocumentationFile>..\bin\Release\LibUsbDotNet.xml</DocumentationFile>
     <Optimize>true</Optimize>

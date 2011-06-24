@@ -81,7 +81,7 @@
             this.btnFile = new System.Windows.Forms.Button();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.picPlot = new System.Windows.Forms.PictureBox();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.tmrStats = new System.Windows.Forms.Timer(this.components);
             this.cmdDraw = new System.Windows.Forms.Button();
             this.tmrStim = new System.Windows.Forms.Timer(this.components);
             this.cmdTestStim = new System.Windows.Forms.Button();
@@ -596,6 +596,11 @@
             this.picPlot.Visible = false;
             this.picPlot.Click += new System.EventHandler(this.picPlot_Click);
             // 
+            // tmrStats
+            // 
+            this.tmrStats.Interval = 500;
+            this.tmrStats.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // cmdDraw
             // 
             this.cmdDraw.Location = new System.Drawing.Point(850, 29);
@@ -726,6 +731,7 @@
             this.Name = "frmMain";
             this.Text = "CID USB Base Station";
             this.Activated += new System.EventHandler(this.frmMain_Activated);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmMain_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
@@ -798,7 +804,7 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox testTimeOn;
         private System.Windows.Forms.PictureBox picPlot;
-        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer tmrStats;
         private System.Windows.Forms.Button cmdDraw;
         private System.Windows.Forms.ToolStripStatusLabel tslStimulating;
         private System.Windows.Forms.Timer tmrStim;

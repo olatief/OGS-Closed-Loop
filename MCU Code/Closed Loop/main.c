@@ -43,7 +43,7 @@ void main()
 {
   uint8_t is = 0;;
   acq_block = 0;
-  P1DIR = ~((1<<6) | (1<<3));
+  P1DIR = ~((1<<6) | (1<<5) | (1<<3));
   P0CON = 0x66;
 
   #ifdef MCU_NRF24LU1P
@@ -190,13 +190,13 @@ void adc_irq() interrupt INTERRUPT_MISCIRQ	// should only be called for ADC, RNG
 void init_adc()
 {
    hal_adc_set_input_channel(HAL_ADC_INP_AIN0);                     
-   hal_adc_set_reference(HAL_ADC_REF_VDD);                        
+   hal_adc_set_reference(HAL_ADC_REF_INT);                        
    hal_adc_set_acq_window(HAL_ADC_AQW_12US);
    hal_adc_set_input_mode(HAL_ADC_DIFF_AIN2);                             
    hal_adc_set_conversion_mode(HAL_ADC_CONTINOUS);               
    hal_adc_set_resolution(HAL_ADC_RES_12BIT);                          
    hal_adc_set_data_just(HAL_ADC_JUST_RIGHT);
-   hal_adc_set_sampling_rate(HAL_ADC_4KSPS);
+   hal_adc_set_sampling_rate(HAL_ADC_16KSPS);
    
    MISC = 1; // Enable ADC interrupt through MISC interrupt 
 }
@@ -214,7 +214,7 @@ void init_radio()
 	hal_nrf_enable_dynamic_payload(1);
 	hal_nrf_setup_dynamic_payload(1); // Set up PIPE 0 to handle dynamic lengths
 	hal_nrf_set_rf_channel(125); // 2525 MHz
-   //hal_nrf_set_auto_retr(3, 200); // Retry 5x
+   	hal_nrf_set_auto_retr(20, 250); // Retry 5x
     // Configure radio as primary receiver (PTX) 
   hal_nrf_set_operation_mode(HAL_NRF_PTX);
  
@@ -254,6 +254,7 @@ void rf_irq() interrupt INTERRUPT_RFIRQ
       // Alternatively, CE_PULSE() can be called re-starting transmission of the payload.
       // (Will only be possible after the radio irq flags are cleared) 
       hal_nrf_flush_tx();
+	  TEST_PIN ^= 1;
       radio_busy = false;
       break;
   }

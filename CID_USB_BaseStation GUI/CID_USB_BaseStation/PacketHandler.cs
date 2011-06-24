@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Signal_Project;
+using System.Windows.Forms;
 
 namespace CID_USB_BaseStation
 {
@@ -13,14 +15,14 @@ namespace CID_USB_BaseStation
         private int missedPackets;
 
         public static DataLogger Logger { get { return PacketHandler.logger; } }
-
+        public Packet LastPacket { get { return lastPacket; } }
 
         public PacketHandler()
         {
             WirelessStats.Instance.Reset();  
         }
 
-        public void ParseNewPacket(Packet receivedPacket)
+        public int[] ParseNewPacket(Packet receivedPacket)
         {
             int [] parsedValues;
             if (lastPacket != null)
@@ -34,19 +36,24 @@ namespace CID_USB_BaseStation
 
                 if (missedPackets == 0)
                 {
-                    WirelessStats.Instance.NumSuccessRxPackets++;
+                    ++WirelessStats.Instance.NumSuccessRxPackets;
                 }
                 else
                 {
                     WirelessStats.Instance.NumDroppedPackets += missedPackets;
                 }
-               
-                parsedValues = parseSingleChan(receivedPacket);
-                Scope.CurrentScope.AddRawADCtoQueue(parsedValues);
+
+                parsedValues = receivedPacket.AdcVals;
+               // Scope.CurrentScope.AddRawADCtoQueue(parsedValues);
             }
+            else
+            {
+                parsedValues = new int[0];
+            }
+            
             lastPacket = receivedPacket;
 
-            return ;
+            return parsedValues;
         }
 
         private int[] parseSingleChan(Packet pkt)
@@ -61,7 +68,9 @@ namespace CID_USB_BaseStation
                     tempValue = -tempValue;
                 }
                * */
+
                 parsedValues[i] = 2048-tempValue;
+                
                 logger.LogLine(parsedValues[i]);
             }
 

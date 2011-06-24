@@ -213,14 +213,14 @@
     </File>
     <File>
       <GroupNumber>1</GroupNumber>
-      <FileNumber>4</FileNumber>
+      <FileNumber>3</FileNumber>
       <FileType>1</FileType>
-      <tvExp>1</tvExp>
+      <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>36</ColumnNumber>
+      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>107</TopLine>
-      <CurrentLine>107</CurrentLine>
+      <TopLine>0</TopLine>
+      <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\usb_desc_bulk.c</PathWithFileName>
       <FilenameWithoutPath>usb_desc_bulk.c</FilenameWithoutPath>
@@ -233,8 +233,8 @@
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <File>
-      <GroupNumber>0</GroupNumber>
-      <FileNumber>0</FileNumber>
+      <GroupNumber>2</GroupNumber>
+      <FileNumber>4</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -247,8 +247,8 @@
       <FilenameWithoutPath>cklf.c</FilenameWithoutPath>
     </File>
     <File>
-      <GroupNumber>0</GroupNumber>
-      <FileNumber>0</FileNumber>
+      <GroupNumber>2</GroupNumber>
+      <FileNumber>5</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -261,8 +261,8 @@
       <FilenameWithoutPath>cpu.c</FilenameWithoutPath>
     </File>
     <File>
-      <GroupNumber>0</GroupNumber>
-      <FileNumber>0</FileNumber>
+      <GroupNumber>2</GroupNumber>
+      <FileNumber>6</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -275,22 +275,22 @@
       <FilenameWithoutPath>hal_nrf_hw.c</FilenameWithoutPath>
     </File>
     <File>
-      <GroupNumber>0</GroupNumber>
-      <FileNumber>0</FileNumber>
+      <GroupNumber>2</GroupNumber>
+      <FileNumber>7</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>62</ColumnNumber>
+      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>16</TopLine>
-      <CurrentLine>25</CurrentLine>
+      <TopLine>0</TopLine>
+      <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\hal\nrf24lu1p\hal_usb.c</PathWithFileName>
       <FilenameWithoutPath>hal_usb.c</FilenameWithoutPath>
     </File>
     <File>
-      <GroupNumber>0</GroupNumber>
-      <FileNumber>0</FileNumber>
+      <GroupNumber>2</GroupNumber>
+      <FileNumber>8</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -303,8 +303,8 @@
       <FilenameWithoutPath>hal_nrf.c</FilenameWithoutPath>
     </File>
     <File>
-      <GroupNumber>0</GroupNumber>
-      <FileNumber>0</FileNumber>
+      <GroupNumber>2</GroupNumber>
+      <FileNumber>9</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -319,35 +319,9 @@
   </Group>
 
   <AlienFiles>
-    <PathWithFilename>C:\Users\Omar\Dropbox\OGS-Closed-Loop\MCU Code\hal\nrf24lu1p\hal_usb.h</PathWithFilename>
-    <TopLine>145</TopLine>
-    <CurrentLine>155</CurrentLine>
-    <Constant>0</Constant>
-    <WindowPosition>
-      <length>0</length>
-      <flags>0</flags>
-      <showCmd>0</showCmd>
-      <MinPosition>
-        <xPos>0</xPos>
-        <yPos>0</yPos>
-      </MinPosition>
-      <MaxPosition>
-        <xPos>0</xPos>
-        <yPos>0</yPos>
-      </MaxPosition>
-      <NormalPosition>
-        <Top>0</Top>
-        <Left>0</Left>
-        <Right>0</Right>
-        <Bottom>0</Bottom>
-      </NormalPosition>
-    </WindowPosition>
-  </AlienFiles>
-
-  <AlienFiles>
-    <PathWithFilename>C:\Users\Omar\Dropbox\OGS-Closed-Loop\MCU Code\USB_RX\USB_DESC_BULK.H</PathWithFilename>
-    <TopLine>16</TopLine>
-    <CurrentLine>20</CurrentLine>
+    <PathWithFilename>C:\Users\Omar\Dropbox\OGS-Closed-Loop\MCU Code\USB_RX\config.h</PathWithFilename>
+    <TopLine>1</TopLine>
+    <CurrentLine>16</CurrentLine>
     <Constant>0</Constant>
     <WindowPosition>
       <length>0</length>
@@ -397,9 +371,35 @@
   </AlienFiles>
 
   <AlienFiles>
-    <PathWithFilename>C:\Users\Omar\Dropbox\OGS-Closed-Loop\MCU Code\USB_RX\config.h</PathWithFilename>
-    <TopLine>1</TopLine>
-    <CurrentLine>16</CurrentLine>
+    <PathWithFilename>C:\Users\Omar\Dropbox\OGS-Closed-Loop\MCU Code\hal\nrf24lu1p\hal_usb.h</PathWithFilename>
+    <TopLine>145</TopLine>
+    <CurrentLine>155</CurrentLine>
+    <Constant>0</Constant>
+    <WindowPosition>
+      <length>0</length>
+      <flags>0</flags>
+      <showCmd>0</showCmd>
+      <MinPosition>
+        <xPos>0</xPos>
+        <yPos>0</yPos>
+      </MinPosition>
+      <MaxPosition>
+        <xPos>0</xPos>
+        <yPos>0</yPos>
+      </MaxPosition>
+      <NormalPosition>
+        <Top>0</Top>
+        <Left>0</Left>
+        <Right>0</Right>
+        <Bottom>0</Bottom>
+      </NormalPosition>
+    </WindowPosition>
+  </AlienFiles>
+
+  <AlienFiles>
+    <PathWithFilename>C:\Users\Omar\Dropbox\OGS-Closed-Loop\MCU Code\USB_RX\usb_desc_bulk.h</PathWithFilename>
+    <TopLine>16</TopLine>
+    <CurrentLine>20</CurrentLine>
     <Constant>0</Constant>
     <WindowPosition>
       <length>0</length>
@@ -431,8 +431,8 @@
       <Documents>
         <Doc>
           <Name>.\main.c</Name>
-          <ColumnNumber>1</ColumnNumber>
-          <TopLine>205</TopLine>
+          <ColumnNumber>23</ColumnNumber>
+          <TopLine>218</TopLine>
           <CurrentLine>242</CurrentLine>
         </Doc>
         <Doc>

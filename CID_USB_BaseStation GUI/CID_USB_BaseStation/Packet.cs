@@ -33,6 +33,8 @@ namespace CID_USB_BaseStation
 
         private byte[] buffer;
         public byte[] Buffer { get { return buffer; } }
+        private int[] adcVals;
+        public int[] AdcVals { get { return adcVals; } }
 
         public Packet(EndpointDataEventArgs e)
         {
@@ -44,6 +46,28 @@ namespace CID_USB_BaseStation
             info = buffer[infoIndex];
             this.isStimulating = !(((info) & (0x80)) == 0); // if right most bit is set to 1 then its stimulating
             this.count = (byte)( 0x7F & info);
+            adcVals = ParsePacket();
+        }
+
+        private int[] ParsePacket()
+        {
+            int[] parsedValues = new int[15];
+            int tempValue;
+            for (int i = 0; i < parsedValues.Length; i++)
+            {
+                tempValue = this.buffer[2 * i + 1] + (this.buffer[2 * i] << 8);
+                /*  if (tempValue >= 512)
+                  {
+                      tempValue = -tempValue;
+                  }
+                 * */
+
+                parsedValues[i] = 2048 - tempValue;
+
+                DataLogger.Instance.LogLine(parsedValues[i]);
+            }
+
+            return parsedValues;
         }
     }
 }

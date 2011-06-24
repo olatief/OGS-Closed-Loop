@@ -3,19 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ComponentModel;
+using System.Linq.Expressions;
 
 namespace CID_USB_BaseStation
 {
-    public sealed class WirelessStats : INotifyPropertyChanged
+    public sealed class WirelessStats
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
         private static readonly WirelessStats instance = new WirelessStats();
         private long startTime;
         private long stopTime;
         private long numDroppedPackets;
         private long numSuccessRxPackets;
-
+        public Action<Action> _synchronousInvoker = null;
         public static WirelessStats Instance { get { return instance; } }  // Singleton Pattern
         public long StartTime { set; get; }
         public long StopTime { set; get; }
@@ -27,18 +26,17 @@ namespace CID_USB_BaseStation
                 set
                 {
                     numDroppedPackets = value;
-                    OnPropertyChanged("NumDroppedPackets");
                 }
             }
-        public long NumSuccessRxPackets { get { return numSuccessRxPackets; }
+        public long NumSuccessRxPackets { 
+            get { return numSuccessRxPackets; }
             set
             {
                 numSuccessRxPackets = value;
-                OnPropertyChanged("NumSuccessRxPackets");
             }
         }
         
-        private WirelessStats() { Reset(); }
+        private WirelessStats() {  }
 
         public void Reset()
         {
@@ -47,15 +45,6 @@ namespace CID_USB_BaseStation
 
             NumDroppedPackets = 0;
             NumSuccessRxPackets = 0;
-        }
-
-        private void OnPropertyChanged(string name)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(name));
-            }
         }
     }
 }

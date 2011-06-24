@@ -15,7 +15,8 @@ using LibUsbDotNet.Main;
 using EC = LibUsbDotNet.Main.ErrorCode;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-
+using Signal_Project;
+using System.Threading.Tasks;
 namespace CID_USB_BaseStation
 {
     public partial class frmMain : Form
@@ -36,6 +37,9 @@ namespace CID_USB_BaseStation
 
         private void UsbGlobals_UsbErrorEvent(object sender, UsbError e) { Invoke(new UsbErrorEventDelegate(UsbGlobalErrorEvent), new object[] { sender, e }); }
         private void UsbGlobalErrorEvent(object sender, UsbError e) { /* tRecv.AppendText(e + "\r\n");*/ }
+
+        //private BackgroundWorker bw_ProcessUSBpacket = new BackgroundWorker();
+        private QueuedBackgroundWorker bw_ProcessUSBpacket = new QueuedBackgroundWorker();
 
         public frmMain()
         {
@@ -72,8 +76,6 @@ namespace CID_USB_BaseStation
 
         private void Form1_Load(object sender, EventArgs e)
         {
-         //   this.DoubleBuffered = true;
-            scope = new Scope(picPlot.Location, picPlot.Size, this);
             tvalDC.Tag = validate(10, 90, delegate(Int32 val) { pStim.DC = (byte)val; });
             tvalAmplitude.Tag = validate(0, 14, delegate(Int32 val) { pStim.Amplitude = (byte)val; tEstLedCurrent.Text = ledvals[val]; });
             tvalFreq.Tag = validate(0, 200, delegate(Int32 val) { pStim.Freq = (byte)val; ComputeTimes(); });
@@ -86,6 +88,10 @@ namespace CID_USB_BaseStation
             tvalPulseOff.Tag = validate(1, 250, delegate(Int32 val) { pStim.PulseOff = (byte)val; ComputeTimes(); });
             tvalCycles.Tag = validate(0, 250, delegate(Int32 val) { pStim.Cycles = (byte)val; ComputeTimes(); });
             tvalDelay.Tag = validate(0, 40 * 250, delegate(Int32 val) { pAlgo.delay = (byte)(val / 40); tvalDelay.Text = Convert.ToString(pAlgo.delay * 40); });
+            
+            oScope = Oscilloscope.Create();
+            oScope.Show();
+        
         }
 
         private void ComputeTimes()
@@ -156,7 +162,7 @@ namespace CID_USB_BaseStation
 
         #region Nested Types
 
-        private delegate void OnDataReceivedDelegate(object sender, EndpointDataEventArgs e);
+        private delegate void OnDataReceivedDelegate(object sender, EndpointDataEventArgs e, bool isStimulating);
 
         private delegate void UsbErrorEventDelegate(object sender, UsbError e);
 
@@ -173,7 +179,6 @@ namespace CID_USB_BaseStation
                     if (openDevice(cboDevices.SelectedIndex))
                     {
                         pktHandler = new PacketHandler();
-
                         if (!dataLogger.LoggingActivated)
                         {
                             MessageBox.Show("Data will not be saved for this session because no file was selected.");
@@ -303,19 +308,38 @@ namespace CID_USB_BaseStation
             return bRtn;
         }
 
-        private void mEp_DataReceived(object sender, EndpointDataEventArgs e) { 
-            Invoke(new OnDataReceivedDelegate(OnDataReceived), new object[] { sender, e }); 
+        private void mEp_DataReceived(object sender, EndpointDataEventArgs e) {
+
+            bw_ProcessUSBpacket_DoWork(e);
+           // Task.Factory.StartNew(bw_ProcessUSBpacket_DoWork, e);
+           // bw_ProcessUSBpacket.RunAsync<EndpointDataEventArgs, bool>(bw_ProcessUSBpacket_DoWork, e, bw_ProcessUSBpacket_RunWorkerCompleted);
+                // So we can keep on receiveing USB Packets as fast as possible without being blocked by UI thread
+        
         }
 
-        private void OnDataReceived(object sender, EndpointDataEventArgs e)
+        delegate void Completed (bool isStimulating);
+
+        void bw_ProcessUSBpacket_DoWork(EndpointDataEventArgs e)
         {
             Packet RxPacket = new Packet(e);
-            pktHandler.ParseNewPacket(RxPacket);
-            
+            int[] adcVals = pktHandler.ParseNewPacket(RxPacket);
+            int sum = 0;
+
+            foreach (int val in adcVals)
+            {
+                sum += val;
+                oScope.AddData(val,0,0);
+            }
+
+            // oScope.AddData(sum/15, 0, 0);
+            return;
+        }
+
+        void bw_ProcessUSBpacket_RunWorkerCompleted(bool isStimulating)
+        {
             tslStatus.Text = String.Format("Values Written: {0}", dataLogger.NumValuesWritten);
 
-            
-            if (RxPacket.IsStimulating) // means it was Stimulating
+            if (isStimulating) // means it was Stimulating
             {
                 tmrStim.Enabled = true;
                 tslStimulating.Text = "Stimulating!!";
@@ -419,32 +443,36 @@ namespace CID_USB_BaseStation
             txtFilename.Text = dataLogger.FileName;
         }
 
+        private bool firstTime = true;
+
         private void frmMain_Activated(object sender, EventArgs e)
         {
-            List<TextBox> tvals = new List<TextBox>();
-
-            tvals.Add(tvalAmplitude);
-            tvals.Add(tvalDC);
-            tvals.Add(tvalFreq);
-            tvals.Add(tvalHighThresh);
-            tvals.Add(tvalIEI);
-            tvals.Add(tvalLowThresh);
-            tvals.Add(tvalNstage);
-            tvals.Add(tvalPulseOff);
-            tvals.Add(tvalPulseOn);
-            tvals.Add(tvalDelay);
-            tvals.Add(tvalCycles);
-
-            foreach (TextBox tval in tvals)
+            if (firstTime)
             {
-                tval.Validating += new System.ComponentModel.CancelEventHandler(this.OnValidationTest);
-                tval.Validated += new System.EventHandler(this.OnValidated);
-                tval.Select(); // Validate
-            }
-            tvals[0].Select();
+                firstTime = false;
+                List<TextBox> tvals = new List<TextBox>();
 
-            lblDroppedStat.DataBindings.Add("Text", WirelessStats.Instance, "NumDroppedPackets");
-            lblSuccessStat.DataBindings.Add("Text", WirelessStats.Instance, "NumSuccessRxPackets");
+                tvals.Add(tvalAmplitude);
+                tvals.Add(tvalDC);
+                tvals.Add(tvalFreq);
+                tvals.Add(tvalHighThresh);
+                tvals.Add(tvalIEI);
+                tvals.Add(tvalLowThresh);
+                tvals.Add(tvalNstage);
+                tvals.Add(tvalPulseOff);
+                tvals.Add(tvalPulseOn);
+                tvals.Add(tvalDelay);
+                tvals.Add(tvalCycles);
+
+                foreach (TextBox tval in tvals)
+                {
+                    tval.Validating += new System.ComponentModel.CancelEventHandler(this.OnValidationTest);
+                    tval.Validated += new System.EventHandler(this.OnValidated);
+                    tval.Select(); // Validate
+                }
+                tvals[0].Select();
+                tmrStats.Enabled = true;
+            }
         }
 
         private void tmrStim_Tick(object sender, EventArgs e)
@@ -472,16 +500,16 @@ namespace CID_USB_BaseStation
             myRectangle = new Rectangle(picPlot.Location, picPlot.Size);
             myGraphic = this.CreateGraphics();
 
-            timer1.Stop();
-            timer1.Enabled = false;
-            timer1.Enabled = true;
+            tmrStats.Stop();
+            tmrStats.Enabled = false;
+            tmrStats.Enabled = true;
         }
 
         private void startDrawing()
         {
-            timer1.Stop();
-            timer1.Enabled = false;
-            timer1.Enabled = true;
+            tmrStats.Stop();
+            tmrStats.Enabled = false;
+            tmrStats.Enabled = true;
         }
 
         private int LeftOffset = 10;
@@ -525,17 +553,37 @@ namespace CID_USB_BaseStation
 
         private void hScroll_ValueChanged(object sender, EventArgs e)
         {
-            scope.XScrollLocation = hScrollBar1.Value;
+           // scope.XScrollLocation = hScrollBar1.Value;
         }
 
         private void vScroll_ValueChanged(object sender, ScrollEventArgs e)
         {
-            scope.YScrollLocation = vScrollBar1.Value;
+           // scope.YScrollLocation = vScrollBar1.Value;
         }
 
         private void Trigger_KeyDown(object sender, KeyEventArgs e)
         {
 
+        }
+
+        private void frmMain_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            oScope.Dispose();
+
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            lblDroppedStat.Text = Convert.ToString(WirelessStats.Instance.NumDroppedPackets);
+            lblSuccessStat.Text = Convert.ToString(WirelessStats.Instance.NumSuccessRxPackets);
+
+            if (null != pktHandler)
+            {
+                if (null != pktHandler.LastPacket)
+                {
+                    bw_ProcessUSBpacket_RunWorkerCompleted(pktHandler.LastPacket.IsStimulating);
+                }
+            }
         }
 
     }

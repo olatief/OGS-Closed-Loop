@@ -20,7 +20,7 @@ sbit P0_7 = P0^7;
 
 sbit LED_CTRL_PIN = P1^3;
 sbit P1_4 = P1^4;
-sbit P1_5 = P1^5;
+sbit TEST_PIN = P1^5;
 sbit P1_6 = P1^6;
 
  typedef enum { PROGSTIM = 1, PROGALGO, PROGALL } pktType;

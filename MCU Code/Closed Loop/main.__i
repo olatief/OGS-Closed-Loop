@@ -1,0 +1,1 @@
+"main.c" LARGE MODC2 MDU_R515 INCDIR(..\hal\nrf24l01p;..\hal;..\compiler\c51;..\hal\nrf24le1;..\compiler\common) DEFINE (MCU_NRF24LE1) NOPRINT
