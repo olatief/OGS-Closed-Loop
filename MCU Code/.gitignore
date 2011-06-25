@@ -1,0 +1,12 @@
+*.lst
+*.obj
+*.map
+*.m51
+*.m66
+*.plg
+*.__i
+*.i
+*.tra
+*.lnp
+*.orc
+*.bak
