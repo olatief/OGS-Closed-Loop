@@ -1,28 +1,74 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Signal_Project;
 using System.Windows.Forms;
+using System.Threading.Tasks;
 
 namespace CID_USB_BaseStation
 {
+    public class ProcessingDoneEventArgs : EventArgs
+    {
+        public ProcessingDoneEventArgs(int[] results, bool isStimulating)
+        {
+            this.results = results;
+            this.isStimulating = isStimulating;
+        }
+
+        public int[] results;
+        public bool isStimulating;
+
+    }	//end of class HandlerDoneEventArgs
+
     class PacketHandler
     {
+        public delegate void processingDoneHandler(object sender, ProcessingDoneEventArgs e);
+
         private static DataLogger logger = DataLogger.Instance;
         private byte deviceId = 0;
         private Packet lastPacket = null;
         private int missedPackets;
-
+        private Queue workQueue = new Queue();
+        
         public static DataLogger Logger { get { return PacketHandler.logger; } }
         public Packet LastPacket { get { return lastPacket; } }
+        public event processingDoneHandler processingDone;
 
+       
         public PacketHandler()
         {
             WirelessStats.Instance.Reset();  
         }
+        
+        public void Add(byte[] buffer)
+        {
+                workQueue.Enqueue(buffer);
+            
 
-        public int[] ParseNewPacket(Packet receivedPacket)
+            if (!isProcessing)
+            {
+                Task.Factory.StartNew(processQueue);
+            }
+        }
+
+        private bool isProcessing = false;
+
+        public void processQueue()
+        {
+            // byte[] buffer;
+            isProcessing = true;
+            
+                while(workQueue.Count>0)
+                    ParseNewPacket(new Packet((byte[])workQueue.Dequeue()));
+            
+
+            isProcessing = false;
+        }
+
+        
+        public void ParseNewPacket(Packet receivedPacket)
         {
             int [] parsedValues;
             if (lastPacket != null)
@@ -44,6 +90,7 @@ namespace CID_USB_BaseStation
                 }
 
                 parsedValues = receivedPacket.AdcVals;
+
                // Scope.CurrentScope.AddRawADCtoQueue(parsedValues);
             }
             else
@@ -53,7 +100,10 @@ namespace CID_USB_BaseStation
             
             lastPacket = receivedPacket;
 
-            return parsedValues;
+            if (processingDone != null)
+            {
+                processingDone(this, new ProcessingDoneEventArgs(parsedValues, lastPacket.IsStimulating));
+            }
         }
 
         private int[] parseSingleChan(Packet pkt)

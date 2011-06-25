@@ -123,28 +123,29 @@ namespace CID_USB_BaseStation
         }
         
         
-        public void OnValidationTest(object sender, System.ComponentModel.CancelEventArgs e)
+        private void OnValidationTest(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Int32 userVal;
             Validator val;
-            
-            val = (Validator)(((TextBox)sender).Tag);
-            if (Int32.TryParse(((TextBox)sender).Text, out userVal))
+            TextBox txtSender = (TextBox)sender;
+
+            val = (Validator)(txtSender.Tag);
+            if (Int32.TryParse(txtSender.Text, out userVal))
             {
                 if (userVal > val.max || userVal < val.min)
                 {
                     e.Cancel = true;
-                    this.errorProvider1.SetError((TextBox)sender, String.Format("Value is out of range: {0} to {1}", val.min, val.max));
+                    this.errorProvider1.SetError(txtSender, String.Format("Value is out of range: {0} to {1}", val.min, val.max));
                 }
                 else
                 {
-                    this.errorProvider1.SetError((TextBox)sender, String.Empty);
+                    this.errorProvider1.SetError(txtSender, String.Empty);
                 }
             }
             else
             {
                 e.Cancel = true;
-                this.errorProvider1.SetError((TextBox)sender, "Value is not an integer");
+                this.errorProvider1.SetError(txtSender, "Value is not an integer");
             }
         }
 
@@ -179,6 +180,7 @@ namespace CID_USB_BaseStation
                     if (openDevice(cboDevices.SelectedIndex))
                     {
                         pktHandler = new PacketHandler();
+                        pktHandler.processingDone += new PacketHandler.processingDoneHandler(ProcessUSBpacket_Done);
                         if (!dataLogger.LoggingActivated)
                         {
                             MessageBox.Show("Data will not be saved for this session because no file was selected.");
@@ -310,7 +312,8 @@ namespace CID_USB_BaseStation
 
         private void mEp_DataReceived(object sender, EndpointDataEventArgs e) {
 
-            bw_ProcessUSBpacket_DoWork(e);
+            //bw_ProcessUSBpacket_DoWork(e);
+            pktHandler.Add(e.Buffer);
            // Task.Factory.StartNew(bw_ProcessUSBpacket_DoWork, e);
            // bw_ProcessUSBpacket.RunAsync<EndpointDataEventArgs, bool>(bw_ProcessUSBpacket_DoWork, e, bw_ProcessUSBpacket_RunWorkerCompleted);
                 // So we can keep on receiveing USB Packets as fast as possible without being blocked by UI thread
@@ -319,13 +322,11 @@ namespace CID_USB_BaseStation
 
         delegate void Completed (bool isStimulating);
 
-        void bw_ProcessUSBpacket_DoWork(EndpointDataEventArgs e)
+        void ProcessUSBpacket_Done(object sender, ProcessingDoneEventArgs e)
         {
-            Packet RxPacket = new Packet(e);
-            int[] adcVals = pktHandler.ParseNewPacket(RxPacket);
             int sum = 0;
-
-            foreach (int val in adcVals)
+            
+            foreach (int val in e.results)
             {
                 sum += val;
                 oScope.AddData(val,0,0);

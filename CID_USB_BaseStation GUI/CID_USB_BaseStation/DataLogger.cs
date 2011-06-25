@@ -33,7 +33,7 @@ namespace CID_USB_BaseStation
                 this.fileName = fileName;
                 isFileOpened = true;
             }
-            catch (Exception ioe)
+             catch (Exception ioe)
             {
                 MessageBox.Show("Unable to create: " + fileName+ ": " + ioe.Message);
                 this.fileName = "";

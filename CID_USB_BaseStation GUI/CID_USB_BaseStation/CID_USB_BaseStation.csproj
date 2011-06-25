@@ -51,6 +51,7 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>A7334AF901514CA2C9F3E656BF2DA79102122C1C</ManifestCertificateThumbprint>

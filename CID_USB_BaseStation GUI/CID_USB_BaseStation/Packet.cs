@@ -36,12 +36,14 @@ namespace CID_USB_BaseStation
         private int[] adcVals;
         public int[] AdcVals { get { return adcVals; } }
 
-        public Packet(EndpointDataEventArgs e)
+        public Packet(EndpointDataEventArgs e) : this(e.Buffer) { }
+
+        public Packet( byte [] buffer)
         {
             byte info;
 
             this.buffer = new byte [maxLength];
-            Array.Copy(e.Buffer, this.buffer, maxLength);
+            Array.Copy(buffer, this.buffer, maxLength);
 
             info = buffer[infoIndex];
             this.isStimulating = !(((info) & (0x80)) == 0); // if right most bit is set to 1 then its stimulating
