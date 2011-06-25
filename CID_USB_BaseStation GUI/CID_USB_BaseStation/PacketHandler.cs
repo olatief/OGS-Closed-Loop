@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Linq;
 using System.Text;
 using Signal_Project;
@@ -22,7 +23,7 @@ namespace CID_USB_BaseStation
 
     }	//end of class HandlerDoneEventArgs
 
-    class PacketHandler
+    class PacketHandler : IDisposable
     {
         public delegate void processingDoneHandler(object sender, ProcessingDoneEventArgs e);
 
@@ -30,8 +31,9 @@ namespace CID_USB_BaseStation
         private byte deviceId = 0;
         private Packet lastPacket = null;
         private int missedPackets;
-        private Queue workQueue = new Queue();
-        
+        //private ConcurrentQueue<byte[]> workQueue = new ConcurrentQueue<byte[]>();
+
+        public BlockingCollection<byte[]> bcWorkQueue = new BlockingCollection<byte[]>(new ConcurrentQueue<byte[]>());
         public static DataLogger Logger { get { return PacketHandler.logger; } }
         public Packet LastPacket { get { return lastPacket; } }
         public event processingDoneHandler processingDone;
@@ -39,44 +41,42 @@ namespace CID_USB_BaseStation
        
         public PacketHandler()
         {
-            WirelessStats.Instance.Reset();  
+            WirelessStats.Instance.Reset();
+            Task.Factory.StartNew(processQueue);
         }
-        
-        public void Add(byte[] buffer)
+       
+        public void processQueue()
         {
-                workQueue.Enqueue(buffer);
-            
-
-            if (!isProcessing)
+            while (!bcWorkQueue.IsCompleted || disposed == true)
             {
-                Task.Factory.StartNew(processQueue);
+                byte[] buffer = null;
+
+                try
+                {
+                    buffer = bcWorkQueue.Take();
+                }
+                catch (InvalidOperationException) { }
+
+                if (buffer != null)
+                {
+                    ParseNewPacket(new Packet(buffer));
+                }
             }
         }
 
-        private bool isProcessing = false;
-
-        public void processQueue()
-        {
-            // byte[] buffer;
-            isProcessing = true;
-            
-                while(workQueue.Count>0)
-                    ParseNewPacket(new Packet((byte[])workQueue.Dequeue()));
-            
-
-            isProcessing = false;
-        }
-
-        
         public void ParseNewPacket(Packet receivedPacket)
         {
             int [] parsedValues;
             if (lastPacket != null)
             {
                 missedPackets = receivedPacket.Count - lastPacket.Count - 1;
-
+                
                 if (receivedPacket.Count <= lastPacket.Count) // check for overflow since count only goes to 128;
                 {
+                    if (missedPackets == 0)
+                    {
+                        throw new InvalidOperationException();
+                    }
                     missedPackets += 128;
                 }
 
@@ -149,6 +149,30 @@ namespace CID_USB_BaseStation
                 val[i] = tmpVal;
             }
             return val;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private bool disposed = false;
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    this.bcWorkQueue.CompleteAdding();
+                }
+
+                disposed = true;
+            }
+        }
+        ~PacketHandler()
+        {
+            Dispose(false);
         }
     }
 }

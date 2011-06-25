@@ -14,6 +14,8 @@ using LibUsbDotNet.LibUsb;
 using LibUsbDotNet.Main;
 using EC = LibUsbDotNet.Main.ErrorCode;
 using System.Diagnostics;
+using System.Threading;
+
 using System.Runtime.InteropServices;
 using Signal_Project;
 using System.Threading.Tasks;
@@ -288,6 +290,8 @@ namespace CID_USB_BaseStation
                     mEpReader = mUsbDevice.OpenEndpointReader((ReadEndpointID)(epNum | 0x80), 64);
                     mEpWriter = mUsbDevice.OpenEndpointWriter((WriteEndpointID)epNum);
                     mEpReader.DataReceived += mEp_DataReceived;
+                    mEpReader.ReadBufferSize = 64;
+                    mEpReader.ReadThreadPriority = ThreadPriority.AboveNormal;
                     mEpReader.Flush();
                 //    panTransfer.Enabled = true;
                 }
@@ -313,7 +317,17 @@ namespace CID_USB_BaseStation
         private void mEp_DataReceived(object sender, EndpointDataEventArgs e) {
 
             //bw_ProcessUSBpacket_DoWork(e);
-            pktHandler.Add(e.Buffer);
+            byte[] buffer = (byte[])e.Buffer.Clone(); // so we dont process duplicates
+
+            if (this.IsDisposed) // stop everything
+            {
+                pktHandler.bcWorkQueue.CompleteAdding();
+            }
+            else
+            {
+                pktHandler.bcWorkQueue.Add(buffer);
+            }
+
            // Task.Factory.StartNew(bw_ProcessUSBpacket_DoWork, e);
            // bw_ProcessUSBpacket.RunAsync<EndpointDataEventArgs, bool>(bw_ProcessUSBpacket_DoWork, e, bw_ProcessUSBpacket_RunWorkerCompleted);
                 // So we can keep on receiveing USB Packets as fast as possible without being blocked by UI thread
@@ -395,22 +409,26 @@ namespace CID_USB_BaseStation
             sendProg(pAll);
         }
 
+        UsbTransfer usbWriteTransfer;
+
         private void sendProg(progAll pAll)
         {
             ErrorCode wError;
             byte[] bytesToWrite = StructureToByteArray(pAll);
 
-            int uiTransmitted;
+            int uiTransmitted = 2;
             if (mEpWriter != null)
             {
-               
-                wError = mEpWriter.Write(bytesToWrite, 1000, out uiTransmitted);
+                //wError = mEpWriter.SubmitAsyncTransfer(bytesToWrite, 0, bytesToWrite.Length, 100, out usbWriteTransfer);
+               // wError = usbWriteTransfer.Wait(out uiTransmitted);
+
+                 wError = mEpWriter.Write(bytesToWrite, 100, out uiTransmitted);
                 if (wError == ErrorCode.None)
                 {
                     tsStatus.Text = uiTransmitted + " bytes written.";
                 }
                 else
-                {
+                {   
                     tsStatus.Text = "Write failed!";
                     mEpWriter.Reset();
                 }

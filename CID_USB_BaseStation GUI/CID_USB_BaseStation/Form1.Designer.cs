@@ -16,6 +16,7 @@
             if (disposing && (components != null))
             {
                 components.Dispose();
+                closeDevice(); // closes USB
             }
             base.Dispose(disposing);
         }

@@ -36,8 +36,6 @@ C:\Users\Omar\Dropbox\OGS-Closed-Loop\CID_USB_BaseStation GUI\CID_USB_BaseStatio
 C:\Users\Omar\Dropbox\OGS-Closed-Loop\CID_USB_BaseStation GUI\CID_USB_BaseStation\bin\Release\CID_USB_BaseStation.application
 C:\Users\Omar\Dropbox\OGS-Closed-Loop\CID_USB_BaseStation GUI\CID_USB_BaseStation\bin\Release\CID_USB_BaseStation.exe
 C:\Users\Omar\Dropbox\OGS-Closed-Loop\CID_USB_BaseStation GUI\CID_USB_BaseStation\bin\Release\CID_USB_BaseStation.pdb
-C:\Users\Omar\Dropbox\OGS-Closed-Loop\CID_USB_BaseStation GUI\CID_USB_BaseStation\bin\Release\LibUsbDotNet.pdb
-C:\Users\Omar\Dropbox\OGS-Closed-Loop\CID_USB_BaseStation GUI\CID_USB_BaseStation\bin\Release\LibUsbDotNet.xml
 C:\Users\Omar\Dropbox\OGS-Closed-Loop\CID_USB_BaseStation GUI\CID_USB_BaseStation\obj\x86\Release\ResolveAssemblyReference.cache
 C:\Users\Omar\Dropbox\OGS-Closed-Loop\CID_USB_BaseStation GUI\CID_USB_BaseStation\obj\x86\Release\CID_USB_BaseStation.frmMain.resources
 C:\Users\Omar\Dropbox\OGS-Closed-Loop\CID_USB_BaseStation GUI\CID_USB_BaseStation\obj\x86\Release\CID_USB_BaseStation.Properties.Resources.resources
@@ -47,3 +45,5 @@ C:\Users\Omar\Dropbox\OGS-Closed-Loop\CID_USB_BaseStation GUI\CID_USB_BaseStatio
 C:\Users\Omar\Dropbox\OGS-Closed-Loop\CID_USB_BaseStation GUI\CID_USB_BaseStation\obj\x86\Release\CID_USB_BaseStation.application
 C:\Users\Omar\Dropbox\OGS-Closed-Loop\CID_USB_BaseStation GUI\CID_USB_BaseStation\obj\x86\Release\CID_USB_BaseStation.exe
 C:\Users\Omar\Dropbox\OGS-Closed-Loop\CID_USB_BaseStation GUI\CID_USB_BaseStation\obj\x86\Release\CID_USB_BaseStation.pdb
+C:\Users\Omar\Dropbox\OGS-Closed-Loop\CID_USB_BaseStation GUI\CID_USB_BaseStation\bin\Release\LibUsbDotNet.pdb
+C:\Users\Omar\Dropbox\OGS-Closed-Loop\CID_USB_BaseStation GUI\CID_USB_BaseStation\bin\Release\LibUsbDotNet.xml
