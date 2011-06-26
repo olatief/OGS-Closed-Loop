@@ -35,7 +35,7 @@ namespace CID_USB_BaseStation
         progAlgo pAlgo = new progAlgo();
 
         DataLogger dataLogger = DataLogger.Instance;
-        PacketHandler pktHandler;
+        PacketHandler pktHandler=new PacketHandler();
 
         private void UsbGlobals_UsbErrorEvent(object sender, UsbError e) { Invoke(new UsbErrorEventDelegate(UsbGlobalErrorEvent), new object[] { sender, e }); }
         private void UsbGlobalErrorEvent(object sender, UsbError e) { /* tRecv.AppendText(e + "\r\n");*/ }
@@ -322,12 +322,15 @@ namespace CID_USB_BaseStation
 
         void ProcessUSBpacket_Done(object sender, ProcessingDoneEventArgs e)
         {
-            int sum = 0;
-            
+            double tmpVal;
             foreach (int val in e.results)
             {
-                sum += val;
-                oScope.AddData(val,0,0);
+                tmpVal = val;
+                if (pktHandler.filterEnabled)
+                {
+                    tmpVal = pktHandler.bpFilter.Filter(tmpVal);
+                }
+                oScope.AddData(tmpVal,0,0);
             }
 
             // oScope.AddData(sum/15, 0, 0);
@@ -505,5 +508,20 @@ namespace CID_USB_BaseStation
             }
         }
 
+        private void btnUpdateFilter_Click(object sender, EventArgs e)
+        {
+            double samplingFreq = Convert.ToDouble(txtSamplingFreq.Text);
+            double LowFreq = Convert.ToDouble(txtFilterLowFreq.Text);
+            double HiFreq = Convert.ToDouble(txtFilterHiFreq.Text);
+            int filterOrder = Convert.ToInt32(txtFilterOrder.Text);
+            
+            // inefficient since it will call the filter designer 3 times in a row
+            pktHandler.bpFilter = new Butterworth(LowFreq / samplingFreq, HiFreq / samplingFreq, filterOrder);
+        }
+
+        private void chkFilterEnabled_CheckedChanged(object sender, EventArgs e)
+        {
+            pktHandler.filterEnabled = chkFilterEnabled.Checked;
+        }
     }
 }

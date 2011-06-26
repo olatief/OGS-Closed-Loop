@@ -28,17 +28,25 @@ namespace CID_USB_BaseStation
         private void cmdDraw_Click(object sender, EventArgs e)
         {
             int[] adcVals = new int[1000];
+            double[] filterVal = new double[1001];
 
-            
+
             int i = 0;
             // generate sine wave data
             oScope.Show();
+            filterVal[0] = pktHandler.bpFilter.Filter(1);
+           // oScope.AddData(filterVal[0], 0, 0);
             for (i = 0; i < adcVals.Length; ++i)
             {
+                
                 adcVals[i] = Convert.ToInt32(1000 * Math.Sin(2 * Math.PI * (i) / 50));
-                oScope.AddData(adcVals[i], 0,0);
+                oScope.AddData(pktHandler.bpFilter.Response((double)i/(double)adcVals.Length), 0, 0);
                 oScope.AddExternalData(adcVals[i]);
             }
+
+            
+
+            
 
             //scope.AddRawADCtoQueue(adcVals);
 

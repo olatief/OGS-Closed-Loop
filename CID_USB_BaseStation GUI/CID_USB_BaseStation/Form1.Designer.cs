@@ -90,6 +90,17 @@
             this.lblDroppedStat = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.btnUpdateFilter = new System.Windows.Forms.Button();
+            this.label19 = new System.Windows.Forms.Label();
+            this.txtFilterOrder = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.txtFilterHiFreq = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.txtFilterLowFreq = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.txtSamplingFreq = new System.Windows.Forms.TextBox();
+            this.chkFilterEnabled = new System.Windows.Forms.CheckBox();
             this.statusStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -98,6 +109,7 @@
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.groupBox5.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // cboDevices
@@ -542,7 +554,7 @@
             // 
             // btnConvert
             // 
-            this.btnConvert.Location = new System.Drawing.Point(850, 83);
+            this.btnConvert.Location = new System.Drawing.Point(775, 29);
             this.btnConvert.Name = "btnConvert";
             this.btnConvert.Size = new System.Drawing.Size(69, 21);
             this.btnConvert.TabIndex = 8;
@@ -659,11 +671,120 @@
             this.label14.TabIndex = 0;
             this.label14.Text = "Dropped Packets:";
             // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.btnUpdateFilter);
+            this.groupBox6.Controls.Add(this.label19);
+            this.groupBox6.Controls.Add(this.txtFilterOrder);
+            this.groupBox6.Controls.Add(this.label18);
+            this.groupBox6.Controls.Add(this.txtFilterHiFreq);
+            this.groupBox6.Controls.Add(this.label17);
+            this.groupBox6.Controls.Add(this.txtFilterLowFreq);
+            this.groupBox6.Controls.Add(this.label16);
+            this.groupBox6.Controls.Add(this.txtSamplingFreq);
+            this.groupBox6.Controls.Add(this.chkFilterEnabled);
+            this.groupBox6.Location = new System.Drawing.Point(521, 106);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(502, 290);
+            this.groupBox6.TabIndex = 16;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Real-time Filtering";
+            // 
+            // btnUpdateFilter
+            // 
+            this.btnUpdateFilter.Location = new System.Drawing.Point(243, 190);
+            this.btnUpdateFilter.Name = "btnUpdateFilter";
+            this.btnUpdateFilter.Size = new System.Drawing.Size(75, 23);
+            this.btnUpdateFilter.TabIndex = 12;
+            this.btnUpdateFilter.Text = "Update Filter";
+            this.btnUpdateFilter.UseVisualStyleBackColor = true;
+            this.btnUpdateFilter.Click += new System.EventHandler(this.btnUpdateFilter_Click);
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(231, 87);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(112, 13);
+            this.label19.TabIndex = 11;
+            this.label19.Text = "Filter Order (per cutoff)";
+            // 
+            // txtFilterOrder
+            // 
+            this.txtFilterOrder.Location = new System.Drawing.Point(349, 84);
+            this.txtFilterOrder.Name = "txtFilterOrder";
+            this.txtFilterOrder.Size = new System.Drawing.Size(49, 20);
+            this.txtFilterOrder.TabIndex = 10;
+            this.txtFilterOrder.Text = "10";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(22, 139);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(106, 13);
+            this.label18.TabIndex = 9;
+            this.label18.Text = "High Freq Cutoff (Hz)";
+            // 
+            // txtFilterHiFreq
+            // 
+            this.txtFilterHiFreq.Location = new System.Drawing.Point(153, 132);
+            this.txtFilterHiFreq.Name = "txtFilterHiFreq";
+            this.txtFilterHiFreq.Size = new System.Drawing.Size(49, 20);
+            this.txtFilterHiFreq.TabIndex = 8;
+            this.txtFilterHiFreq.Text = "800";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(22, 114);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(104, 13);
+            this.label17.TabIndex = 7;
+            this.label17.Text = "Low Freq Cutoff (Hz)";
+            // 
+            // txtFilterLowFreq
+            // 
+            this.txtFilterLowFreq.Location = new System.Drawing.Point(153, 107);
+            this.txtFilterLowFreq.Name = "txtFilterLowFreq";
+            this.txtFilterLowFreq.Size = new System.Drawing.Size(49, 20);
+            this.txtFilterLowFreq.TabIndex = 6;
+            this.txtFilterLowFreq.Text = "10";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(22, 88);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(125, 13);
+            this.label16.TabIndex = 5;
+            this.label16.Text = "Sampling Frequency (Hz)";
+            // 
+            // txtSamplingFreq
+            // 
+            this.txtSamplingFreq.Location = new System.Drawing.Point(153, 84);
+            this.txtSamplingFreq.Name = "txtSamplingFreq";
+            this.txtSamplingFreq.Size = new System.Drawing.Size(49, 20);
+            this.txtSamplingFreq.TabIndex = 4;
+            this.txtSamplingFreq.Text = "16000";
+            // 
+            // chkFilterEnabled
+            // 
+            this.chkFilterEnabled.AutoSize = true;
+            this.chkFilterEnabled.Location = new System.Drawing.Point(25, 41);
+            this.chkFilterEnabled.Name = "chkFilterEnabled";
+            this.chkFilterEnabled.Size = new System.Drawing.Size(104, 17);
+            this.chkFilterEnabled.TabIndex = 0;
+            this.chkFilterEnabled.Text = "Filtering Enabled";
+            this.chkFilterEnabled.UseVisualStyleBackColor = true;
+            this.chkFilterEnabled.CheckedChanged += new System.EventHandler(this.chkFilterEnabled_CheckedChanged);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1285, 684);
+            this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.cmdTestStim);
             this.Controls.Add(this.cmdDraw);
@@ -693,6 +814,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -760,6 +883,17 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label lblSuccessStat;
         private System.Windows.Forms.Label lblDroppedStat;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.CheckBox chkFilterEnabled;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.TextBox txtSamplingFreq;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.TextBox txtFilterLowFreq;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.TextBox txtFilterOrder;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.TextBox txtFilterHiFreq;
+        private System.Windows.Forms.Button btnUpdateFilter;
     }
 }
 

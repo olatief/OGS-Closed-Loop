@@ -35,8 +35,9 @@ namespace CID_USB_BaseStation
         public static DataLogger Logger { get { return PacketHandler.logger; } }
         public Packet LastPacket { get { return lastPacket; } }
         public event processingDoneHandler processingDone;
+        public Butterworth bpFilter = new Butterworth(0,.5,2);
+        public bool filterEnabled = false;
 
-       
         public PacketHandler()
         {
             WirelessStats.Instance.Reset();
@@ -116,7 +117,6 @@ namespace CID_USB_BaseStation
                     tempValue = -tempValue;
                 }
                * */
-
                 parsedValues[i] = 2048-tempValue;
                 
                 logger.LogLine(parsedValues[i]);
