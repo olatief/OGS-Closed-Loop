@@ -1,12 +1,17 @@
 *.lst
+*.LST
 *.obj
+*.OBJ
 *.map
 *.m51
+*.M51
 *.m66
 *.plg
 *.__i
 *.i
+*.I
 *.tra
 *.lnp
 *.orc
+*.ORC
 *.bak

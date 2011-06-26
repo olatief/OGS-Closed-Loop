@@ -40,7 +40,6 @@ namespace CID_USB_BaseStation
         private void UsbGlobals_UsbErrorEvent(object sender, UsbError e) { Invoke(new UsbErrorEventDelegate(UsbGlobalErrorEvent), new object[] { sender, e }); }
         private void UsbGlobalErrorEvent(object sender, UsbError e) { /* tRecv.AppendText(e + "\r\n");*/ }
 
-        //private BackgroundWorker bw_ProcessUSBpacket = new BackgroundWorker();
         private QueuedBackgroundWorker bw_ProcessUSBpacket = new QueuedBackgroundWorker();
 
         public frmMain()
@@ -245,11 +244,8 @@ namespace CID_USB_BaseStation
                     mUsbDevice.Close();
                     mUsbDevice = null;
                     tsStatus.Text = "Device Closed";
-                    //chkLogToFile.Checked = false;
                 }
-
             }
-            // panTransfer.Enabled = false;
         }
 
         private bool openDevice(int index)
@@ -257,12 +253,7 @@ namespace CID_USB_BaseStation
             bool bRtn = false;
 
             closeDevice();
-           /* TODO: Delete
-            chkRead.CheckedChanged -= chkRead_CheckedChanged;
-            chkRead.Checked = false;
-            cmdRead.Enabled = true;
-            chkRead.CheckedChanged += chkRead_CheckedChanged;
-        */
+
             if (mRegDevices[index].Open(out mUsbDevice))
             {
                 bRtn = true;
@@ -293,7 +284,6 @@ namespace CID_USB_BaseStation
                     mEpReader.ReadBufferSize = 64;
                     mEpReader.ReadThreadPriority = ThreadPriority.AboveNormal;
                     mEpReader.Flush();
-                //    panTransfer.Enabled = true;
                 }
             }
             
@@ -316,25 +306,19 @@ namespace CID_USB_BaseStation
 
         private void mEp_DataReceived(object sender, EndpointDataEventArgs e) {
 
-            //bw_ProcessUSBpacket_DoWork(e);
             byte[] buffer = (byte[])e.Buffer.Clone(); // so we dont process duplicates
 
             if (this.IsDisposed) // stop everything
             {
+                // This prevents the process from waiting for the processing thread to get done
                 pktHandler.bcWorkQueue.CompleteAdding();
             }
             else
             {
+                // So we can keep on receiveing USB Packets as fast as possible without being blocked by UI thread
                 pktHandler.bcWorkQueue.Add(buffer);
             }
-
-           // Task.Factory.StartNew(bw_ProcessUSBpacket_DoWork, e);
-           // bw_ProcessUSBpacket.RunAsync<EndpointDataEventArgs, bool>(bw_ProcessUSBpacket_DoWork, e, bw_ProcessUSBpacket_RunWorkerCompleted);
-                // So we can keep on receiveing USB Packets as fast as possible without being blocked by UI thread
-        
         }
-
-        delegate void Completed (bool isStimulating);
 
         void ProcessUSBpacket_Done(object sender, ProcessingDoneEventArgs e)
         {
@@ -366,7 +350,6 @@ namespace CID_USB_BaseStation
             }
         }
 
-
         private void btnProgAll_Click(object sender, EventArgs e)
         {
             pAll.pType = pktType.All;
@@ -388,8 +371,6 @@ namespace CID_USB_BaseStation
             return bytearray;
         }
 
-
-
         private void btnProgStim_Click(object sender, EventArgs e)
         {
             pAll.pType = pktType.Stim;
@@ -399,7 +380,6 @@ namespace CID_USB_BaseStation
             sendProg(pAll);
         }
 
-
         private void btnProgAlgo_Click(object sender, EventArgs e)
         {
             pAll.pType = pktType.Algo;
@@ -408,8 +388,6 @@ namespace CID_USB_BaseStation
 
             sendProg(pAll);
         }
-
-        UsbTransfer usbWriteTransfer;
 
         private void sendProg(progAll pAll)
         {
@@ -466,7 +444,7 @@ namespace CID_USB_BaseStation
 
         private void frmMain_Activated(object sender, EventArgs e)
         {
-            if (firstTime)
+            if (firstTime) // This is because sometimes the form gets Activated more than once
             {
                 firstTime = false;
                 List<TextBox> tvals = new List<TextBox>();
@@ -508,87 +486,9 @@ namespace CID_USB_BaseStation
 
         }
 
-        #region DATAPLOTTING
-
-        Rectangle myRectangle; 
-        Pen mDataPen = new Pen(Color.Navy, 2);
-        Graphics myGraphic; 
-
-        private void initPlot()
-        {
-            myRectangle = new Rectangle(picPlot.Location, picPlot.Size);
-            myGraphic = this.CreateGraphics();
-
-            tmrStats.Stop();
-            tmrStats.Enabled = false;
-            tmrStats.Enabled = true;
-        }
-
-        private void startDrawing()
-        {
-            tmrStats.Stop();
-            tmrStats.Enabled = false;
-            tmrStats.Enabled = true;
-        }
-
-        private int LeftOffset = 10;
-        private  int BottomOffset = 10; 
-        private const float SamplingFreq = 4000; // (Hz)
-
-        private float XScalingFactor = 5.0f;
-        private float YScalingFactor = 1.0f;
-
-        private void DrawData(Int16[] adcVals)
-        {
-         //   populateArray2();
-          Point[] pts = new Point[adcVals.Length];
-          BottomOffset = picPlot.Location.Y + picPlot.Size.Height/2;// +picPlot.Size.Height;
-          LeftOffset = picPlot.Location.X;// +picPlot.Size.Width;
-          for (int i=0; i < adcVals.Length; i++){
-              pts[i].X = LeftOffset + Convert.ToInt32(XScalingFactor * i);
-              pts[i].Y = (BottomOffset +  Convert.ToInt32(YScalingFactor*adcVals[i]));
-          }
-
-          myGraphic = this.CreateGraphics();
-        //  myGraphic.Clear(System.Drawing.SystemColors.Control);
-          myGraphic.DrawRectangle(
-           Pens.Black, 
-           picPlot.Location.X,
-           picPlot.Location.Y,
-          picPlot.Size.Width - 1,
-            picPlot.Size.Height - 1);
-
-          // pMaxValue = myRectangle.Height-(BottomOffset + pMax);
-          // myGraphic.DrawLine(Pens.Black,10,pMaxValue,180,pMaxValue);
-          myGraphic.DrawCurve(mDataPen, pts);
- 
-        }
-        #endregion
-
-        private void picPlot_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void hScroll_ValueChanged(object sender, EventArgs e)
-        {
-           // scope.XScrollLocation = hScrollBar1.Value;
-        }
-
-        private void vScroll_ValueChanged(object sender, ScrollEventArgs e)
-        {
-           // scope.YScrollLocation = vScrollBar1.Value;
-        }
-
-        private void Trigger_KeyDown(object sender, KeyEventArgs e)
-        {
-
-        }
-
         private void frmMain_FormClosed(object sender, FormClosedEventArgs e)
         {
             oScope.Dispose();
-
         }
 
         private void timer1_Tick(object sender, EventArgs e)

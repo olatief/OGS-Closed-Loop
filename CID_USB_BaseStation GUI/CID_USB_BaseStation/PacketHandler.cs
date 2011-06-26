@@ -28,10 +28,8 @@ namespace CID_USB_BaseStation
         public delegate void processingDoneHandler(object sender, ProcessingDoneEventArgs e);
 
         private static DataLogger logger = DataLogger.Instance;
-        private byte deviceId = 0;
         private Packet lastPacket = null;
         private int missedPackets;
-        //private ConcurrentQueue<byte[]> workQueue = new ConcurrentQueue<byte[]>();
 
         public BlockingCollection<byte[]> bcWorkQueue = new BlockingCollection<byte[]>(new ConcurrentQueue<byte[]>());
         public static DataLogger Logger { get { return PacketHandler.logger; } }
