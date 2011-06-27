@@ -29,6 +29,7 @@ namespace CID_USB_BaseStation
         private UsbEndpointReader mEpReader;
         private UsbEndpointWriter mEpWriter;
         private UsbRegDeviceList mRegDevices;
+        private Oscilloscope oScope;
 
         progAll pAll = new progAll();
         progStim pStim = new progStim();
@@ -91,6 +92,13 @@ namespace CID_USB_BaseStation
             tvalDelay.Tag = validate(0, 40 * 250, delegate(Int32 val) { pAlgo.delay = (byte)(val / 40); tvalDelay.Text = Convert.ToString(pAlgo.delay * 40); });
             
             oScope = Oscilloscope.Create();
+            if (oScope == null)
+            {
+                MessageBox.Show("Cant load Osc_DLL.dll. Make sure this file is in the same folder as the executable");
+                Environment.Exit(0);
+                return;
+                
+            }
             oScope.Show();
         
         }

@@ -11,7 +11,8 @@
     <RootNamespace>CID_USB_BaseStation</RootNamespace>
     <AssemblyName>CID_USB_BaseStation</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>C:\Users\Omar\Dropbox\Cyberonics Wireless Nordic Files\</PublishUrl>
@@ -154,6 +155,9 @@
       <Project>{0A78F6FF-5586-4052-8104-E23FF83A7CE1}</Project>
       <Name>LibUsbDotNet</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
