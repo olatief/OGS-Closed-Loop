@@ -6,15 +6,13 @@ using System.Numerics;
 
 namespace CID_USB_BaseStation
 {
-    class Butterworth
+    class Butterworth : Filter
     {
-        private object filtLock = new object();
 
-        private LTISystem[] bpFilter;
         private double lowfreq;
         private double hifreq;
         private int nSection;
-
+        
         public double LowFreq
         {
             get { return lowfreq; }
@@ -51,14 +49,11 @@ namespace CID_USB_BaseStation
                 }
             }
         }
+        
         private void updateFilter()
         {
             LTISystem[] temp =  BandPass(lowfreq,hifreq,nSection); // no reason why we cant calculate coefficients before we lock
-            // prevent updating coefficients while we're in the middle of a filter operation. Prevents index out of bound exceptions;
-            lock (filtLock) 
-            {
-                bpFilter = temp; 
-            }
+            base.updateFilter(temp);
         }
 
         public Butterworth(double lofreq, double hifreq, int nSection)
@@ -66,31 +61,7 @@ namespace CID_USB_BaseStation
             bpFilter = BandPass( lofreq,  hifreq, nSection);
         }
 
-        public double Response(double freq)
-        {
-            Complex result = 1;
-            foreach (LTISystem lti in bpFilter)
-            {
-                result *= lti.response(freq);
-            }
-
-            return result.Magnitude;
-        }
-
-        public double Filter(double val)
-        {
-            double result;
-
-            lock (filtLock)
-            {
-                result = bpFilter[0].Eval(val);
-                for (int i = 1; i < bpFilter.Length; i++)
-                {
-                    result = bpFilter[i].Eval(result);
-                }
-            }
-            return result;
-        }
+        
 
         public static Complex[] Poles( double freq,
                                         int nSection)

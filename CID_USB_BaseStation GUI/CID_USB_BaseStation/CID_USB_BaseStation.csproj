@@ -84,7 +84,9 @@
     <Compile Include="DataLogger.cs" />
     <Compile Include="DataParse.cs" />
     <Compile Include="Filter\Butterworth.cs" />
+    <Compile Include="Filter\Filter.cs" />
     <Compile Include="Filter\LTISystem.cs" />
+    <Compile Include="Filter\Notch.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -94,6 +96,7 @@
     <Compile Include="FormTester.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="MATLAB.cs" />
     <Compile Include="Oscilloscope.cs" />
     <Compile Include="Packet.cs" />
     <Compile Include="PacketHandler.cs" />
@@ -158,6 +161,17 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="MLApp">
+      <Guid>{C36E46AB-6A81-457B-9F91-A7719A06287F}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

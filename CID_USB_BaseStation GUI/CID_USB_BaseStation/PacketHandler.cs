@@ -35,8 +35,10 @@ namespace CID_USB_BaseStation
         public static DataLogger Logger { get { return PacketHandler.logger; } }
         public Packet LastPacket { get { return lastPacket; } }
         public event processingDoneHandler processingDone;
-        public Butterworth bpFilter = new Butterworth(0,.5,2);
-        public bool filterEnabled = false;
+        public Butterworth bpFilter = new Butterworth(0.1,.5,2);
+        public Notch notchFilter = new Notch(60, 16000, 10);
+        public bool bpFilterEnabled = false;
+        public bool notchFilterEnabled = false;
 
         public PacketHandler()
         {
@@ -162,6 +164,7 @@ namespace CID_USB_BaseStation
             {
                 if (disposing)
                 {
+                    // so it doesnt keep on running when we shut down. TODO: see if this is necessary so we can get rid of Dispose pattern
                     this.bcWorkQueue.CompleteAdding();
                 }
 

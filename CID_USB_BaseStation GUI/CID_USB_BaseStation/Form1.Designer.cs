@@ -91,6 +91,13 @@
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.txtFilterBandwidth = new System.Windows.Forms.TextBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.txtFilterNumHarmonics = new System.Windows.Forms.TextBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.txtFilterNotchFreq = new System.Windows.Forms.TextBox();
+            this.chkNotchFilterEnabled = new System.Windows.Forms.CheckBox();
             this.btnUpdateFilter = new System.Windows.Forms.Button();
             this.label19 = new System.Windows.Forms.Label();
             this.txtFilterOrder = new System.Windows.Forms.TextBox();
@@ -673,6 +680,13 @@
             // 
             // groupBox6
             // 
+            this.groupBox6.Controls.Add(this.label22);
+            this.groupBox6.Controls.Add(this.txtFilterBandwidth);
+            this.groupBox6.Controls.Add(this.label21);
+            this.groupBox6.Controls.Add(this.txtFilterNumHarmonics);
+            this.groupBox6.Controls.Add(this.label20);
+            this.groupBox6.Controls.Add(this.txtFilterNotchFreq);
+            this.groupBox6.Controls.Add(this.chkNotchFilterEnabled);
             this.groupBox6.Controls.Add(this.btnUpdateFilter);
             this.groupBox6.Controls.Add(this.label19);
             this.groupBox6.Controls.Add(this.txtFilterOrder);
@@ -690,9 +704,72 @@
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Real-time Filtering";
             // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(280, 139);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(104, 13);
+            this.label22.TabIndex = 19;
+            this.label22.Text = "1 dB Bandwidth (Hz)";
+            // 
+            // txtFilterBandwidth
+            // 
+            this.txtFilterBandwidth.Location = new System.Drawing.Point(395, 136);
+            this.txtFilterBandwidth.Name = "txtFilterBandwidth";
+            this.txtFilterBandwidth.Size = new System.Drawing.Size(49, 20);
+            this.txtFilterBandwidth.TabIndex = 18;
+            this.txtFilterBandwidth.Text = "10";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(280, 114);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(109, 13);
+            this.label21.TabIndex = 17;
+            this.label21.Text = "Number of Harmonics";
+            this.label21.Click += new System.EventHandler(this.label21_Click);
+            // 
+            // txtFilterNumHarmonics
+            // 
+            this.txtFilterNumHarmonics.Location = new System.Drawing.Point(395, 111);
+            this.txtFilterNumHarmonics.Name = "txtFilterNumHarmonics";
+            this.txtFilterNumHarmonics.Size = new System.Drawing.Size(49, 20);
+            this.txtFilterNumHarmonics.TabIndex = 16;
+            this.txtFilterNumHarmonics.Text = "20";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(278, 88);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(111, 13);
+            this.label20.TabIndex = 15;
+            this.label20.Text = "Notch Frequency (Hz)";
+            // 
+            // txtFilterNotchFreq
+            // 
+            this.txtFilterNotchFreq.Location = new System.Drawing.Point(395, 85);
+            this.txtFilterNotchFreq.Name = "txtFilterNotchFreq";
+            this.txtFilterNotchFreq.Size = new System.Drawing.Size(49, 20);
+            this.txtFilterNotchFreq.TabIndex = 14;
+            this.txtFilterNotchFreq.Text = "60";
+            // 
+            // chkNotchFilterEnabled
+            // 
+            this.chkNotchFilterEnabled.AutoSize = true;
+            this.chkNotchFilterEnabled.Location = new System.Drawing.Point(281, 41);
+            this.chkNotchFilterEnabled.Name = "chkNotchFilterEnabled";
+            this.chkNotchFilterEnabled.Size = new System.Drawing.Size(201, 17);
+            this.chkNotchFilterEnabled.TabIndex = 13;
+            this.chkNotchFilterEnabled.Text = "60Hz Pseudo-Comb Filtering Enabled";
+            this.chkNotchFilterEnabled.UseVisualStyleBackColor = true;
+            this.chkNotchFilterEnabled.CheckedChanged += new System.EventHandler(this.chkNotchFilterEnabled_CheckedChanged);
+            // 
             // btnUpdateFilter
             // 
-            this.btnUpdateFilter.Location = new System.Drawing.Point(243, 190);
+            this.btnUpdateFilter.Location = new System.Drawing.Point(211, 223);
             this.btnUpdateFilter.Name = "btnUpdateFilter";
             this.btnUpdateFilter.Size = new System.Drawing.Size(75, 23);
             this.btnUpdateFilter.TabIndex = 12;
@@ -703,7 +780,7 @@
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(231, 87);
+            this.label19.Location = new System.Drawing.Point(22, 175);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(112, 13);
             this.label19.TabIndex = 11;
@@ -711,7 +788,7 @@
             // 
             // txtFilterOrder
             // 
-            this.txtFilterOrder.Location = new System.Drawing.Point(349, 84);
+            this.txtFilterOrder.Location = new System.Drawing.Point(153, 175);
             this.txtFilterOrder.Name = "txtFilterOrder";
             this.txtFilterOrder.Size = new System.Drawing.Size(49, 20);
             this.txtFilterOrder.TabIndex = 10;
@@ -773,9 +850,9 @@
             this.chkFilterEnabled.AutoSize = true;
             this.chkFilterEnabled.Location = new System.Drawing.Point(25, 41);
             this.chkFilterEnabled.Name = "chkFilterEnabled";
-            this.chkFilterEnabled.Size = new System.Drawing.Size(104, 17);
+            this.chkFilterEnabled.Size = new System.Drawing.Size(154, 17);
             this.chkFilterEnabled.TabIndex = 0;
-            this.chkFilterEnabled.Text = "Filtering Enabled";
+            this.chkFilterEnabled.Text = "Bandpass Filtering Enabled";
             this.chkFilterEnabled.UseVisualStyleBackColor = true;
             this.chkFilterEnabled.CheckedChanged += new System.EventHandler(this.chkFilterEnabled_CheckedChanged);
             // 
@@ -894,6 +971,13 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.TextBox txtFilterHiFreq;
         private System.Windows.Forms.Button btnUpdateFilter;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.TextBox txtFilterNotchFreq;
+        private System.Windows.Forms.CheckBox chkNotchFilterEnabled;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.TextBox txtFilterNumHarmonics;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.TextBox txtFilterBandwidth;
     }
 }
 

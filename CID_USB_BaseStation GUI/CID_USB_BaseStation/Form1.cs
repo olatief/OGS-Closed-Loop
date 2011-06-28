@@ -334,9 +334,13 @@ namespace CID_USB_BaseStation
             foreach (int val in e.results)
             {
                 tmpVal = val;
-                if (pktHandler.filterEnabled)
+                if (pktHandler.bpFilterEnabled)
                 {
-                    tmpVal = pktHandler.bpFilter.Filter(tmpVal);
+                    tmpVal = pktHandler.bpFilter.runFilter(tmpVal);
+                }
+                if (pktHandler.notchFilterEnabled)
+                {
+                    tmpVal = pktHandler.notchFilter.runFilter(tmpVal);
                 }
                 oScope.AddData(tmpVal,0,0);
             }
@@ -522,14 +526,30 @@ namespace CID_USB_BaseStation
             double LowFreq = Convert.ToDouble(txtFilterLowFreq.Text);
             double HiFreq = Convert.ToDouble(txtFilterHiFreq.Text);
             int filterOrder = Convert.ToInt32(txtFilterOrder.Text);
-            
-            // inefficient since it will call the filter designer 3 times in a row
+
+            double notchFrequency = Convert.ToDouble(txtFilterNotchFreq.Text);
+            int numHarmonics = Convert.ToInt32(txtFilterNumHarmonics.Text);
+            double bandwidth = Convert.ToDouble(txtFilterBandwidth.Text);
+
+            pktHandler.notchFilter.updateFilter(pktHandler.notchFilter.notchesPrototype(notchFrequency,samplingFreq,bandwidth,1,numHarmonics));
+
             pktHandler.bpFilter = new Butterworth(LowFreq / samplingFreq, HiFreq / samplingFreq, filterOrder);
         }
 
+        
         private void chkFilterEnabled_CheckedChanged(object sender, EventArgs e)
         {
-            pktHandler.filterEnabled = chkFilterEnabled.Checked;
+            pktHandler.bpFilterEnabled = chkFilterEnabled.Checked;
+        }
+
+        private void chkNotchFilterEnabled_CheckedChanged(object sender, EventArgs e)
+        {
+            pktHandler.notchFilterEnabled = chkNotchFilterEnabled.Checked;
+        }
+
+        private void label21_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

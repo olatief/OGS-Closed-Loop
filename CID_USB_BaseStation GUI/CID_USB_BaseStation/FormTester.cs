@@ -32,7 +32,7 @@ namespace CID_USB_BaseStation
             int i = 0;
             // generate sine wave data
             oScope.Show();
-            filterVal[0] = pktHandler.bpFilter.Filter(1);
+            filterVal[0] = pktHandler.bpFilter.runFilter(1);
            // oScope.AddData(filterVal[0], 0, 0);
             for (i = 0; i < adcVals.Length; ++i)
             {
@@ -53,14 +53,7 @@ namespace CID_USB_BaseStation
 
         private void btnConvert_Click(object sender, EventArgs e)
         {
-            // string s = tRaw.Text;
-            // string[] lines = s.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
-
-            // UInt16[] bits = lines.Select(x => UInt16.Parse(x)).ToArray();
-
-            // int[] vals = bitsToInt(ref bits);
-
-            //  tConverted.Text = "";
+            MessageBox.Show(Matlab.tester());
         }
     }
 }
