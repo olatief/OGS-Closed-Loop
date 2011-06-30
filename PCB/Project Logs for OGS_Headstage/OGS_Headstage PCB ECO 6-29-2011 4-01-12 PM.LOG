@@ -1,0 +1,4 @@
+Added Pin To Net: NetName=PROGPIN1 Pin=U5-10
+Added Net: Name=PROGPIN1
+Added Pin To Net: NetName=PROGPIN2 Pin=U5-11
+Added Net: Name=PROGPIN2

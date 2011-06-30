@@ -1,0 +1,13 @@
+Added Component: Designator=LED1(OSRAM LED)
+Added Pin To Net: NetName=NetLED1_1 Pin=LED1-1
+Added Pin To Net: NetName=NetLED1_1 Pin=U1-1
+Added Pin To Net: NetName=NetLED1_1 Pin=U1-8
+Added Pin To Net: NetName=NetLED1_1 Pin=U1-9
+Added Pin To Net: NetName=NetLED1_1 Pin=U1-10
+Added Pin To Net: NetName=NetLED1_1 Pin=U1-11
+Added Pin To Net: NetName=NetLED1_1 Pin=U1-12
+Added Net: Name=NetLED1_1
+Added Pin To Net: NetName=NetLED1_2 Pin=LED1-2
+Added Pin To Net: NetName=NetLED1_2 Pin=U1-2
+Added Net: Name=NetLED1_2
+Added Member To Class: ClassName=LED_SOP Member=Component LED1 osram_hiled

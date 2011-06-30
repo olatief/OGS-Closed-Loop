@@ -1,0 +1,13 @@
+Output: NC Drill Files
+Type  : NC Drill
+From  : Project [OGS_Headstage.PrjPcb]
+   Generated File[OGS_Headstage.TXT]
+   Generated File[OGS_Headstage.DRL]
+   Generated File[OGS_Headstage.LDP]
+   Generated File[OGS_Headstage.DRR]
+
+
+Files Generated   : 4
+Documents Printed : 0
+
+Finished Output Generation At 4:32:39 PM On 6/29/2011

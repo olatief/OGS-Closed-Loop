@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+NCDrill File Report For: OGS_Headstage.PcbDoc   6/29/2011  4:32:39 PM
+---------------------------------------------------------------------------
+
+Layer Pair : Top Layer to Bottom Layer
+ASCII RoundHoles File : OGS_Headstage.TXT
+EIA File   : OGS_Headstage.DRL
+
+Tool         Hole Size           Hole Type     Hole Count Plated       Tool Travel
+---------------------------------------------------------------------------
+T1        11.8mil (0.29972mm)      Round          12               1.78 Inch (45.10 mm)
+T2        45mil (1.143mm)          Round          2                0.08 Inch (1.93 mm)
+T3        81.38mil (2.06705mm)     Round          1                0.00 Inch (0.00 mm)
+---------------------------------------------------------------------------
+Totals                                            15               1.85 Inch (47.03 mm)
+
+Total Processing Time (hh:mm:ss) : 00:00:00
