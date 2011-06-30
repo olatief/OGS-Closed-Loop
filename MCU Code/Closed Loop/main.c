@@ -190,8 +190,8 @@ void adc_irq() interrupt INTERRUPT_MISCIRQ	// should only be called for ADC, RNG
 void init_adc()
 {
    hal_adc_set_input_channel(HAL_ADC_INP_AIN0);                     
-   hal_adc_set_reference(HAL_ADC_REF_INT);                        
-   hal_adc_set_acq_window(HAL_ADC_AQW_12US);
+   hal_adc_set_reference(HAL_ADC_REF_VDD);                        
+   hal_adc_set_acq_window(HAL_ADC_AQW_3US);
    hal_adc_set_input_mode(HAL_ADC_DIFF_AIN2);                             
    hal_adc_set_conversion_mode(HAL_ADC_CONTINOUS);               
    hal_adc_set_resolution(HAL_ADC_RES_12BIT);                          

@@ -148,15 +148,15 @@ void timer2() interrupt INTERRUPT_T2 // controls stimulation waveform
 			CRCH = timer_low>>8;
 		//	prog_led(g_Amplitude);
 			
-			if(!outputDisabled) P1_6 = 1;
+			if(!outputDisabled) prog_led(g_Amplitude); // P1_6 = 1;
 					
 		} 
 		else 
 		{
 			CRCL = timer_high&0xFF;
 			CRCH = timer_high>>8;
-		//	prog_led(0);
-			P1_6 = 0;
+			prog_led(0);
+		//	P1_6 = 0;
 
 			if(!outputDisabled)
 			{
