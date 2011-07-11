@@ -1,0 +1,14 @@
+Field=Comment~String~Comment~100|Field=Description~String~Description~100|Field=Designator~String~Designator~100|Field=Footprint~String~Footprint~100|Field=LibRef~String~LibRef~100|Field=Quantity~Integer~Quantity~100|ReportField=Currency~<none>|ReportField=ProductionQuantity~1|ReportField=ProjectFileName~16_Channel.PrjPCB|ReportField=ProjectFullPath~C:\Users\Omar\Dropbox\OGS-Closed-Loop\16 channel\16_Channel.PrjPCB|ReportField=Title~Bill of Materials For Project [16_Channel.PrjPCB] (No PCB Document Selected)|ReportField=TotalQuantity~36|ReportField=ReportTime~3:11:57 PM|ReportField=ReportDate~7/4/2011|ReportField=ReportDateTime~7/4/2011 3:11:57 PM|ReportField=OutputName~Bill of Materials|ReportField=OutputType~BOM_PartType|ReportField=GeneratorName~BOM|ReportField=GeneratorDescription~Bill of Materials|ReportField=VariantName~None|ReportField=Address1~|ReportField=Address2~|ReportField=Address3~|ReportField=Address4~|ReportField=ApprovedBy~|ReportField=Author~|ReportField=CheckedBy~|ReportField=CompanyName~|ReportField=CurrentDate~7/4/2011|ReportField=CurrentTime~3:11:24 PM|ReportField=Date~|ReportField=DocumentFullPathAndName~C:\Users\Omar\Dropbox\OGS-Closed-Loop\16 channel\16ASIC.SchDoc|ReportField=DocumentName~16ASIC.SchDoc|ReportField=DocumentNumber~|ReportField=DrawnBy~|ReportField=Engineer~|ReportField=ImagePath~|ReportField=ModifiedDate~7/4/2011|ReportField=Organization~|ReportField=ProjectName~16_Channel.PrjPCB|ReportField=Revision~|ReportField=Rule~|ReportField=SheetNumber~|ReportField=SheetTotal~|ReportField=Time~|ReportField=Title~|ReportField=DataSourceFileName~16_Channel.PrjPCB|ReportField=DataSourceFullPath~C:\Users\Omar\Dropbox\OGS-Closed-Loop\16 channel\16_Channel.PrjPCB
+NP0 50V|Capacitor|C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17|0402s|Cap|17
+NP0 50V|Capacitor|C18|J1-0603|Cap|1
+MicroAntenna||E1|microantenna|MicroAntenna|1
+DF30FC-20DP||J1|DF30FC-20DP|DF30FC-20DP|1
+Inductor|Inductor|L3|0402-A|Inductor|1
+Header 2|Header, 2-Pin|P1|HDR1X2|Header 2|1
+Res2|Resistor|R1, R2, R3, R4, R5, R15, R16|0402s|Res2|7
+16ASIC||U1||16ASIC|1
+FXLP34||U2, U4|SOT353-5AN|FXLP34|2
+ISL60002BIH310Z-TK|IC VOLT REF FGA LV 1.024V SOT-23|U3|SOT23-3L|ISL60002BIH310Z-TK|1
+QFN32 5x5 package|2.4GHz Tranceiver with embedded MCU and 10 bit ADC|U10|Nordic_QFN50P500X500X90-33N|nRF24LE1 - 5x5|1
+balun||U11|balun|balun|1
+TSX-3225, 16MHz, Cl=9pF, +/-10ppm|Crystal|X1|bt-xtal 2.5 x 2 mm|BT-XTAL|1

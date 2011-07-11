@@ -1,0 +1,19 @@
+Output: Gerber Files
+Type  : Gerber
+From  : Variant [[No Variations]] of PCB Document [16 chan.PcbDoc]
+   Generated File[16 chan.GTL]
+   Generated File[16 chan.GP1]
+   Generated File[16 chan.GP2]
+   Generated File[16 chan.GBL]
+   Generated File[16 chan.GTS]
+   Generated File[16 chan.GBS]
+   Generated File[16 chan.GM1]
+   Generated File[16 chan.RUL]
+   Generated File[16 chan.EXTREP]
+   Generated File[16 chan.REP]
+
+
+Files Generated   : 10
+Documents Printed : 0
+
+Finished Output Generation At 3:17:32 PM On 7/5/2011
