@@ -6,11 +6,12 @@ using LibUsbDotNet.Main;
 
 namespace CID_USB_BaseStation
 {
-    class Packet
+    public class Packet
     {
         private static uint maxLength = 32;
         private static int infoIndex = 30;
-
+        private static Packet lastPacket = null; // Pointer to the last packet that was processed by this class. Takes care of start bits occuring on Packet boundaries
+        
         public static uint MaxLength 
         {
             get { return maxLength; } 
@@ -27,7 +28,8 @@ namespace CID_USB_BaseStation
 
         private byte count;
         private bool isStimulating;
-
+        private List<int> startPos = new List<int>();
+        
         public byte Count { get { return count; } set { count = value; } }
         public bool IsStimulating { get { return isStimulating; } }
 
@@ -37,6 +39,11 @@ namespace CID_USB_BaseStation
         public int[] AdcVals { get { return adcVals; } }
 
         public Packet(EndpointDataEventArgs e) : this(e.Buffer) { }
+
+        public Packet() :  this(new byte[maxLength])
+        {
+            // init Empty Packet;
+        }
 
         public Packet( byte [] buffer)
         {
@@ -48,7 +55,21 @@ namespace CID_USB_BaseStation
             info = buffer[infoIndex];
             this.isStimulating = !(((info) & (0x80)) == 0); // if right most bit is set to 1 then its stimulating
             this.count = (byte)( 0x7F & info);
+            
             adcVals = ParsePacket();
+            lastPacket = this;
+        }
+
+        public int calculateMissedPacketsBetween(Packet LastPacket)
+        {
+            int missedPackets = this.count - LastPacket.count - 1;
+
+            if (this.Count <= LastPacket.Count) // check for overflow since count only goes to 128;
+            {
+                missedPackets += 128;
+            }
+
+            return missedPackets;
         }
 
         private int[] ParsePacket()

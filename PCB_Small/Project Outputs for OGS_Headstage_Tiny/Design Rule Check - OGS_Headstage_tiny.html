@@ -1,0 +1,707 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<style type="text/css">
+		h1, h2, h3, h4, h5, h6 {
+			font-family : sans-serif;
+			color : white;
+			background-color : #21489e;
+			padding: 0.3em;
+		}
+		body {
+			font-family : verdana;
+		}
+		td, th {
+			padding: 0.5em;
+			text-align : center;
+			width : 18%;
+		}
+		th {
+			background-color : #A6CAF0;
+
+		}
+		th.column1, td.column1 {
+			text-align: left;
+			width : auto;
+		}
+		table {
+			width : 100%;
+		}
+		
+		.DRC_summary_header {							
+			padding-bottom : 0.1em;
+			border : 0px solid black;							
+			width: 100%;
+                        align: right;
+                        
+		}
+
+		.DRC_summary_header_col1, 
+		.DRC_summary_header_col2, 
+		.DRC_summary_header_col3
+		{
+			color : black;
+			font-size:150%;
+                        padding : 0em;
+			padding-top : 0.2em;
+			padding-bottom 0.2: 0em;
+			border : 0px solid black;
+			width : auto;
+			vertical-align: top;
+			font-weight: bold;				
+		}
+		
+		.DRC_summary_header_col1 	
+		{		                       
+			text-align: right;
+                        width: auto;	
+		}
+
+		.DRC_summary_header_col2 	
+		{		
+			text-align: center;	
+		}
+
+		.DRC_summary_header_col3 	
+		{		
+			text-align: left;	
+		}
+
+
+		
+		.header_holder
+		{
+		Width = 100%;
+		border = 0px solid green;
+		padding = 0;
+		}
+		
+		
+		
+		.front_matter, .front_matter_column1, .front_matter_column2, .front_matter_column3
+                {
+			left:0;
+			top:0;
+			padding-top : 0.1em;			
+			border : 0px solid black;
+			width : 100%;
+			vertical-align: top
+
+		}
+		.front_matter {	
+			
+			margin-top: 5px;
+ 			margin-left: 0px;					 			
+ 			horizontal-align: left;
+		}
+				
+		
+		.front_matter_column1 {
+			width : 10em;	
+			text-align  : right;
+			padding-right:0.1em;
+			
+		}
+		
+		.front_matter_column2 {
+                        width: 0.1em;
+			align: center;
+			text-align : center;
+			margin-right  : 0.1em;	
+			margin-left   : 0.1em;
+		}
+		.front_matter_column3 {
+			width         : auto;  
+			text-align    : left;	
+			margin-right  : 0.5em;				
+		}
+		
+		.total_column1, .total_column {
+			font-weight : bold;
+		}
+		.total_column1 {
+			text-align : right;
+		}
+		.warning, .error {
+			color : red;
+			font-weight : bold;
+		}
+		tr.onmouseout_odd {
+			background-color : #EEEEE0 
+		}
+		tr.onmouseout_even { 
+			background-color : #F3F3E3   
+		}
+		tr.onmouseover_odd, tr.onmouseover_even { 
+			background-color : lightYellow
+		} 
+		a:link, a:visited, .q a:link,.q a:active,.q {
+			color: #21489e; 
+		}
+		a:link.callback, a:visited.callback { 
+			color: #008000 
+		}
+		a:link.customize, a:visited.customize {
+			color: #C0C0C0;
+			position: absolute; 
+			right: 10px;
+		}	
+		p.contents_level1 {
+			font-weight : bold;
+			font-size : 110%;
+			margin : 0.5em;
+		}
+		p.contents_level2 {
+			position : relative;
+			left : 20px;
+			margin : 0.5em;
+		}
+	</style><script type="text/javascript">
+		function coordToMils(coord) {
+			var number = coord / 10000;
+			
+			if (number != number.toFixed(3))
+				number = number.toFixed(3);
+
+			return number + 'mil'
+		}
+
+		function coordToMM(coord) {
+			var number = 0.0254 * coord / 10000;
+			
+			if (number != number.toFixed(4))
+				number = number.toFixed(4);
+			
+			return number + 'mm'
+		}
+	
+		function convertCoord(coordNode, units) {
+			for (var i = 0; i < coordNode.childNodes.length; i++) {
+				coordNode.removeChild(coordNode.childNodes[i]);
+			}
+
+			var coord = coordNode.getAttribute('value');
+			if (coord != null) {
+				if (units == 'mm') {
+					textNode = document.createTextNode(coordToMM(coord));
+					coordNode.appendChild(textNode);
+				} else if (units == 'mil') {
+					textNode = document.createTextNode(coordToMils(coord));		
+					coordNode.appendChild(textNode);	
+				}
+			}
+		}
+	
+		function convertUnits(unitNode, units) {
+			for (var i = 0; i < unitNode.childNodes.length; i++) {
+				unitNode.removeChild(unitNode.childNodes[i]);		
+			}
+		
+			textNode = document.createTextNode(units); 
+			unitNode.appendChild(textNode);
+		}
+	
+		function changeUnits(radio_input, units) {
+			if (radio_input.checked) {
+			
+				var elements = document.getElementsByName('coordinate');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertCoord(elements[i], units);
+					}
+				}
+	
+				var elements = document.getElementsByName('units');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertUnits(elements[i], units);
+					}
+				}
+			}
+		}
+	</script><title>Design Rule Verification Report</title>
+</head>
+<body onload=""><img ALT="Altium" src="
+			file://C:\Users\Public\Documents\Altium\AD 10\Templates\AD-rgb_logo_223x64.gif
+		"><a href="dxpprocess://Client:SetupPreferences?Server=PCB|PageName=Reports" class="customize"><acronym title="dxpprocess://Client:SetupPreferences?Server=PCB|PageName=Reports">customize</acronym></a><h1>Design Rule Verification Report</h1>
+<table class="header_holder">
+<td Style="width:70%">
+<table class="front_matter">
+<tr class="front_matter">
+<td class="front_matter_column1">Date</td>
+<td class="front_matter_column2">:</td>
+<td class="front_matter_column3">7/2/2011</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Time</td>
+<td class="front_matter_column2">:</td>
+<td class="front_matter_column3">9:41:33 PM</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Elapsed Time</td>
+<td class="front_matter_column2">:</td>
+<td class="front_matter_column3">00:00:01</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Filename</td>
+<td class="front_matter_column2">:</td>
+<td class="front_matter_column3"><a href="file:///C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc" class="file"><acronym title="C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc">C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc</acronym></a></td>
+</tr>
+</table>
+</td>
+<td Style="Width:30%">
+<table class="DRC_summary_header">
+<tr>
+<td class="DRC_summary_header_col1">Warnings</td>
+<td class="DRC_summary_header_col2">:</td>
+<td class="DRC_summary_header_col3">0</td></tr>
+<tr>
+<td class="DRC_summary_header_col1">Rule Violations</td>
+<td class="DRC_summary_header_col2">:</td>
+<td class="DRC_summary_header_col3" style="color : red">111</td></tr>
+</table>
+</td>
+</table>
+<hr><a name="IDASY4WC"><h2>Summary</h2></a><table>
+<tr>
+<th class="column1">Warnings</th>
+<th class="column2">Count</th>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">0</td>
+</tr>
+</table><br><table>
+<tr>
+<th class="column1">Rule Violations</th>
+<th class="column2">Count</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDAEZ4WC">Clearance Constraint (Gap=5mil) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDAKZ4WC">Room SingleASIC (Bounding Region = (2187mil, 484mil, 3662mil, 699mil) (Disabled)(InComponentClass('SingleASIC'))</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDAQZ4WC">Room Main_4x4 (Bounding Region = (0mil, 0mil, 2000mil, 1000mil) (Disabled)(InComponentClass('Main_4x4'))</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDAWZ4WC">Room LED_SOP (Bounding Region = (2666mil, 913mil, 2951mil, 1048mil) (Disabled)(InComponentClass('LED_SOP'))</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDA2Z4WC">Net Antennae (Tolerance=0mil) (All)</a></td>
+<td class="column2">5</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDAA14WC">Silk to Silk (Clearance=10mil) (All),(All)</a></td>
+<td class="column2">14</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDAE54WC">Silkscreen Over Component Pads (Clearance=10mil) (OnLayer('Mechanical 13')),(OnLayer('Mechanical 15'))</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDAK54WC">Minimum Solder Mask Sliver (Gap=3mil) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDAQ54WC">Hole To Hole Clearance (Gap=6mil) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDAW54WC">Height Constraint (Min=0mil) (Max=1000mil) (Prefered=500mil) (Disabled)(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDA254WC">Hole Size Constraint (Min=10mil) (Max=100mil) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDAFI5WC">Un-Routed Net Constraint ( (All) )</a></td>
+<td class="column2">92</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDAZJAXC">Short-Circuit Constraint (Allowed=Yes) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDA5JAXC">Power Plane Connect Rule(Relief Connect )(Expansion=20mil) (Conductor Width=10mil) (Air Gap=10mil) (Entries=4) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDAFKAXC">Width Constraint (Min=6mil) (Max=30mil) (Preferred=6mil) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDALKAXC">Width Constraint (Min=6mil) (Max=50mil) (Preferred=10mil) (InNet('V3P0'))</a></td>
+<td class="column2">0</td>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">111</td>
+</tr>
+</table><br><hr><a name="IDA2Z4WC"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Net Antennae (Tolerance=0mil) (All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1572.5mil|Location2.X=1591.735mil|Location1.Y=1808.5mil|Location2.Y=1835.519mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1572.5mil|Location2.X=1591.735mil|Location1.Y=1808.5mil|Location2.Y=1835.519mil|Absolute=True">Net Antennae: Track (1579mil,1815mil)(1607.504mil,1843.504mil)  Top Layer</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1697.87mil|Location2.X=1717.105mil|Location1.Y=1833.335mil|Location2.Y=1860.355mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1697.87mil|Location2.X=1717.105mil|Location1.Y=1833.335mil|Location2.Y=1860.355mil|Absolute=True">Net Antennae: Track (1700.702mil,1843.504mil)(1704.37mil,1839.835mil)  Top Layer</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1744.5mil|Location2.X=1768.089mil|Location1.Y=1872.5mil|Location2.Y=1906.699mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1744.5mil|Location2.X=1768.089mil|Location1.Y=1872.5mil|Location2.Y=1906.699mil|Absolute=True">Net Antennae: Track (1753mil,1858.527mil)(1753mil,1881mil)  Top Layer</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1768.067mil|Location2.X=1789.478mil|Location1.Y=1696.209mil|Location2.Y=1726.818mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1768.067mil|Location2.X=1789.478mil|Location1.Y=1696.209mil|Location2.Y=1726.818mil|Absolute=True">Net Antennae: Track (1767.803mil,1711.472mil)(1775.567mil,1703.709mil)  Top Layer</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1795.815mil|Location2.X=1819.404mil|Location1.Y=1668.185mil|Location2.Y=1702.384mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1795.815mil|Location2.X=1819.404mil|Location1.Y=1668.185mil|Location2.Y=1702.384mil|Absolute=True">Net Antennae: Track (1804.315mil,1676.685mil)(1804.315mil,1724.535mil)  Top Layer</acronym></a><br></td>
+</tr>
+</table></a><a href="#top">Back to top</a><br><br><a name="IDAA14WC"><table>
+<tr>
+<th style="text-align : left" colspan="2" class="rule">Silk to Silk (Clearance=10mil) (All),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1799mil|Location2.X=1854.984mil|Location1.Y=1686mil|Location2.Y=1711.994mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1799mil|Location2.X=1854.984mil|Location1.Y=1686mil|Location2.Y=1711.994mil|Absolute=True">Text "C15" (1802mil,1689mil)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1832.342mil|Location2.X=1835.342mil|Location1.Y=1717.673mil|Location2.Y=1747.689mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1832.342mil|Location2.X=1835.342mil|Location1.Y=1717.673mil|Location2.Y=1747.689mil|Absolute=True">Track (1833.842mil,1719.173mil)(1833.842mil,1746.189mil)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1799mil|Location2.X=1854.984mil|Location1.Y=1686mil|Location2.Y=1711.994mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1799mil|Location2.X=1854.984mil|Location1.Y=1686mil|Location2.Y=1711.994mil|Absolute=True">Text "C15" (1802mil,1689mil)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1773.287mil|Location2.X=1835.342mil|Location1.Y=1717.673mil|Location2.Y=1720.673mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1773.287mil|Location2.X=1835.342mil|Location1.Y=1717.673mil|Location2.Y=1720.673mil|Absolute=True">Track (1774.787mil,1719.173mil)(1833.842mil,1719.173mil)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1715mil|Location2.X=1747.658mil|Location1.Y=1645mil|Location2.Y=1670.994mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1715mil|Location2.X=1747.658mil|Location1.Y=1645mil|Location2.Y=1670.994mil|Absolute=True">Text "C1" (1718mil,1648mil)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1731.535mil|Location2.X=1749.646mil|Location1.Y=1656.354mil|Location2.Y=1664.228mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1731.535mil|Location2.X=1749.646mil|Location1.Y=1656.354mil|Location2.Y=1664.228mil|Absolute=True">Track (1735.473mil,1660.291mil)(1745.709mil,1660.291mil)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1715mil|Location2.X=1747.658mil|Location1.Y=1645mil|Location2.Y=1670.994mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1715mil|Location2.X=1747.658mil|Location1.Y=1645mil|Location2.Y=1670.994mil|Absolute=True">Text "C1" (1718mil,1648mil)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1741.772mil|Location2.X=1749.646mil|Location1.Y=1656.354mil|Location2.Y=1674.465mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1741.772mil|Location2.X=1749.646mil|Location1.Y=1656.354mil|Location2.Y=1674.465mil|Absolute=True">Track (1745.709mil,1660.291mil)(1745.709mil,1670.527mil)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1597mil|Location2.X=1652.984mil|Location1.Y=1648mil|Location2.Y=1673.994mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1597mil|Location2.X=1652.984mil|Location1.Y=1648mil|Location2.Y=1673.994mil|Absolute=True">Text "C16" (1600mil,1651mil)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1580.354mil|Location2.X=1598.465mil|Location1.Y=1656.354mil|Location2.Y=1664.228mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1580.354mil|Location2.X=1598.465mil|Location1.Y=1656.354mil|Location2.Y=1664.228mil|Absolute=True">Track (1584.291mil,1660.291mil)(1594.528mil,1660.291mil)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1525mil|Location2.X=1580.984mil|Location1.Y=1803mil|Location2.Y=1828.994mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1525mil|Location2.X=1580.984mil|Location1.Y=1803mil|Location2.Y=1828.994mil|Absolute=True">Text "C12" (1528mil,1806mil)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1580.354mil|Location2.X=1598.465mil|Location1.Y=1807.535mil|Location2.Y=1825.646mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1580.354mil|Location2.X=1598.465mil|Location1.Y=1807.535mil|Location2.Y=1825.646mil|Absolute=True">Track (1584.291mil,1811.472mil)(1594.528mil,1821.709mil)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1797mil|Location2.X=1846.319mil|Location1.Y=1818mil|Location2.Y=1843.994mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1797mil|Location2.X=1846.319mil|Location1.Y=1818mil|Location2.Y=1843.994mil|Absolute=True">Text "C11" (1800mil,1821mil)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1773mil|Location2.X=1822.319mil|Location1.Y=1789mil|Location2.Y=1814.994mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1773mil|Location2.X=1822.319mil|Location1.Y=1789mil|Location2.Y=1814.994mil|Absolute=True">Text "U11" (1776mil,1792mil)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1524mil|Location2.X=1579.984mil|Location1.Y=1755mil|Location2.Y=1780.994mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1524mil|Location2.X=1579.984mil|Location1.Y=1755mil|Location2.Y=1780.994mil|Absolute=True">Text "C14" (1527mil,1758mil)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1539mil|Location2.X=1594.984mil|Location1.Y=1729mil|Location2.Y=1754.994mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1539mil|Location2.X=1594.984mil|Location1.Y=1729mil|Location2.Y=1754.994mil|Absolute=True">Text "R16" (1542mil,1732mil)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1524mil|Location2.X=1579.984mil|Location1.Y=1777mil|Location2.Y=1802.994mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1524mil|Location2.X=1579.984mil|Location1.Y=1777mil|Location2.Y=1802.994mil|Absolute=True">Text "C13" (1527mil,1780mil)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1525mil|Location2.X=1580.984mil|Location1.Y=1803mil|Location2.Y=1828.994mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1525mil|Location2.X=1580.984mil|Location1.Y=1803mil|Location2.Y=1828.994mil|Absolute=True">Text "C12" (1528mil,1806mil)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1524mil|Location2.X=1579.984mil|Location1.Y=1755mil|Location2.Y=1780.994mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1524mil|Location2.X=1579.984mil|Location1.Y=1755mil|Location2.Y=1780.994mil|Absolute=True">Text "C14" (1527mil,1758mil)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1524mil|Location2.X=1579.984mil|Location1.Y=1777mil|Location2.Y=1802.994mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1524mil|Location2.X=1579.984mil|Location1.Y=1777mil|Location2.Y=1802.994mil|Absolute=True">Text "C13" (1527mil,1780mil)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1615.678mil|Location2.X=1655mil|Location1.Y=1796mil|Location2.Y=1821.994mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1615.678mil|Location2.X=1655mil|Location1.Y=1796mil|Location2.Y=1821.994mil|Absolute=True">Text "R6" (1652mil,1799mil)  Bottom Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1616.678mil|Location2.X=1656mil|Location1.Y=1778mil|Location2.Y=1803.994mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1616.678mil|Location2.X=1656mil|Location1.Y=1778mil|Location2.Y=1803.994mil|Absolute=True">Text "U4" (1653mil,1781mil)  Bottom Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1570.678mil|Location2.X=1610mil|Location1.Y=1769mil|Location2.Y=1794.994mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1570.678mil|Location2.X=1610mil|Location1.Y=1769mil|Location2.Y=1794.994mil|Absolute=True">Text "R7" (1607mil,1772mil)  Bottom Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1616.678mil|Location2.X=1656mil|Location1.Y=1778mil|Location2.Y=1803.994mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1616.678mil|Location2.X=1656mil|Location1.Y=1778mil|Location2.Y=1803.994mil|Absolute=True">Text "U4" (1653mil,1781mil)  Bottom Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1761.678mil|Location2.X=1801mil|Location1.Y=1889mil|Location2.Y=1914.994mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1761.678mil|Location2.X=1801mil|Location1.Y=1889mil|Location2.Y=1914.994mil|Absolute=True">Text "C3" (1798mil,1892mil)  Bottom Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1784.678mil|Location2.X=1824mil|Location1.Y=1870mil|Location2.Y=1895.994mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1784.678mil|Location2.X=1824mil|Location1.Y=1870mil|Location2.Y=1895.994mil|Absolute=True">Text "C7" (1821mil,1873mil)  Bottom Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1646.678mil|Location2.X=1686mil|Location1.Y=1895mil|Location2.Y=1920.994mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1646.678mil|Location2.X=1686mil|Location1.Y=1895mil|Location2.Y=1920.994mil|Absolute=True">Text "R9" (1683mil,1898mil)  Bottom Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1668.678mil|Location2.X=1708mil|Location1.Y=1920mil|Location2.Y=1945.994mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1668.678mil|Location2.X=1708mil|Location1.Y=1920mil|Location2.Y=1945.994mil|Absolute=True">Text "R8" (1705mil,1923mil)  Bottom Overlay</acronym></a></td>
+</tr>
+</table></a><a href="#top">Back to top</a><br><br><a name="IDAFI5WC"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Un-Routed Net Constraint ( (All) )</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1688.622mil|Location2.X=1954mil|Location1.Y=1511mil|Location2.Y=1677.024mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1688.622mil|Location2.X=1954mil|Location1.Y=1511mil|Location2.Y=1677.024mil|Absolute=True">Un-Routed Net Constraint: Net FCSN Between Pad U5-11 (1694.528,1662.26mil) And Via (1943,1522mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1668.937mil|Location2.X=1937.053mil|Location1.Y=1485mil|Location2.Y=1677.024mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1668.937mil|Location2.X=1937.053mil|Location1.Y=1485mil|Location2.Y=1677.024mil|Absolute=True">Un-Routed Net Constraint: Net FMISO Between Pad U5-10 (1674.842,1662.26mil) And Via (1926.053,1496mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1743.378mil|Location2.X=1841mil|Location1.Y=1675.5mil|Location2.Y=1719.78mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1743.378mil|Location2.X=1841mil|Location1.Y=1675.5mil|Location2.Y=1719.78mil|Absolute=True">Un-Routed Net Constraint: Net NetC6_1 Between Pad U1-2 (1747.315,1706mil) And Pad C6-1 (1831,1688mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1324.473mil|Location2.X=1751.252mil|Location1.Y=1692.22mil|Location2.Y=1780.134mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1324.473mil|Location2.X=1751.252mil|Location1.Y=1692.22mil|Location2.Y=1780.134mil|Absolute=True">Un-Routed Net Constraint: Net NetC6_1 Between Pad LED1-2 (1354,1770.291mil) And Pad U1-2 (1747.315,1706mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1772.413mil|Location2.X=1799.972mil|Location1.Y=1740.941mil|Location2.Y=1768.5mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1772.413mil|Location2.X=1799.972mil|Location1.Y=1740.941mil|Location2.Y=1768.5mil|Absolute=True">Un-Routed Net Constraint: Net NetLED1_1 Between Pad U1-11 (1786.193,1744.878mil) And Pad U1-10 (1786.193,1764.563mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1772.413mil|Location2.X=1799.972mil|Location1.Y=1721.256mil|Location2.Y=1748.815mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1772.413mil|Location2.X=1799.972mil|Location1.Y=1721.256mil|Location2.Y=1748.815mil|Absolute=True">Un-Routed Net Constraint: Net NetLED1_1 Between Pad U1-12 (1786.193,1725.193mil) And Pad U1-11 (1786.193,1744.878mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1743.378mil|Location2.X=1770.937mil|Location1.Y=1769.976mil|Location2.Y=1797.535mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1743.378mil|Location2.X=1770.937mil|Location1.Y=1769.976mil|Location2.Y=1797.535mil|Absolute=True">Un-Routed Net Constraint: Net NetLED1_1 Between Pad U1-8 (1747.315,1783.756mil) And Pad U1-9 (1767,1783.756mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1763.063mil|Location2.X=1798.004mil|Location1.Y=1694.189mil|Location2.Y=1729.13mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1763.063mil|Location2.X=1798.004mil|Location1.Y=1694.189mil|Location2.Y=1729.13mil|Absolute=True">Un-Routed Net Constraint: Net NetLED1_1 Between Pad U1-1 (1767,1706mil) And Pad U1-12 (1786.193,1725.193mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1324.473mil|Location2.X=1751.252mil|Location1.Y=1769.976mil|Location2.Y=1941.551mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1324.473mil|Location2.X=1751.252mil|Location1.Y=1769.976mil|Location2.Y=1941.551mil|Absolute=True">Un-Routed Net Constraint: Net NetLED1_1 Between Pad LED1-1 (1354,1931.709mil) And Pad U1-8 (1747.315,1783.756mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1763.063mil|Location2.X=1798.004mil|Location1.Y=1760.626mil|Location2.Y=1795.567mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1763.063mil|Location2.X=1798.004mil|Location1.Y=1760.626mil|Location2.Y=1795.567mil|Absolute=True">Un-Routed Net Constraint: Net NetLED1_1 Between Pad U1-9 (1767,1783.756mil) And Pad U1-10 (1786.193,1764.563mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1641.866mil|Location2.X=1685.906mil|Location1.Y=1845.236mil|Location2.Y=1864.709mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1641.866mil|Location2.X=1685.906mil|Location1.Y=1845.236mil|Location2.Y=1864.709mil|Absolute=True">Un-Routed Net Constraint: Net NetR9_2 Between Pad U2-13 (1645.803,1861.756mil) And Pad R9-2 (1680,1851.142mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1641.866mil|Location2.X=1690.047mil|Location1.Y=1872.583mil|Location2.Y=1899.906mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1641.866mil|Location2.X=1690.047mil|Location1.Y=1872.583mil|Location2.Y=1899.906mil|Absolute=True">Un-Routed Net Constraint: Net NetR8_2 Between Pad U2-14 (1645.803,1875.535mil) And Pad R8-2 (1684.142,1894mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1623.165mil|Location2.X=1637.047mil|Location1.Y=1764.094mil|Location2.Y=1818.449mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1623.165mil|Location2.X=1637.047mil|Location1.Y=1764.094mil|Location2.Y=1818.449mil|Absolute=True">Un-Routed Net Constraint: Net NetR6_1 Between Pad U2-10 (1626.118,1814.512mil) And Pad R6-1 (1631.142,1770mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1598.094mil|Location2.X=1637.047mil|Location1.Y=1736.953mil|Location2.Y=1775.906mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1598.094mil|Location2.X=1637.047mil|Location1.Y=1736.953mil|Location2.Y=1775.906mil|Absolute=True">Un-Routed Net Constraint: Net NetR6_1 Between Pad R7-2 (1604,1742.858mil) And Pad R6-1 (1631.142,1770mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1516.094mil|Location2.X=1573.953mil|Location1.Y=1797.236mil|Location2.Y=1818.449mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1516.094mil|Location2.X=1573.953mil|Location1.Y=1797.236mil|Location2.Y=1818.449mil|Absolute=True">Un-Routed Net Constraint: Net NetR3_1 Between Pad R3-1 (1522,1803.142mil) And Pad U2-6 (1571,1814.512mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1515.094mil|Location2.X=1555.252mil|Location1.Y=1831.244mil|Location2.Y=1846.047mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1515.094mil|Location2.X=1555.252mil|Location1.Y=1831.244mil|Location2.Y=1846.047mil|Absolute=True">Un-Routed Net Constraint: Net NetR2_1 Between Pad R2-1 (1521,1840.142mil) And Pad U2-5 (1551.315,1834.197mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1694.658mil|Location2.X=1790.5mil|Location1.Y=1605mil|Location2.Y=1748.815mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1694.658mil|Location2.X=1790.5mil|Location1.Y=1605mil|Location2.Y=1748.815mil|Absolute=True">Un-Routed Net Constraint: Net NetC1_2 Between Pad U1-5 (1708.437,1744.878mil) And Pad C1-2 (1778,1615mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1696.626mil|Location2.X=1740.5mil|Location1.Y=1605mil|Location2.Y=1729.13mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1696.626mil|Location2.X=1740.5mil|Location1.Y=1605mil|Location2.Y=1729.13mil|Absolute=True">Un-Routed Net Constraint: Net NetC1_1 Between Pad U1-4 (1708.437,1725.193mil) And Pad C1-1 (1728,1615mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1696.626mil|Location2.X=1720.248mil|Location1.Y=1647.496mil|Location2.Y=1768.5mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1696.626mil|Location2.X=1720.248mil|Location1.Y=1647.496mil|Location2.Y=1768.5mil|Absolute=True">Un-Routed Net Constraint: Net LED_CTRL Between Pad U1-6 (1708.437,1764.563mil) And Pad U5-12 (1714.213,1662.26mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1642.126mil|Location2.X=1651.874mil|Location1.Y=1721.126mil|Location2.Y=1746.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1642.126mil|Location2.X=1651.874mil|Location1.Y=1721.126mil|Location2.Y=1746.622mil|Absolute=True">Un-Routed Net Constraint: Net V3P0 Between Pad U4-A1 (1647,1726mil) And Pad U4-A2 (1647,1741.748mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1723.693mil|Location2.X=1758.504mil|Location1.Y=1685.881mil|Location2.Y=1717.811mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1723.693mil|Location2.X=1758.504mil|Location1.Y=1685.881mil|Location2.Y=1717.811mil|Absolute=True">Un-Routed Net Constraint: Net V3P0 Between Pad U1-3 (1727.63,1706mil) And Pad U5-13 (1743.74,1691.787mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1542.953mil|Location2.X=1601.024mil|Location1.Y=1764.622mil|Location2.Y=1782.906mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1542.953mil|Location2.X=1601.024mil|Location1.Y=1764.622mil|Location2.Y=1782.906mil|Absolute=True">Un-Routed Net Constraint: Net V3P0 Between Pad C12-1 (1548.858,1777mil) And Pad U5-2 (1586.26,1770.528mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1597.094mil|Location2.X=1621.693mil|Location1.Y=1615.953mil|Location2.Y=1677.024mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1597.094mil|Location2.X=1621.693mil|Location1.Y=1615.953mil|Location2.Y=1677.024mil|Absolute=True">Un-Routed Net Constraint: Net V3P0 Between Pad C16-2 (1603,1621.858mil) And Pad U5-7 (1615.787,1662.26mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1728.976mil|Location2.X=1797.5mil|Location1.Y=1658mil|Location2.Y=1697.693mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1728.976mil|Location2.X=1797.5mil|Location1.Y=1658mil|Location2.Y=1697.693mil|Absolute=True">Un-Routed Net Constraint: Net V3P0 Between Pad U5-13 (1743.74,1691.787mil) And Pad C2-2 (1785,1668mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1728.976mil|Location2.X=1774.5mil|Location1.Y=1784.307mil|Location2.Y=1850mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1728.976mil|Location2.X=1774.5mil|Location1.Y=1784.307mil|Location2.Y=1850mil|Absolute=True">Un-Routed Net Constraint: Net V3P0 Between Pad U5-18 (1743.74,1790.213mil) And Pad C7-1 (1762,1840mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1668.937mil|Location2.X=1690.906mil|Location1.Y=1804.976mil|Location2.Y=1913.764mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1668.937mil|Location2.X=1690.906mil|Location1.Y=1804.976mil|Location2.Y=1913.764mil|Absolute=True">Un-Routed Net Constraint: Net V3P0 Between Pad U5-21 (1674.842,1819.74mil) And Pad C10-1 (1685,1907.858mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1716.094mil|Location2.X=1731.567mil|Location1.Y=1453.236mil|Location2.Y=1717.811mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1716.094mil|Location2.X=1731.567mil|Location1.Y=1453.236mil|Location2.Y=1717.811mil|Absolute=True">Un-Routed Net Constraint: Net V3P0 Between Pad C19-1 (1722,1459.142mil) And Pad U1-3 (1727.63,1706mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1571.496mil|Location2.X=1651.874mil|Location1.Y=1736.874mil|Location2.Y=1776.434mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1571.496mil|Location2.X=1651.874mil|Location1.Y=1736.874mil|Location2.Y=1776.434mil|Absolute=True">Un-Routed Net Constraint: Net V3P0 Between Pad U5-2 (1586.26,1770.528mil) And Pad U4-A2 (1647,1741.748mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1609.881mil|Location2.X=1651.874mil|Location1.Y=1647.496mil|Location2.Y=1730.874mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1609.881mil|Location2.X=1651.874mil|Location1.Y=1647.496mil|Location2.Y=1730.874mil|Absolute=True">Un-Routed Net Constraint: Net V3P0 Between Pad U5-7 (1615.787,1662.26mil) And Pad U4-A1 (1647,1726mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1668.937mil|Location2.X=1758.504mil|Location1.Y=1784.307mil|Location2.Y=1834.504mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1668.937mil|Location2.X=1758.504mil|Location1.Y=1784.307mil|Location2.Y=1834.504mil|Absolute=True">Un-Routed Net Constraint: Net V3P0 Between Pad U5-21 (1674.842,1819.74mil) And Pad U5-18 (1743.74,1790.213mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1728.976mil|Location2.X=1758.504mil|Location1.Y=1685.881mil|Location2.Y=1796.119mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1728.976mil|Location2.X=1758.504mil|Location1.Y=1685.881mil|Location2.Y=1796.119mil|Absolute=True">Un-Routed Net Constraint: Net V3P0 Between Pad U5-13 (1743.74,1691.787mil) And Pad U5-18 (1743.74,1790.213mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1642.126mil|Location2.X=1731.567mil|Location1.Y=1694.189mil|Location2.Y=1730.874mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1642.126mil|Location2.X=1731.567mil|Location1.Y=1694.189mil|Location2.Y=1730.874mil|Absolute=True">Un-Routed Net Constraint: Net V3P0 Between Pad U4-A1 (1647,1726mil) And Pad U1-3 (1727.63,1706mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1581.827mil|Location2.X=1615.291mil|Location1.Y=1905.063mil|Location2.Y=1912.937mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1581.827mil|Location2.X=1615.291mil|Location1.Y=1905.063mil|Location2.Y=1912.937mil|Absolute=True">Un-Routed Net Constraint: Net V1P5 Between Pad U2-19 (1584.78,1909mil) And Pad U2-17 (1612.339,1909mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1626.378mil|Location2.X=1654.764mil|Location1.Y=1736.874mil|Location2.Y=1775.906mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1626.378mil|Location2.X=1654.764mil|Location1.Y=1736.874mil|Location2.Y=1775.906mil|Absolute=True">Un-Routed Net Constraint: Net V1P5 Between Pad U4-B2 (1631.252,1741.748mil) And Pad R6-2 (1648.858,1770mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1609.386mil|Location2.X=1649.74mil|Location1.Y=1886.362mil|Location2.Y=1912.937mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1609.386mil|Location2.X=1649.74mil|Location1.Y=1886.362mil|Location2.Y=1912.937mil|Absolute=True">Un-Routed Net Constraint: Net V1P5 Between Pad U2-17 (1612.339,1909mil) And Pad U2-15 (1645.803,1889.315mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1595.606mil|Location2.X=1654.764mil|Location1.Y=1764.094mil|Location2.Y=1818.449mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1595.606mil|Location2.X=1654.764mil|Location1.Y=1764.094mil|Location2.Y=1818.449mil|Absolute=True">Un-Routed Net Constraint: Net V1P5 Between Pad U2-8 (1598.559,1814.512mil) And Pad R6-2 (1648.858,1770mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1626.378mil|Location2.X=1743.906mil|Location1.Y=1495.236mil|Location2.Y=1746.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1626.378mil|Location2.X=1743.906mil|Location1.Y=1495.236mil|Location2.Y=1746.622mil|Absolute=True">Un-Routed Net Constraint: Net V1P5 Between Pad U4-B2 (1631.252,1741.748mil) And Pad C18-1 (1738,1501.142mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1581.827mil|Location2.X=1601.512mil|Location1.Y=1810.575mil|Location2.Y=1912.937mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1581.827mil|Location2.X=1601.512mil|Location1.Y=1810.575mil|Location2.Y=1912.937mil|Absolute=True">Un-Routed Net Constraint: Net V1P5 Between Pad U2-19 (1584.78,1909mil) And Pad U2-8 (1598.559,1814.512mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1653mil|Location2.X=1853mil|Location1.Y=1781mil|Location2.Y=1997.142mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1653mil|Location2.X=1853mil|Location1.Y=1781mil|Location2.Y=1997.142mil|Absolute=True">Un-Routed Net Constraint: Net NetR15_1 Between Track on layer Top Layer (1753,1881mil) And Pad R15-1 (1753,1897.142mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1539.094mil|Location2.X=1601.024mil|Location1.Y=1696.953mil|Location2.Y=1717.378mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1539.094mil|Location2.X=1601.024mil|Location1.Y=1696.953mil|Location2.Y=1717.378mil|Absolute=True">Un-Routed Net Constraint: Net NetR16_2 Between Pad R16-2 (1545,1702.858mil) And Pad U5-5 (1586.26,1711.472mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1842.094mil|Location2.X=1986.244mil|Location1.Y=1731.236mil|Location2.Y=1813.764mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1842.094mil|Location2.X=1986.244mil|Location1.Y=1731.236mil|Location2.Y=1813.764mil|Absolute=True">Un-Routed Net Constraint: Net NetE1_1 Between Pad L3-2 (1848,1737.142mil) And Pad E1-1 (1939,1799mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1704.315mil|Location2.X=1905mil|Location1.Y=1576.685mil|Location2.Y=1759.858mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1704.315mil|Location2.X=1905mil|Location1.Y=1576.685mil|Location2.Y=1759.858mil|Absolute=True">Un-Routed Net Constraint: Net NetC15_1 Between Track on layer Top Layer (1804.315,1676.685mil) And Pad C15-1 (1805,1659.858mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1667.803mil|Location2.X=1904.315mil|Location1.Y=1611.472mil|Location2.Y=1824.535mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1667.803mil|Location2.X=1904.315mil|Location1.Y=1611.472mil|Location2.Y=1824.535mil|Absolute=True">Un-Routed Net Constraint: Net NetC15_1 Between Track on layer Top Layer (1767.803,1711.472mil) And Pad U11-5 (1804.315,1724.535mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1541.953mil|Location2.X=1601.024mil|Location1.Y=1723.094mil|Location2.Y=1737.063mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1541.953mil|Location2.X=1601.024mil|Location1.Y=1723.094mil|Location2.Y=1737.063mil|Absolute=True">Un-Routed Net Constraint: Net NetC14_1 Between Pad C14-1 (1547.858,1729mil) And Pad U5-4 (1586.26,1731.158mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1541.953mil|Location2.X=1601.024mil|Location1.Y=1744.937mil|Location2.Y=1756.906mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1541.953mil|Location2.X=1601.024mil|Location1.Y=1744.937mil|Location2.Y=1756.906mil|Absolute=True">Un-Routed Net Constraint: Net NetC13_2 Between Pad C13-2 (1547.858,1751mil) And Pad U5-3 (1586.26,1750.842mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1819.079mil|Location2.X=1853.906mil|Location1.Y=1747.173mil|Location2.Y=1768.827mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1819.079mil|Location2.X=1853.906mil|Location1.Y=1747.173mil|Location2.Y=1768.827mil|Absolute=True">Un-Routed Net Constraint: Net NetC11_2 Between Pad U11-1 (1824,1758mil) And Pad L3-1 (1848,1754.858mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1814.953mil|Location2.X=1828.921mil|Location1.Y=1747.173mil|Location2.Y=1797.906mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1814.953mil|Location2.X=1828.921mil|Location1.Y=1747.173mil|Location2.Y=1797.906mil|Absolute=True">Un-Routed Net Constraint: Net NetC11_2 Between Pad C11-2 (1820.858,1792mil) And Pad U11-1 (1824,1758mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1479mil|Location2.X=1679mil|Location1.Y=1715mil|Location2.Y=1973mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1479mil|Location2.X=1679mil|Location1.Y=1715mil|Location2.Y=1973mil|Absolute=True">Un-Routed Net Constraint: Net NetC9_1 Between Track on layer Top Layer (1579,1815mil) And Pad X1-1 (1579,1873mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1502.094mil|Location2.X=1602.622mil|Location1.Y=1853.315mil|Location2.Y=2022.047mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1502.094mil|Location2.X=1602.622mil|Location1.Y=1853.315mil|Location2.Y=2022.047mil|Absolute=True">Un-Routed Net Constraint: Net NetC9_1 Between Pad C9-1 (1508,2016.142mil) And Pad X1-1 (1579,1873mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1608.953mil|Location2.X=1669.551mil|Location1.Y=1904.496mil|Location2.Y=1995.906mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1608.953mil|Location2.X=1669.551mil|Location1.Y=1904.496mil|Location2.Y=1995.906mil|Absolute=True">Un-Routed Net Constraint: Net NetC8_2 Between Pad C8-2 (1614.858,1990mil) And Pad X1-3 (1645.929,1924.181mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1545.929mil|Location2.X=1755.158mil|Location1.Y=1824.181mil|Location2.Y=1931.158mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1545.929mil|Location2.X=1755.158mil|Location1.Y=1824.181mil|Location2.Y=1931.158mil|Absolute=True">Un-Routed Net Constraint: Net NetC8_2 Between Pad X1-3 (1645.929,1924.181mil) And Track on layer Top Layer (1655.158,1831.158mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1524.236mil|Location2.X=1536.047mil|Location1.Y=1723.094mil|Location2.Y=1756.906mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1524.236mil|Location2.X=1536.047mil|Location1.Y=1723.094mil|Location2.Y=1756.906mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C14-2 (1530.142,1729mil) And Pad C13-1 (1530.142,1751mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1555.378mil|Location2.X=1602.622mil|Location1.Y=1904.496mil|Location2.Y=1943.866mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1555.378mil|Location2.X=1602.622mil|Location1.Y=1904.496mil|Location2.Y=1943.866mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad U2-20 (1571,1909mil) And Pad X1-4 (1579,1924.181mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1524.236mil|Location2.X=1537.047mil|Location1.Y=1745.094mil|Location2.Y=1782.906mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1524.236mil|Location2.X=1537.047mil|Location1.Y=1745.094mil|Location2.Y=1782.906mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C13-1 (1530.142,1751mil) And Pad C12-2 (1531.142,1777mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1581.827mil|Location2.X=1615.291mil|Location1.Y=1810.575mil|Location2.Y=1818.449mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1581.827mil|Location2.X=1615.291mil|Location1.Y=1810.575mil|Location2.Y=1818.449mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad U2-7 (1584.78,1814.512mil) And Pad U2-9 (1612.339,1814.512mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1598.094mil|Location2.X=1636.126mil|Location1.Y=1719.236mil|Location2.Y=1731.047mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1598.094mil|Location2.X=1636.126mil|Location1.Y=1719.236mil|Location2.Y=1731.047mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad R7-1 (1604,1725.142mil) And Pad U4-B1 (1631.252,1726mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1723.693mil|Location2.X=1758.504mil|Location1.Y=1764.622mil|Location2.Y=1795.567mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1723.693mil|Location2.X=1758.504mil|Location1.Y=1764.622mil|Location2.Y=1795.567mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad U1-7 (1727.63,1783.756mil) And Pad U5-17 (1743.74,1770.528mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1797.236mil|Location2.X=1809.236mil|Location1.Y=1747.173mil|Location2.Y=1797.906mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1797.236mil|Location2.X=1809.236mil|Location1.Y=1747.173mil|Location2.Y=1797.906mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C11-1 (1803.142,1792mil) And Pad U11-2 (1804.315,1758mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1515.094mil|Location2.X=1527.906mil|Location1.Y=1814.953mil|Location2.Y=1863.764mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1515.094mil|Location2.X=1527.906mil|Location1.Y=1814.953mil|Location2.Y=1863.764mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad R2-2 (1521,1857.858mil) And Pad R3-2 (1522,1820.858mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1622.307mil|Location2.X=1669.551mil|Location1.Y=1831.244mil|Location2.Y=1892.685mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1622.307mil|Location2.X=1669.551mil|Location1.Y=1831.244mil|Location2.Y=1892.685mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad U2-11 (1645.803,1834.197mil) And Pad X1-2 (1645.929,1873mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1513.094mil|Location2.X=1526.906mil|Location1.Y=1851.953mil|Location2.Y=1900.764mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1513.094mil|Location2.X=1526.906mil|Location1.Y=1851.953mil|Location2.Y=1900.764mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad R1-1 (1519,1894.858mil) And Pad R2-2 (1521,1857.858mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1515.094mil|Location2.X=1555.252mil|Location1.Y=1845.024mil|Location2.Y=1863.764mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1515.094mil|Location2.X=1555.252mil|Location1.Y=1845.024mil|Location2.Y=1863.764mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad R2-2 (1521,1857.858mil) And Pad U2-4 (1551.315,1847.976mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1799.394mil|Location2.X=1841mil|Location1.Y=1725.5mil|Location2.Y=1768.827mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1799.394mil|Location2.X=1841mil|Location1.Y=1725.5mil|Location2.Y=1768.827mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad U11-2 (1804.315,1758mil) And Pad C6-2 (1831,1738mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1539.094mil|Location2.X=1601.024mil|Location1.Y=1679.236mil|Location2.Y=1697.693mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1539.094mil|Location2.X=1601.024mil|Location1.Y=1679.236mil|Location2.Y=1697.693mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad R16-1 (1545,1685.142mil) And Pad U5-6 (1586.26,1691.787mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1609.882mil|Location2.X=1720.118mil|Location1.Y=1685.882mil|Location2.Y=1796.118mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1609.882mil|Location2.X=1720.118mil|Location1.Y=1685.882mil|Location2.Y=1796.118mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad U4-B1 (1631.252,1726mil) And Pad U5-25 (1665,1741mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1568.047mil|Location2.X=1629.071mil|Location1.Y=1905.063mil|Location2.Y=1912.937mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1568.047mil|Location2.X=1629.071mil|Location1.Y=1905.063mil|Location2.Y=1912.937mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad U2-20 (1571,1909mil) And Pad U2-16 (1626.118,1909mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1622.307mil|Location2.X=1690.906mil|Location1.Y=1853.315mil|Location2.Y=1896.047mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1622.307mil|Location2.X=1690.906mil|Location1.Y=1853.315mil|Location2.Y=1896.047mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad X1-2 (1645.929,1873mil) And Pad C10-2 (1685,1890.142mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1716.094mil|Location2.X=1743.906mil|Location1.Y=1470.953mil|Location2.Y=1524.764mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1716.094mil|Location2.X=1743.906mil|Location1.Y=1470.953mil|Location2.Y=1524.764mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C19-2 (1722,1476.858mil) And Pad C18-2 (1738,1518.858mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1581.827mil|Location2.X=1669.551mil|Location1.Y=1836.166mil|Location2.Y=1892.685mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1581.827mil|Location2.X=1669.551mil|Location1.Y=1836.166mil|Location2.Y=1892.685mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad U2-21 (1598.559,1861.756mil) And Pad X1-2 (1645.929,1873mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1641.866mil|Location2.X=1700.434mil|Location1.Y=1804.976mil|Location2.Y=1837.15mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1641.866mil|Location2.X=1700.434mil|Location1.Y=1804.976mil|Location2.Y=1837.15mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad U2-11 (1645.803,1834.197mil) And Pad U5-20 (1694.528,1819.74mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1555.378mil|Location2.X=1603.047mil|Location1.Y=1904.496mil|Location2.Y=1995.906mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1555.378mil|Location2.X=1603.047mil|Location1.Y=1904.496mil|Location2.Y=1995.906mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad X1-4 (1579,1924.181mil) And Pad C8-1 (1597.142,1990mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1679.094mil|Location2.X=1758.906mil|Location1.Y=1884.236mil|Location2.Y=1920.764mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1679.094mil|Location2.X=1758.906mil|Location1.Y=1884.236mil|Location2.Y=1920.764mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C10-2 (1685,1890.142mil) And Pad R15-2 (1753,1914.858mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1722.5mil|Location2.X=1810.906mil|Location1.Y=1636.236mil|Location2.Y=1678mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1722.5mil|Location2.X=1810.906mil|Location1.Y=1636.236mil|Location2.Y=1678mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C2-1 (1735,1668mil) And Pad C15-2 (1805,1642.142mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1571.496mil|Location2.X=1608.906mil|Location1.Y=1598.236mil|Location2.Y=1697.693mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1571.496mil|Location2.X=1608.906mil|Location1.Y=1598.236mil|Location2.Y=1697.693mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad U5-6 (1586.26,1691.787mil) And Pad C16-1 (1603,1604.142mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1502.094mil|Location2.X=1603.047mil|Location1.Y=1984.094mil|Location2.Y=2039.764mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1502.094mil|Location2.X=1603.047mil|Location1.Y=1984.094mil|Location2.Y=2039.764mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C9-2 (1508,2033.858mil) And Pad C8-1 (1597.142,1990mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1571.496mil|Location2.X=1609.906mil|Location1.Y=1685.881mil|Location2.Y=1731.047mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1571.496mil|Location2.X=1609.906mil|Location1.Y=1685.881mil|Location2.Y=1731.047mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad U5-6 (1586.26,1691.787mil) And Pad R7-1 (1604,1725.142mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1516.094mil|Location2.X=1537.047mil|Location1.Y=1771.094mil|Location2.Y=1826.764mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1516.094mil|Location2.X=1537.047mil|Location1.Y=1771.094mil|Location2.Y=1826.764mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad R3-2 (1522,1820.858mil) And Pad C12-2 (1531.142,1777mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1609.386mil|Location2.X=1649.74mil|Location1.Y=1810.575mil|Location2.Y=1837.15mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1609.386mil|Location2.X=1649.74mil|Location1.Y=1810.575mil|Location2.Y=1837.15mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad U2-9 (1612.339,1814.512mil) And Pad U2-11 (1645.803,1834.197mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1622.307mil|Location2.X=1669.551mil|Location1.Y=1853.315mil|Location2.Y=1912.937mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1622.307mil|Location2.X=1669.551mil|Location1.Y=1853.315mil|Location2.Y=1912.937mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad U2-16 (1626.118,1909mil) And Pad X1-2 (1645.929,1873mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1688.622mil|Location2.X=1731.567mil|Location1.Y=1771.945mil|Location2.Y=1834.504mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1688.622mil|Location2.X=1731.567mil|Location1.Y=1771.945mil|Location2.Y=1834.504mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad U5-20 (1694.528,1819.74mil) And Pad U1-7 (1727.63,1783.756mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1728.976mil|Location2.X=1809.236mil|Location1.Y=1747.173mil|Location2.Y=1776.434mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1728.976mil|Location2.X=1809.236mil|Location1.Y=1747.173mil|Location2.Y=1776.434mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad U5-17 (1743.74,1770.528mil) And Pad U11-2 (1804.315,1758mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1722.5mil|Location2.X=1758.504mil|Location1.Y=1658mil|Location2.Y=1776.434mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1722.5mil|Location2.X=1758.504mil|Location1.Y=1658mil|Location2.Y=1776.434mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C2-1 (1735,1668mil) And Pad U5-17 (1743.74,1770.528mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1722.5mil|Location2.X=1747.5mil|Location1.Y=1512.953mil|Location2.Y=1678mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1722.5mil|Location2.X=1747.5mil|Location1.Y=1512.953mil|Location2.Y=1678mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C2-1 (1735,1668mil) And Pad C18-2 (1738,1518.858mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1524.236mil|Location2.X=1550.906mil|Location1.Y=1679.236mil|Location2.Y=1734.906mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1524.236mil|Location2.X=1550.906mil|Location1.Y=1679.236mil|Location2.Y=1734.906mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C14-2 (1530.142,1729mil) And Pad R16-1 (1545,1685.142mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1547.378mil|Location2.X=1615.291mil|Location1.Y=1836.166mil|Location2.Y=1887.347mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1547.378mil|Location2.X=1615.291mil|Location1.Y=1836.166mil|Location2.Y=1887.347mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad U2-4 (1551.315,1847.976mil) And Pad U2-21 (1598.559,1861.756mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1437mil|Location2.X=1555.252mil|Location1.Y=1492mil|Location2.Y=1864.709mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1437mil|Location2.X=1555.252mil|Location1.Y=1492mil|Location2.Y=1864.709mil|Absolute=True">Un-Routed Net Constraint: Net ELEC Between Via (1465,1520mil) And Pad U2-3 (1551.315,1861.756mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1513.094mil|Location2.X=1555.252mil|Location1.Y=1871.236mil|Location2.Y=1883.047mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1513.094mil|Location2.X=1555.252mil|Location1.Y=1871.236mil|Location2.Y=1883.047mil|Absolute=True">Un-Routed Net Constraint: Net ELEC_REF Between Pad R1-2 (1519,1877.142mil) And Pad U2-2 (1551.315,1875.535mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1288mil|Location2.X=1619mil|Location1.Y=1414mil|Location2.Y=1977.142mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1288mil|Location2.X=1619mil|Location1.Y=1414mil|Location2.Y=1977.142mil|Absolute=True">Un-Routed Net Constraint: Net ELEC_REF Between Track on layer Bottom Layer (1388,1514mil) And Pad R1-2 (1519,1877.142mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1695.953mil|Location2.X=1800.764mil|Location1.Y=1857.094mil|Location2.Y=1899.906mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1695.953mil|Location2.X=1800.764mil|Location1.Y=1857.094mil|Location2.Y=1899.906mil|Absolute=True">Un-Routed Net Constraint: Net ADC- Between Pad R8-1 (1701.858,1894mil) And Pad C3-1 (1794.858,1863mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1629.566mil|Location2.X=1707.764mil|Location1.Y=1647.496mil|Location2.Y=1899.906mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1629.566mil|Location2.X=1707.764mil|Location1.Y=1647.496mil|Location2.Y=1899.906mil|Absolute=True">Un-Routed Net Constraint: Net ADC- Between Pad U5-8 (1635.472,1662.26mil) And Pad R8-1 (1701.858,1894mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1674.094mil|Location2.X=1783.047mil|Location1.Y=1857.094mil|Location2.Y=1874.764mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1674.094mil|Location2.X=1783.047mil|Location1.Y=1857.094mil|Location2.Y=1874.764mil|Absolute=True">Un-Routed Net Constraint: Net ADC+ Between Pad R9-1 (1680,1868.858mil) And Pad C3-2 (1777.142,1863mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1649.253mil|Location2.X=1685.906mil|Location1.Y=1647.496mil|Location2.Y=1874.764mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1649.253mil|Location2.X=1685.906mil|Location1.Y=1647.496mil|Location2.Y=1874.764mil|Absolute=True">Un-Routed Net Constraint: Net ADC+ Between Pad U5-9 (1655.158,1662.26mil) And Pad R9-1 (1680,1868.858mil)</acronym></a><br></td>
+</tr>
+</table></a><a href="#top">Back to top</a><br><br></body>
+</html>

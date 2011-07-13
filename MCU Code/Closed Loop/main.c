@@ -43,8 +43,9 @@ void main()
 {
   uint8_t is = 0;;
   acq_block = 0;
-  P1DIR = ~((1<<6) | (1<<5) | (1<<3));
-  P0CON = 0x66;
+  P0DIR = ~( 1<<6);
+  //P1DIR = ~((1<<6) | (1<<5) | (1<<3));
+ // P0CON = 0x66;
 
   #ifdef MCU_NRF24LU1P
      USBSLP = 0x01;  // disable usb
@@ -83,7 +84,7 @@ void main()
 		prog_led(is);
 	}
 
-   	prog_led(0);
+  	prog_led(14);
 
 	init_radio();
 	init_adc(); 

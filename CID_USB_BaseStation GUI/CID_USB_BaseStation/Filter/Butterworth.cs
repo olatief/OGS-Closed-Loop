@@ -6,7 +6,7 @@ using System.Numerics;
 
 namespace CID_USB_BaseStation
 {
-    class Butterworth : Filter
+    public class Butterworth : Filter
     {
 
         private double lowfreq;
@@ -62,7 +62,7 @@ namespace CID_USB_BaseStation
         }
 
         
-
+        // Only finds even # of poles
         public static Complex[] Poles( double freq,
                                         int nSection)
         {

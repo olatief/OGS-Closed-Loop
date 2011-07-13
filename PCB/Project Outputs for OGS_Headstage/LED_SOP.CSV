@@ -1,0 +1,16 @@
+"Bill of Material for "
+"On 7/1/2011 at 4:03:22 PM"
+
+"Comment","Pattern","Quantity","Components"
+
+"balun","balun","1","U11",""
+"Inductor","0402-A","1","L3","Inductor"
+"MicroAntenna","microantenna","1","E1",""
+"NP0 50V","0402s","17","C1, C2, C3, C3, C4, C5, C6, C8, C9, C10, C11, C12, C12, C13, C14, C15, C16","Capacitor"
+"osram_hiled","OSRAM LED","1","LED1",""
+"QFN24 4x4 package","NORDIC_QFN50P400X400X90-25N","1","U5","2.4GHz Tranceiver with embedded MCU and 10 bit ADC"
+"Res2","0402s","9","R1, R2, R3, R6, R7, R8, R9, R15, R16","Resistor"
+"Single_ASIC","Single_ASIC","1","U2",""
+"tps79915","SOT23-5AN","1","U3",""
+"TSX-3225, 16MHz, Cl=9pF, +/-10ppm","bt-xtal 2.5 x 2 mm","1","X1","Crystal"
+"ZLED7022","12utqfn","1","U1","ZLED 7022"

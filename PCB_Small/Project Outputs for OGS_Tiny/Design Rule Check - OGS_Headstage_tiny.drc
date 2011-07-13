@@ -1,0 +1,63 @@
+Protel Design System Design Rule Check
+PCB File : C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc
+Date     : 7/9/2011
+Time     : 8:51:50 PM
+
+Processing Rule : Clearance Constraint (Gap=6mil) (All),(All)
+Rule Violations :0
+
+Processing Rule : Room SingleASIC (Bounding Region = (2187mil, 484mil, 3662mil, 699mil) (Disabled)(InComponentClass('SingleASIC'))
+Rule Violations :0
+
+Processing Rule : Room Main_4x4 (Bounding Region = (0mil, 0mil, 2000mil, 1000mil) (Disabled)(InComponentClass('Main_4x4'))
+Rule Violations :0
+
+Processing Rule : Room LED_SOP (Bounding Region = (2666mil, 913mil, 2951mil, 1048mil) (Disabled)(InComponentClass('LED_SOP'))
+Rule Violations :0
+
+Processing Rule : Net Antennae (Tolerance=0mil) (All)
+   Violation between Net Antennae: Track (1804.315mil,1692.811mil)(1804.315mil,1724.535mil)  Top Layer
+Rule Violations :1
+
+Processing Rule : Hole To Hole Clearance (Gap=6mil) (All),(All)
+Rule Violations :0
+
+Processing Rule : Height Constraint (Min=0mil) (Max=1000mil) (Prefered=500mil) (Disabled)(All)
+Rule Violations :0
+
+Processing Rule : Hole Size Constraint (Min=10mil) (Max=100mil) (All)
+Rule Violations :0
+
+Processing Rule : Un-Routed Net Constraint ( (All) )
+   Violation between Un-Routed Net Constraint: Net VOUT Between Pad U1-2 (1789,1754.685mil) And Pad LED1-2 (2202,1634.291mil)
+   Violation between Un-Routed Net Constraint: Net NetLED1_1 Between Pad U1-8 (1866.756,1754.685mil) And Pad LED1-1 (2202,1795.709mil)
+   Violation between Un-Routed Net Constraint: Net V3P0 Between Pad U5-18 (1743.74,1790.213mil) And Track on layer Bottom Layer (1769,1782mil)
+   Violation between Un-Routed Net Constraint: Net V3P0 Between Pad C7-1 (1681.685,1922mil) And Track on layer Top Layer (1687.94,1844.504mil)
+   Violation between Un-Routed Net Constraint: Net V3P0 Between Pad U5-7 (1615.787,1662.26mil) And Track on layer Bottom Layer (1696,1667.811mil)
+   Violation between Un-Routed Net Constraint: Net V3P0 Between Pad U5-2 (1586.26,1770.528mil) And Track on layer Top Layer (1608.882,1662.26mil)
+   Violation between Un-Routed Net Constraint: Net V3P0 Between Pad U5-13 (1743.74,1691.787mil) And Pad U5-18 (1743.74,1790.213mil)
+   Violation between Un-Routed Net Constraint: Net NetU5_16 Between Pad U5-16 (1743.74,1750.842mil) And Pad U11-3 (1770.63,1758mil)
+   Violation between Un-Routed Net Constraint: Net NetU5_15 Between Pad U5-15 (1743.74,1731.158mil) And Pad U11-4 (1770.63,1724.535mil)
+   Violation between Un-Routed Net Constraint: Net NetC15_1 Between Pad U11-5 (1790.315,1724.535mil) And Track on layer Top Layer (1804.315,1724.535mil)
+   Violation between Un-Routed Net Constraint: Net NetC11_2 Between Pad U11-1 (1810,1758mil) And Pad L3-1 (1839,1761.685mil)
+   Violation between Un-Routed Net Constraint: Net NetC11_2 Between Pad U11-1 (1810,1758mil) And Pad C11-2 (1814.811,1791mil)
+   Violation between Un-Routed Net Constraint: Net GND Between Pad C11-1 (1791.189,1791mil) And Pad R15-2 (1796.811,1819mil)
+   Violation between Un-Routed Net Constraint: Net GND Between Pad U11-2 (1790.315,1758mil) And Pad C11-1 (1791.189,1791mil)
+   Violation between Un-Routed Net Constraint: Net GND Between Pad U5-17 (1743.74,1770.528mil) And Pad U11-2 (1790.315,1758mil)
+Rule Violations :15
+
+Processing Rule : Short-Circuit Constraint (Allowed=Yes) (All),(All)
+Rule Violations :0
+
+Processing Rule : Power Plane Connect Rule(Direct Connect )(Expansion=20mil) (Conductor Width=10mil) (Air Gap=10mil) (Entries=4) (All)
+Rule Violations :0
+
+Processing Rule : Width Constraint (Min=6mil) (Max=30mil) (Preferred=6mil) (All)
+Rule Violations :0
+
+Processing Rule : Width Constraint (Min=6mil) (Max=50mil) (Preferred=10mil) (InNet('V3P0'))
+Rule Violations :0
+
+
+Violations Detected : 16
+Time Elapsed        : 00:00:01

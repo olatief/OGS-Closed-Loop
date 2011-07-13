@@ -6,7 +6,7 @@ using System.Numerics;
 
 namespace CID_USB_BaseStation
 {
-    class Filter
+    public class Filter
     {
         protected object filtLock = new object();
 

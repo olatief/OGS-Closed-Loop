@@ -1,0 +1,39 @@
+---------------------------------------------------------------------------
+NCDrill File Report For: OGS_Headstage_tiny.PcbDoc   7/11/2011  5:36:45 PM
+---------------------------------------------------------------------------
+
+Layer Pair : Top Layer to Bottom Layer
+ASCII RoundHoles File : OGS_Headstage_tiny.TXT
+EIA File   : OGS_Headstage_tiny.DRL
+
+Tool         Hole Size           Hole Type     Hole Count Plated       Tool Travel
+---------------------------------------------------------------------------
+T1        10mil (0.254mm)          Round          12               1.26 Inch (32.12 mm)
+T2        11.8mil (0.29972mm)      Round          1                0.00 Inch (0.00 mm)
+T3        12mil (0.3048mm)         Round          6                0.29 Inch (7.28 mm)
+T4        29mil (0.7366mm)         Round          2                0.23 Inch (5.84 mm)
+T5        81.4mil (2.06756mm)      Round          1                0.00 Inch (0.00 mm)
+---------------------------------------------------------------------------
+Totals                                            22               1.78 Inch (45.23 mm)
+Layer Pair : Top Layer to Ground 1
+ASCII RoundHoles File : OGS_Headstage_tiny.TX1
+EIA File   : OGS_Headstage_tiny.DR1
+
+Tool         Hole Size           Hole Type     Hole Count Plated       Tool Travel
+---------------------------------------------------------------------------
+T1        10mil (0.254mm)          Round          5                0.48 Inch (12.18 mm)
+---------------------------------------------------------------------------
+Totals                                            5                0.48 Inch (12.18 mm)
+Layer Pair : Power 2 to Bottom Layer
+ASCII RoundHoles File : OGS_Headstage_tiny.TX2
+EIA File   : OGS_Headstage_tiny.DR2
+
+Tool         Hole Size           Hole Type     Hole Count Plated       Tool Travel
+---------------------------------------------------------------------------
+T1        10mil (0.254mm)          Round          5                0.55 Inch (14.04 mm)
+---------------------------------------------------------------------------
+Totals                                            5                0.55 Inch (14.04 mm)
+---------------------------------------------------------------------------
+Totals                                            32               2.81 Inch (71.45 mm)
+
+Total Processing Time (hh:mm:ss) : 00:00:00

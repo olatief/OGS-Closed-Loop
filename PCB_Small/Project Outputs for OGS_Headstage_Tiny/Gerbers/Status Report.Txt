@@ -1,0 +1,19 @@
+Output: Gerber Files
+Type  : Gerber
+From  : Variant [[No Variations]] of PCB Document [OGS_Headstage_tiny.PcbDoc]
+   Generated File[OGS_Headstage_tiny.GTL]
+   Generated File[OGS_Headstage_tiny.GP1]
+   Generated File[OGS_Headstage_tiny.GBL]
+   Generated File[OGS_Headstage_tiny.GTS]
+   Generated File[OGS_Headstage_tiny.GP2]
+   Generated File[OGS_Headstage_tiny.GBS]
+   Generated File[OGS_Headstage_tiny.GM1]
+   Generated File[OGS_Headstage_tiny.RUL]
+   Generated File[OGS_Headstage_tiny.EXTREP]
+   Generated File[OGS_Headstage_tiny.REP]
+
+
+Files Generated   : 10
+Documents Printed : 0
+
+Finished Output Generation At 5:36:46 PM On 7/11/2011

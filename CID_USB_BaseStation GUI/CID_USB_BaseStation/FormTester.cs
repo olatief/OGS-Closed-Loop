@@ -51,9 +51,8 @@ namespace CID_USB_BaseStation
           
         }
 
-        private void btnConvert_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show(Matlab.tester());
-        }
+        
+
+        
     }
 }

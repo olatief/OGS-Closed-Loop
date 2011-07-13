@@ -1,0 +1,12 @@
+Field=Comment~String~Comment~149|Field=Description~String~Description~149|Field=Designator~String~Designator~149|Field=Footprint~String~Footprint~149|Field=LibRef~String~LibRef~149|Field=Quantity~Integer~Quantity~50|Field=Supplier Part Number 1~String~Supplier Part Number 1~249|ReportField=Currency~<none>|ReportField=ProductionQuantity~1|ReportField=ProjectFileName~OGS_Headstage.PrjPcb|ReportField=ProjectFullPath~C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB\OGS_Headstage.PrjPcb|ReportField=Title~Bill of Materials For Project [OGS_Headstage.PrjPcb] (No PCB Document Selected)|ReportField=TotalQuantity~35|ReportField=ReportTime~4:02:19 PM|ReportField=ReportDate~7/1/2011|ReportField=ReportDateTime~7/1/2011 4:02:19 PM|ReportField=OutputName~Bill of Materials|ReportField=OutputType~BOM_PartType|ReportField=GeneratorName~BOM|ReportField=GeneratorDescription~Bill of Materials|ReportField=VariantName~None|ReportField=Address1~|ReportField=Address2~|ReportField=Address3~|ReportField=Address4~|ReportField=ApprovedBy~|ReportField=Author~|ReportField=CheckedBy~|ReportField=CompanyName~|ReportField=CurrentDate~7/1/2011|ReportField=CurrentTime~4:01:19 PM|ReportField=Date~|ReportField=DocumentFullPathAndName~C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB\LED_SOP.SchDoc|ReportField=DocumentName~LED_SOP.SchDoc|ReportField=DocumentNumber~|ReportField=DrawnBy~|ReportField=Engineer~|ReportField=ImagePath~|ReportField=ModifiedDate~7/1/2011|ReportField=Organization~|ReportField=ProjectName~OGS_Headstage.PrjPcb|ReportField=Revision~|ReportField=Rule~|ReportField=SheetNumber~|ReportField=SheetTotal~|ReportField=Time~|ReportField=Title~|ReportField=DataSourceFileName~OGS_Headstage.PrjPcb|ReportField=DataSourceFullPath~C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB\OGS_Headstage.PrjPcb
+NP0 50V|Capacitor|C1, C2, C3, C4, C5, C6, C8, C9, C10, C11, C12, C13, C14, C15, C16|0402s|Cap|17|490-3085-1-ND, 490-3896-1-ND, 709-1135-1-ND, 709-1222-1-ND
+MicroAntenna||E1|microantenna|MicroAntenna|1|
+Inductor|Inductor|L3|0402-A|Inductor|1|PCD2369CT-ND
+osram_hiled||LED1|OSRAM LED|osram_hiled|1|
+Res2|Resistor|R1, R2, R3, R6, R7, R8, R9, R15, R16|0402s|Res2|9|P22.0KLCT-ND
+ZLED7022|ZLED 7022|U1|12utqfn|ZLED7022|1|1898432
+Single_ASIC||U2|Single_ASIC|Single_ASIC|1|
+tps79915||U3|SOT23-5AN|tps79915|1|
+QFN24 4x4 package|2.4GHz Tranceiver with embedded MCU and 10 bit ADC|U5|NORDIC_QFN50P400X400X90-25N|nRF24LE1 - 4x4|1|
+balun||U11|balun|balun|1|
+TSX-3225, 16MHz, Cl=9pF, +/-10ppm|Crystal|X1|bt-xtal 2.5 x 2 mm|BT-XTAL|1|644-1059-1-ND

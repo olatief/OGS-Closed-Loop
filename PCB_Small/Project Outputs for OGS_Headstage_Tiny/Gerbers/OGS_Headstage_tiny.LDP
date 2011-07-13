@@ -1,0 +1,4 @@
+Layer Pairs Export File for PCB: C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_tiny.PcbDoc
+LayersSetName=Top_Bot_Thru_Holes|DrillFile=ogs_headstage_tiny.txt|LayerPairs=gtl,gbl
+LayersSetName=Top_Ground 1_Blind_Vias|DrillFile=dr1|LayerPairs=gtl,gp1
+LayersSetName=Power 2_Bot_Blind_Vias|DrillFile=dr2|LayerPairs=g1,gbl

@@ -87,7 +87,7 @@ namespace CID_USB_BaseStation
             tvalNstage.Tag = validate(1, 10, delegate(Int32 val) { pAlgo.nStage = (byte)val; });
 
             tvalPulseOn.Tag = validate(1, 250, delegate(Int32 val) { pStim.PulseOn = (byte)val; ComputeTimes(); });
-            tvalPulseOff.Tag = validate(1, 250, delegate(Int32 val) { pStim.PulseOff = (byte)val; ComputeTimes(); });
+            tvalPulseOff.Tag = validate(0, 250, delegate(Int32 val) { pStim.PulseOff = (byte)val; ComputeTimes(); });
             tvalCycles.Tag = validate(0, 250, delegate(Int32 val) { pStim.Cycles = (byte)val; ComputeTimes(); });
             tvalDelay.Tag = validate(0, 40 * 250, delegate(Int32 val) { pAlgo.delay = (byte)(val / 40); tvalDelay.Text = Convert.ToString(pAlgo.delay * 40); });
             
@@ -550,6 +550,22 @@ namespace CID_USB_BaseStation
         private void label21_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void rdoSingle_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rdoSingle.Checked)
+            {
+                pnlChannelSelect.Enabled = false;
+            }
+        }
+
+        private void rdoSixteen_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rdoSixteen.Checked)
+            {
+                pnlChannelSelect.Enabled = true;
+            }
         }
     }
 }

@@ -7,5 +7,6 @@ namespace CID_USB_BaseStation
 {
     class DataParse
     {
+
     }
 }

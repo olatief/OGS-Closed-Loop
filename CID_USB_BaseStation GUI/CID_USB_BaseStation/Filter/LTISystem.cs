@@ -6,7 +6,7 @@ using System.Numerics;
 
 namespace CID_USB_BaseStation
 {
-    class LTISystem
+    public class LTISystem
     {
         public Double[] a;
         public Double[] b;

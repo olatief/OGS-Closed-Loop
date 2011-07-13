@@ -1,0 +1,8 @@
+DRC Rules Export File for PCB: C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB\OGS_Headstage.PcbDoc
+RuleKind=Clearance|RuleName=clearance1|Scope=Board|Minimum=6.00
+RuleKind=Clearance|RuleName=Plane_pad_clear|Scope=Board|Minimum=12.00
+RuleKind=ShortCircuit|RuleName=ShortCircuit|Scope=Board|Allowed=0
+RuleKind=SolderMaskExpansion|RuleName=SolderMaskExpansion|Scope=Board|Minimum=0.00
+RuleKind=Width|RuleName=Width|Scope=Board|Minimum=6.00
+RuleKind=Width|RuleName=Width_v3p0|Scope=Board|Minimum=6.00
+RuleKind=Clearance|RuleName=plane clear|Scope=Board|Minimum=10.00

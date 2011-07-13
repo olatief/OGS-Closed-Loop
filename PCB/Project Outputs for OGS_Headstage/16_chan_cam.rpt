@@ -1,0 +1,15 @@
+CAMtasticDXP Drill Report
+Serial Number:0000-00-00000
+Drill File: C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB\Project Outputs for OGS_Headstage\16_chan_cam.drl
+Format: 2.4
+Units: English (Inch)
+Step & Repeat Codes Used: NO
+
+
+TOOL		SIZE		COUNT
+====		======		=====
+
+ 1 		0.0100		50
+ 2 		0.0150		29
+ 3 		0.0200		16
+ 4 		0.0354		2

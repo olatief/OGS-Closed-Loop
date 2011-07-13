@@ -6,7 +6,7 @@ using System.Numerics;
 
 namespace CID_USB_BaseStation
 {
-    class Notch : Filter
+    public class Notch : Filter
     {
         private double notchFrequency;
         private double samplingFrequency;

@@ -23,7 +23,7 @@ namespace CID_USB_BaseStation
 
     }	//end of class HandlerDoneEventArgs
 
-    class PacketHandler : IDisposable
+    public class PacketHandler : IDisposable
     {
         public delegate void processingDoneHandler(object sender, ProcessingDoneEventArgs e);
 
@@ -70,13 +70,14 @@ namespace CID_USB_BaseStation
             int [] parsedValues;
             if (lastPacket != null)
             {
-                missedPackets = receivedPacket.Count - lastPacket.Count - 1;
                 
+                // missedPackets = receivedPacket.calculateMissedPacketsBetween(lastPacket);
+                missedPackets = receivedPacket.Count - lastPacket.Count - 1;
                 if (receivedPacket.Count <= lastPacket.Count) // check for overflow since count only goes to 128;
                 {
                     if (missedPackets == 0)
                     {
-                        throw new InvalidOperationException();
+                       // throw new InvalidOperationException();
                     }
                     missedPackets += 128;
                 }
@@ -88,6 +89,7 @@ namespace CID_USB_BaseStation
                 else
                 {
                     WirelessStats.Instance.NumDroppedPackets += missedPackets;
+                    ++WirelessStats.Instance.NumSuccessRxPackets; // we still need to count the last packet we received as a successful packet
                 }
 
                 parsedValues = receivedPacket.AdcVals;
@@ -107,7 +109,14 @@ namespace CID_USB_BaseStation
             }
         }
 
-        private int[] parseSingleChan(Packet pkt)
+        public int[] parseSixteenChan(Packet pkt)
+        {
+
+            return null;
+        }
+
+
+        public int[] parseSingleChan(Packet pkt)
         {
             int[] parsedValues = new int[15];
             int tempValue;
@@ -119,7 +128,7 @@ namespace CID_USB_BaseStation
                     tempValue = -tempValue;
                 }
                * */
-                parsedValues[i] = 2048-tempValue;
+                parsedValues[i] = 2048-tempValue; // This is because a value of 2048 is 0 in differential recording mode
                 
                 logger.LogLine(parsedValues[i]);
             }

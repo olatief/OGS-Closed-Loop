@@ -81,6 +81,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Block.cs" />
     <Compile Include="DataLogger.cs" />
     <Compile Include="DataParse.cs" />
     <Compile Include="Filter\Butterworth.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="Oscilloscope.cs" />
     <Compile Include="Packet.cs" />
     <Compile Include="PacketHandler.cs" />
+    <Compile Include="Parser.cs" />
     <Compile Include="progParameters.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -172,6 +174,9 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Tests\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

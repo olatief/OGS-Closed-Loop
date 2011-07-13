@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace CID_USB_BaseStation
 {
-    class DataLogger
+    public class DataLogger
     {
         private static DataLogger instance;
         private bool isFileOpened = false;

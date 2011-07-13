@@ -108,6 +108,13 @@
             this.label16 = new System.Windows.Forms.Label();
             this.txtSamplingFreq = new System.Windows.Forms.TextBox();
             this.chkFilterEnabled = new System.Windows.Forms.CheckBox();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.pnlChannelSelect = new System.Windows.Forms.Panel();
+            this.cboChannelDisplay = new System.Windows.Forms.ComboBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.rdoSixteen = new System.Windows.Forms.RadioButton();
+            this.rdoSingle = new System.Windows.Forms.RadioButton();
             this.statusStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -117,6 +124,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.groupBox5.SuspendLayout();
             this.groupBox6.SuspendLayout();
+            this.groupBox7.SuspendLayout();
+            this.pnlChannelSelect.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // cboDevices
@@ -146,7 +156,7 @@
             this.tslStimulating});
             this.statusStrip1.Location = new System.Drawing.Point(0, 662);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1285, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1187, 22);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -171,7 +181,7 @@
             // 
             // tRecv
             // 
-            this.tRecv.Location = new System.Drawing.Point(534, 30);
+            this.tRecv.Location = new System.Drawing.Point(549, 29);
             this.tRecv.Name = "tRecv";
             this.tRecv.Size = new System.Drawing.Size(157, 20);
             this.tRecv.TabIndex = 3;
@@ -192,7 +202,7 @@
             this.groupBox2.Controls.Add(this.pnlProg);
             this.groupBox2.Location = new System.Drawing.Point(26, 106);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(460, 521);
+            this.groupBox2.Size = new System.Drawing.Size(417, 521);
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Programming Controls";
@@ -204,14 +214,14 @@
             this.pnlProg.Controls.Add(this.groupBox3);
             this.pnlProg.Location = new System.Drawing.Point(14, 28);
             this.pnlProg.Name = "pnlProg";
-            this.pnlProg.Size = new System.Drawing.Size(440, 487);
+            this.pnlProg.Size = new System.Drawing.Size(397, 487);
             this.pnlProg.TabIndex = 0;
             // 
             // btnProgAll
             // 
-            this.btnProgAll.Location = new System.Drawing.Point(268, 249);
+            this.btnProgAll.Location = new System.Drawing.Point(264, 263);
             this.btnProgAll.Name = "btnProgAll";
-            this.btnProgAll.Size = new System.Drawing.Size(105, 45);
+            this.btnProgAll.Size = new System.Drawing.Size(105, 32);
             this.btnProgAll.TabIndex = 3;
             this.btnProgAll.Text = "Program All";
             this.btnProgAll.UseVisualStyleBackColor = true;
@@ -561,13 +571,12 @@
             // 
             // btnConvert
             // 
-            this.btnConvert.Location = new System.Drawing.Point(775, 29);
+            this.btnConvert.Location = new System.Drawing.Point(745, 28);
             this.btnConvert.Name = "btnConvert";
             this.btnConvert.Size = new System.Drawing.Size(69, 21);
             this.btnConvert.TabIndex = 8;
             this.btnConvert.Text = "Convert";
             this.btnConvert.UseVisualStyleBackColor = true;
-            this.btnConvert.Click += new System.EventHandler(this.btnConvert_Click);
             // 
             // txtFilename
             // 
@@ -635,9 +644,9 @@
             this.groupBox5.Controls.Add(this.lblDroppedStat);
             this.groupBox5.Controls.Add(this.label15);
             this.groupBox5.Controls.Add(this.label14);
-            this.groupBox5.Location = new System.Drawing.Point(521, 420);
+            this.groupBox5.Location = new System.Drawing.Point(464, 420);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(502, 207);
+            this.groupBox5.Size = new System.Drawing.Size(486, 207);
             this.groupBox5.TabIndex = 15;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Wireless Stats";
@@ -697,9 +706,9 @@
             this.groupBox6.Controls.Add(this.label16);
             this.groupBox6.Controls.Add(this.txtSamplingFreq);
             this.groupBox6.Controls.Add(this.chkFilterEnabled);
-            this.groupBox6.Location = new System.Drawing.Point(521, 106);
+            this.groupBox6.Location = new System.Drawing.Point(464, 106);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(502, 290);
+            this.groupBox6.Size = new System.Drawing.Size(486, 290);
             this.groupBox6.TabIndex = 16;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Real-time Filtering";
@@ -856,11 +865,100 @@
             this.chkFilterEnabled.UseVisualStyleBackColor = true;
             this.chkFilterEnabled.CheckedChanged += new System.EventHandler(this.chkFilterEnabled_CheckedChanged);
             // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.pnlChannelSelect);
+            this.groupBox7.Controls.Add(this.panel1);
+            this.groupBox7.Location = new System.Drawing.Point(984, 106);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(189, 521);
+            this.groupBox7.TabIndex = 17;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "System Selection";
+            // 
+            // pnlChannelSelect
+            // 
+            this.pnlChannelSelect.Controls.Add(this.cboChannelDisplay);
+            this.pnlChannelSelect.Controls.Add(this.label23);
+            this.pnlChannelSelect.Enabled = false;
+            this.pnlChannelSelect.Location = new System.Drawing.Point(9, 88);
+            this.pnlChannelSelect.Name = "pnlChannelSelect";
+            this.pnlChannelSelect.Size = new System.Drawing.Size(160, 80);
+            this.pnlChannelSelect.TabIndex = 2;
+            // 
+            // cboChannelDisplay
+            // 
+            this.cboChannelDisplay.FormattingEnabled = true;
+            this.cboChannelDisplay.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16"});
+            this.cboChannelDisplay.Location = new System.Drawing.Point(23, 43);
+            this.cboChannelDisplay.Name = "cboChannelDisplay";
+            this.cboChannelDisplay.Size = new System.Drawing.Size(121, 21);
+            this.cboChannelDisplay.TabIndex = 2;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(32, 10);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(101, 13);
+            this.label23.TabIndex = 1;
+            this.label23.Text = "Channel For Display";
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.rdoSixteen);
+            this.panel1.Controls.Add(this.rdoSingle);
+            this.panel1.Location = new System.Drawing.Point(6, 24);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(126, 47);
+            this.panel1.TabIndex = 0;
+            // 
+            // rdoSixteen
+            // 
+            this.rdoSixteen.AutoSize = true;
+            this.rdoSixteen.Location = new System.Drawing.Point(3, 27);
+            this.rdoSixteen.Name = "rdoSixteen";
+            this.rdoSixteen.Size = new System.Drawing.Size(106, 17);
+            this.rdoSixteen.TabIndex = 1;
+            this.rdoSixteen.Text = "16 Channel ASIC";
+            this.rdoSixteen.UseVisualStyleBackColor = true;
+            this.rdoSixteen.CheckedChanged += new System.EventHandler(this.rdoSixteen_CheckedChanged);
+            // 
+            // rdoSingle
+            // 
+            this.rdoSingle.AutoSize = true;
+            this.rdoSingle.Checked = true;
+            this.rdoSingle.Location = new System.Drawing.Point(3, 3);
+            this.rdoSingle.Name = "rdoSingle";
+            this.rdoSingle.Size = new System.Drawing.Size(123, 17);
+            this.rdoSingle.TabIndex = 0;
+            this.rdoSingle.TabStop = true;
+            this.rdoSingle.Text = "Single Channel ASIC";
+            this.rdoSingle.UseVisualStyleBackColor = true;
+            this.rdoSingle.CheckedChanged += new System.EventHandler(this.rdoSingle_CheckedChanged);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1285, 684);
+            this.ClientSize = new System.Drawing.Size(1187, 684);
+            this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.cmdTestStim);
@@ -893,6 +991,11 @@
             this.groupBox5.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
+            this.pnlChannelSelect.ResumeLayout(false);
+            this.pnlChannelSelect.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -978,6 +1081,13 @@
         private System.Windows.Forms.TextBox txtFilterNumHarmonics;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.TextBox txtFilterBandwidth;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.RadioButton rdoSixteen;
+        private System.Windows.Forms.RadioButton rdoSingle;
+        private System.Windows.Forms.Panel pnlChannelSelect;
+        private System.Windows.Forms.ComboBox cboChannelDisplay;
+        private System.Windows.Forms.Label label23;
     }
 }
 
