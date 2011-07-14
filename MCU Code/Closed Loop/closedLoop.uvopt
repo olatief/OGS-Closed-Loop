@@ -215,10 +215,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>55</ColumnNumber>
+      <ColumnNumber>20</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>183</TopLine>
-      <CurrentLine>218</CurrentLine>
+      <TopLine>1</TopLine>
+      <CurrentLine>16</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\main.c</PathWithFileName>
       <FilenameWithoutPath>main.c</FilenameWithoutPath>
@@ -557,7 +557,7 @@
         </Doc>
         <Doc>
           <Name>hardware.h</Name>
-          <ColumnNumber>11</ColumnNumber>
+          <ColumnNumber>0</ColumnNumber>
           <TopLine>1</TopLine>
           <CurrentLine>21</CurrentLine>
         </Doc>
@@ -581,9 +581,9 @@
         </Doc>
         <Doc>
           <Name>.\main.c</Name>
-          <ColumnNumber>55</ColumnNumber>
-          <TopLine>183</TopLine>
-          <CurrentLine>218</CurrentLine>
+          <ColumnNumber>52</ColumnNumber>
+          <TopLine>169</TopLine>
+          <CurrentLine>169</CurrentLine>
         </Doc>
       </Documents>
     </MDIGroup>
