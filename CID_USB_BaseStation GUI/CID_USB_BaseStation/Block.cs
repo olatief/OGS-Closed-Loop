@@ -13,7 +13,9 @@ namespace CID_USB_BaseStation
         
         public int Offset { get { return offset; } }
         public byte[] Buffer { get { return buffer; } }
+        public enum BlockType { FullBlock, PartialBlock};
 
+        private BlockType blockType = BlockType.PartialBlock;
         public static Block ExtractFromByteArray(byte[] buf, int startBitPos, int endBitPos)
         {
             

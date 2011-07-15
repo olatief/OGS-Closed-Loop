@@ -9,10 +9,11 @@
 #include "hal_spi.h"
 
 #define MAXLENGTH 30 // This is how	many bytes are allocated for the raw data
-#define MAXBLOCKS  4
+#define MAXBLOCKS  3
 #define CALC_PAYLOAD_PTR(bl) payload+bl*MAXPAYLOAD
 
 void init_radio();
+void init_pwm();
 
  sbit P0_0 = P0^0;
   sbit P0_4 = P0^4;
@@ -49,7 +50,7 @@ void main()
 	#ifdef FOURPIN
 	P0DIR &= ~(1<<4);
 	#else
-	P1DIR &= ~( (1<<0) | (1<<4) | (1<<6) );	   			// SMISO, LED6
+	P1DIR &= ~( (1<<0) );	   			// SMISO, LED6
 	#endif
 //	P0DIR &= ~( (1<<7) | (1<<5) );  	// SMOSI, SSCK
 
@@ -57,7 +58,8 @@ void main()
  #ifndef DEBUG
 	hal_spi_slave_preload(0xAA);
 	hal_spi_slave_preload(0xAA);
-	hal_spi_slave_init( HAL_SPI_MODE_0, HAL_SPI_LSB_MSB);
+	// VERY IMPORTANT: we need to ensure we sample a byte on a clock transition from high to low (MODE 1 or MODE 2 should do this
+	hal_spi_slave_init( HAL_SPI_MODE_1, HAL_SPI_LSB_MSB);
 
 	SPISCON0 &= ~ (1<<4);	// Enable irqSpiSlaveDone
 
@@ -80,7 +82,7 @@ void main()
    	RFCKEN = 1;	   // Enable the radio clock
     
 	init_radio();
-
+	init_pwm();
 #ifndef	DEBUG
 	SPI = 1;
 #endif	
@@ -114,13 +116,37 @@ void main()
 
 }
 
-#define PWM0_EN (1<<0)
-
 void init_pwm()
 {
-	PWMCON = PWM0_EN; // Enables PWM0, freq=CCLK/31
-	PWMDC0 =  0x0F; // 50% Duty Cycle for 5 bit period
+
+	P0DIR &= ~(1<<2);
+	// fake for now
+	CRCL = 0x00; // FF - 06 count 
+   CRCH = 0xFF;
+	   CCEN = 0x02;  // Compare enabled
+  
+   T2PS = 0; // CLK/12 PreScaler
+   T2R1 = 1; //mode 0 reload from TF2 interrupr
+   T2R0 = 0; 
+  // T2CM = 1;	
+   T2I0 = 1; // Turn on timer
+   T2I1 = 0;
+    ET2 = 1; // Enable timer 2 interrupt	
+	
+	/*
+    PWMDC0 =  0x0F; // 50% Duty Cycle for 5 bit period
+	PWMDC1 =  0x0F; // 50% Duty Cycle for 5 bit period
+
+	PWMCON = 0x01; // Enables PWM0, freq=CCLK/31
+	*/
 }					 
+// sbit P0_2 = P0^2;
+T2_ISR()
+{
+	P0 ^= (1<<2);
+	//P0_2 ^= 1;
+	TF2=0;
+}
 
 #ifdef DEBUG
 T2_ISR()

@@ -136,20 +136,21 @@ namespace CID_USB_BaseStation
             return startPositions;
         }
 
-        public List<Block> ExtractBlocks(Packet pkt)
+        public List<Block> ExtractFullBlocks(Packet pkt)
         {
             
            List<int> startPos = realStartPositions(findStartPatterninPacket(pkt));
             
            List<Block> blocks = new List<Block>();
 
-           if (startPos.Count <= 1) return blocks;
+           if (startPos.Count <= 1) return blocks; // if there were no start positions found give back an empty block
            
 
            for (int i = 0; i < startPos.Count - 1; i++)
            {
-               byte[] bufTemp = new byte[26];
-             
+               byte[] bufTemp = new byte[26]; // 204 bits total to store the entire block.
+               
+               blocks.Add(new Block(
            }
 
             return blocks;

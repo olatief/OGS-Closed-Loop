@@ -215,10 +215,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>20</ColumnNumber>
+      <ColumnNumber>67</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>1</TopLine>
-      <CurrentLine>16</CurrentLine>
+      <TopLine>81</TopLine>
+      <CurrentLine>94</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\main.c</PathWithFileName>
       <FilenameWithoutPath>main.c</FilenameWithoutPath>
@@ -517,8 +517,14 @@
     <ActiveMDIGroup>0</ActiveMDIGroup>
     <MDIGroup>
       <Size>100</Size>
-      <ActiveTab>10</ActiveTab>
+      <ActiveTab>0</ActiveTab>
       <Documents>
+        <Doc>
+          <Name>.\main.c</Name>
+          <ColumnNumber>67</ColumnNumber>
+          <TopLine>81</TopLine>
+          <CurrentLine>94</CurrentLine>
+        </Doc>
         <Doc>
           <Name>..\hal\nrf24le1\hal_adc.h</Name>
           <ColumnNumber>31</ColumnNumber>
@@ -578,12 +584,6 @@
           <ColumnNumber>25</ColumnNumber>
           <TopLine>128</TopLine>
           <CurrentLine>149</CurrentLine>
-        </Doc>
-        <Doc>
-          <Name>.\main.c</Name>
-          <ColumnNumber>52</ColumnNumber>
-          <TopLine>169</TopLine>
-          <CurrentLine>169</CurrentLine>
         </Doc>
       </Documents>
     </MDIGroup>
