@@ -203,10 +203,10 @@
       <FileType>1</FileType>
       <tvExp>1</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>31</ColumnNumber>
+      <ColumnNumber>59</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>119</TopLine>
-      <CurrentLine>123</CurrentLine>
+      <TopLine>109</TopLine>
+      <CurrentLine>124</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\main.c</PathWithFileName>
       <FilenameWithoutPath>main.c</FilenameWithoutPath>
@@ -264,8 +264,8 @@
 
   <AlienFiles>
     <PathWithFilename>C:\Users\Omar\Dropbox\OGS-Closed-Loop\MCU Code\compiler\c51\reg24le1.h</PathWithFilename>
-    <TopLine>163</TopLine>
-    <CurrentLine>180</CurrentLine>
+    <TopLine>36</TopLine>
+    <CurrentLine>59</CurrentLine>
     <Constant>0</Constant>
     <WindowPosition>
       <length>0</length>
@@ -291,7 +291,7 @@
   <AlienFiles>
     <PathWithFilename>C:\Keil\C51\INC\Nordic\reg24le1.h</PathWithFilename>
     <TopLine>155</TopLine>
-    <CurrentLine>178</CurrentLine>
+    <CurrentLine>186</CurrentLine>
     <Constant>0</Constant>
     <WindowPosition>
       <length>0</length>
@@ -323,21 +323,21 @@
       <Documents>
         <Doc>
           <Name>.\main.c</Name>
-          <ColumnNumber>27</ColumnNumber>
-          <TopLine>119</TopLine>
-          <CurrentLine>125</CurrentLine>
+          <ColumnNumber>16</ColumnNumber>
+          <TopLine>109</TopLine>
+          <CurrentLine>123</CurrentLine>
         </Doc>
         <Doc>
           <Name>..\compiler\c51\reg24le1.h</Name>
-          <ColumnNumber>10</ColumnNumber>
-          <TopLine>163</TopLine>
-          <CurrentLine>180</CurrentLine>
+          <ColumnNumber>12</ColumnNumber>
+          <TopLine>36</TopLine>
+          <CurrentLine>59</CurrentLine>
         </Doc>
         <Doc>
           <Name>C:\Keil\C51\INC\Nordic\reg24le1.h</Name>
-          <ColumnNumber>10</ColumnNumber>
+          <ColumnNumber>25</ColumnNumber>
           <TopLine>155</TopLine>
-          <CurrentLine>178</CurrentLine>
+          <CurrentLine>186</CurrentLine>
         </Doc>
       </Documents>
     </MDIGroup>

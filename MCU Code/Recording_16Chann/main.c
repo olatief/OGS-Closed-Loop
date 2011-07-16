@@ -58,7 +58,7 @@ void main()
  #ifndef DEBUG
 	hal_spi_slave_preload(0xAA);
 	hal_spi_slave_preload(0xAA);
-	// VERY IMPORTANT: we need to ensure we sample a byte on a clock transition from high to low (MODE 1 or MODE 2 should do this
+	// VERY IMPORTANT: we need to ensure we sample a byte on a clock transition from high to low (MODE 1 or MODE 2) should do this
 	hal_spi_slave_init( HAL_SPI_MODE_1, HAL_SPI_LSB_MSB);
 
 	SPISCON0 &= ~ (1<<4);	// Enable irqSpiSlaveDone
@@ -118,27 +118,11 @@ void main()
 
 void init_pwm()
 {
-
-	P0DIR &= ~(1<<2);
-	// fake for now
-	CRCL = 0x00; // FF - 06 count 
-   CRCH = 0xFF;
-	   CCEN = 0x02;  // Compare enabled
-  
-   T2PS = 0; // CLK/12 PreScaler
-   T2R1 = 1; //mode 0 reload from TF2 interrupr
-   T2R0 = 0; 
-  // T2CM = 1;	
-   T2I0 = 1; // Turn on timer
-   T2I1 = 0;
-    ET2 = 1; // Enable timer 2 interrupt	
-	
-	/*
     PWMDC0 =  0x0F; // 50% Duty Cycle for 5 bit period
 	PWMDC1 =  0x0F; // 50% Duty Cycle for 5 bit period
-
-	PWMCON = 0x01; // Enables PWM0, freq=CCLK/31
-	*/
+	PWMCON |= (1<<2); // set prescaler to (1+1)=2. same as ~258kHz square wave
+	PWMCON |= 0x01; // Enables PWM0, freq=CCLK/31, 5 bit period
+	
 }					 
 // sbit P0_2 = P0^2;
 T2_ISR()

@@ -39,11 +39,14 @@ namespace CID_USB_BaseStation
         public Notch notchFilter = new Notch(60, 16000, 10);
         public bool bpFilterEnabled = false;
         public bool notchFilterEnabled = false;
+        private Parser SixteenChanParser = new Parser();
 
         public PacketHandler()
         {
             WirelessStats.Instance.Reset();
             Task.Factory.StartNew(processQueue);
+
+            
         }
        
         public void processQueue()
@@ -60,7 +63,9 @@ namespace CID_USB_BaseStation
 
                 if (buffer != null)
                 {
-                    ParseNewPacket(new Packet(buffer));
+                    Packet rxPacket = new Packet(buffer);
+                    SixteenChanParser.ParseNewPacket(rxPacket);
+                    ParseNewPacket(rxPacket);
                 }
             }
         }

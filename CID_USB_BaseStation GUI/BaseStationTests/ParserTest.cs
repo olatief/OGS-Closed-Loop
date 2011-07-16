@@ -11,6 +11,16 @@ namespace BaseStationTests
     public class ParserTest
     {
         [Test]
+        public void realStartPositionsTestHandle14bitPattern()
+        {
+            Parser testParser = new Parser();
+            int [] testVals = {100, 102, 100+204,102+204};
+            List<int> result = testParser.realStartPositions( testVals.ToList<int>() );
+
+            Assert.AreEqual(100, result[0]);
+        }
+
+        [Test]
         public void parseThreePackets()
         {
             byte[] buf1 = new byte[32];
@@ -42,6 +52,8 @@ namespace BaseStationTests
             Packet pkt3 = new Packet(buf3);
 
             Parser testParser = new Parser();
+            
+
 /*
             List<byte[]> blocks1 = testParser.ExtractBlocks(pkt1);
             List<byte[]> blocks2 = testParser.ExtractBlocks(pkt2);
@@ -94,6 +106,21 @@ namespace BaseStationTests
             Assert.AreEqual(0, realStartPos.Count); 
         }
         [Test]
+        public void findStartPatterninPacketTestRealData()
+        {
+            byte[] testBuffer = new byte[32]; // initialize to all 0x00
+            Parser testParser = new Parser();
+
+            testBuffer[27] = 0x4F;
+            testBuffer[28] = 0x55;
+            testBuffer[29] = 0xE1; 
+
+            List<int> results = testParser.findStartPatterninPacket(new Packet(testBuffer));
+
+            Assert.AreEqual(1, results.Count);
+            Assert.AreEqual(7, results[0]);
+        }
+        [Test]
         public void findStartPositionsTest()
         {
             Parser test = new Parser();
@@ -116,7 +143,7 @@ namespace BaseStationTests
         [Test]
         public void findStartPatterninPacketTest()
         {
-            byte[] testBuffer = new byte[30]; // initialize to all 0x00
+            byte[] testBuffer = new byte[32]; // initialize to all 0x00
             Parser testParser = new Parser();
             
             testBuffer[10] = 0x02;
@@ -127,7 +154,7 @@ namespace BaseStationTests
             testBuffer[21] = 0x54;
             testBuffer[22] = 0x04;
 
-            List<int> results = testParser.findStartPatterninPacket(testBuffer);
+            List<int> results = testParser.findStartPatterninPacket(new Packet(testBuffer));
 
             Assert.AreEqual(2, results.Count);
             Assert.AreEqual(10 * 8 + 6, results[0]);

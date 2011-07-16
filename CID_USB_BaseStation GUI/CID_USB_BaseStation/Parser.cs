@@ -9,54 +9,60 @@ namespace CID_USB_BaseStation
     {
         public const int blockSize = 204; // Size of 16 channel acquisition (16*12bits = 204)
         Packet LastPacket = new Packet();
-        private const bool isKeilLittleEndian = true; // x86 is little endian so this tells us if its the same as the target platform we're receiveing data from
-        UInt16 pattern = 0x02AA; // TODO: figure out endianness of 8051
+       // private const bool isMCULittleEndian = true; // x86 is little endian  
+        const UInt16 pattern = 0x0AAA; // TODO: figure out endianness of 8051
+        const UInt16 patternLength = 12; // # of bits
+        const UInt16 patternMask = (1<<(patternLength+1)) - 1;
+
         UInt32[] preShifts = new UInt32[22];
         UInt32[] masks = new UInt32[22];
 
         public Parser()
         {
             // Adapted from: http://stackoverflow.com/questions/1572290/fastest-way-to-scan-for-bit-pattern-in-a-stream-of-bits
-            byte[] prePattern = { 0x02, 0xAA };
-            prePattern[0] = 0x02;  // 0b 0000 0010
-            prePattern[1] = 0xAA;  // 0b 1010 1010;
 
-            for (int i = 0; i < 22; i++) // There's a total of 32-10 = 22 masks we need to test for every int
+            for (int i = 0; i < (32 - patternLength); i++) // There's a total of 32-patternLength masks we need to test for every int
             {
                 preShifts[i] = (UInt32)(pattern << i);
-                masks[i] = (UInt32)(0x03FF << i);   // mask for 10 bit patterns
+                masks[i] = (UInt32)(patternMask << i);   
 
             }
         }
 
         public List<int> findStartPatterninPacket(Packet rxPacket)
         {
-            List<int> retVal;
+            return findStartPatterninPacket(rxPacket.Buffer);
+        }
 
-            if (rxPacket.calculateMissedPacketsBetween(LastPacket) == 0)
+        public List<int> findStartPatterninBlock(Block toBeSearched)
+        {
+            return findStartPatterninPacket(toBeSearched.Buffer);
+        }
+
+        public List<int> findStartPatterninPacket(IList<byte> rxBytes)
+        {
+            List<int> startPositions = new List<int>();
+            List<int> foundLocations = new List<int>();
+
+            for (int i = 0; i < rxBytes.Count - 3; i += 3)
             {
-                byte[] searchBuffer = new byte[33];
-
-                Array.Copy(LastPacket.Buffer, searchBuffer, 30);
-                Array.Copy(rxPacket.Buffer, 0, searchBuffer, 30, 3);
-
-                retVal = findStartPatterninPacket(searchBuffer);
+                foundLocations = findStartPositions(new byte[] { rxBytes[i], rxBytes[i + 1], rxBytes[i + 2], rxBytes[i + 3] });
+                foreach (int loc in foundLocations)
+                {
+                    startPositions.Add(8 * i + loc);
+                }
             }
-            else
-            {
-
-                retVal = new List<int>();
-            }
-
-            LastPacket = rxPacket;
-            return retVal;
+            return startPositions;
         }
 
         // We assume that the input positions are pre-sorted in ascending order
         public List<int> realStartPositions(List<int> startPositions)
         {
             List<int> realStartPos = new List<int> { };
+            List<int> longestChain = new List<int>();
+            List<int> nextLongestChain = new List<int>();
 
+            
             if (startPositions.Count == 0 || (startPositions[startPositions.Count - 1] - startPositions[0]) < blockSize)
             {
                 return new List<int> { }; // give back an empty list if no block is found
@@ -75,7 +81,6 @@ namespace CID_USB_BaseStation
                     chain.Add(startPositions[i]);
                     do
                     {
-
                         chain.Add(startPositions[resultidx]);
                         resultidx = startPositions.FindIndex(resultidx, delegate(int val) { return val == startPositions[resultidx] + blockSize; });
                     } while(resultidx != -1);
@@ -83,40 +88,34 @@ namespace CID_USB_BaseStation
                 }
             }
 
+            // Find the longest chain. This should be the real packet start locations
+            // TODO: if we find lots of issues with 14 toggles that look like two start patterns together then we might have to use more than two packets together
             int maxChainLength = 0;
+
             foreach (List<int> chain in chains)
             {
                 if (maxChainLength < chain.Count)
                 {
+                    //assign last local max to be the next longest chain
+                    nextLongestChain = longestChain;
+
                     maxChainLength = chain.Count;
-                    realStartPos = chain;
+                    longestChain = chain;
                 }
             }
 
-            return realStartPos;
-        }
-
-        public List<int> findStartPatterninBlock(Block toBeSearched)
-        {
-            return findStartPatterninPacket(toBeSearched.Buffer);
-        }
-
-        public List<int> findStartPatterninPacket(IList<byte> rxBytes)
-        {
-            List<int> startPositions = new List<int>();
-            List<int> foundLocations = new List<int>();
-
-            for (int i = 0; i < rxBytes.Count-3; i += 3) 
+            if (longestChain.Count == nextLongestChain.Count) 
             {
-                foundLocations = findStartPositions(new byte[] { rxBytes[i], rxBytes[i+1], rxBytes[i+2], rxBytes[i+3] } );
-                foreach(int loc in foundLocations)
-                {
-                    startPositions.Add(8 * i + loc);
-                }
+                // This means that there are two possible chains that can both be legit blocks (14 bit problem). 
+                // The way we handle it is by returning neither chains and waiting for more data to decide.
+                return new List<int>();
             }
-            return startPositions;
+
+            return longestChain;
         }
-        // Return value of -1 indicates that no start pattern was found
+
+        
+        // Return value of Empty list indicates that no start pattern was found
         public List<int> findStartPositions(byte[] values)
         {
             int i = 0;
@@ -128,9 +127,9 @@ namespace CID_USB_BaseStation
 
             UInt32 combinedBytes = (UInt32)((values[0] << 24) + (values[1] << 16) + (values[2] << 8) + values[3]);
 
-            for (i = 21; i >= 0; i--)
+            for (i = 32-patternLength-1; i >= 0; i--)
             {
-                if ((combinedBytes & masks[i]) == preShifts[i]) startPositions.Add(32-(i+10)); // We want the position where the start pattern starts.
+                if ((combinedBytes & masks[i]) == preShifts[i]) startPositions.Add(32 - (i + patternLength)); // We want the position where the start pattern starts.
             }
 
             return startPositions;
@@ -150,7 +149,7 @@ namespace CID_USB_BaseStation
            {
                byte[] bufTemp = new byte[26]; // 204 bits total to store the entire block.
                
-               blocks.Add(new Block(
+              //blocks.Add(new Block(
            }
 
             return blocks;
@@ -165,22 +164,61 @@ namespace CID_USB_BaseStation
         }
 
         private List<byte> combinedPacketBuffer = new List<byte>();
-        private List<byte> leftOverBlock = new List<byte>();
+        private Block leftOverBlock = new Block();
 
-        public int[] ParseNewPacket(Packet rxPacket)
+        public List<Block> ParseNewPacket(Packet rxPacket)
         {
+            List<Block> validBlocks = new List<Block>();
+            Block blockforProcessing;
+
             combinedPacketBuffer.Clear(); 
-            // we need to combine two packets just in case the start pattern was on the boundary so the search routine can find it.
+
             if (rxPacket.calculateMissedPacketsBetween(LastPacket) == 0)
             {
-                combinedPacketBuffer.AddRange(leftOverBlock); // Discard left over block from the last packet if there are missing packets in between since they wont match up anyways
+                // we need to combine two packets just in case the start pattern was on the boundary so the search routine can find it.
+                blockforProcessing = Block.combineBlocks(leftOverBlock, rxPacket.Buffer);
+            }
+            else
+            {
+                // Discard left over block from the last packet if there are missing packets in between since they wont match up anyways
+                blockforProcessing = new Block(rxPacket);
             }
 
-            combinedPacketBuffer.AddRange(rxPacket.Buffer);
+            List<int> startPosFound = findStartPatterninBlock(blockforProcessing);
+            List<int> realStartPosFound = realStartPositions(startPosFound);
 
-            //List<int> realStartPosFound = realStartPositions(findStartPatterninBlock(combinedPacketBuffer));
+            if (startPosFound.Count == 0) // means no start bits were found. should rarely come here. Need to test this more
+            {
+                leftOverBlock = new Block(); // set it to an empty block so we start from scratch next time
+                return validBlocks; // returns 0 blocks
+            }
+            
+            if (realStartPosFound.Count > 0 ) // means we found some legit start patterns
+            {
+                
+                validBlocks = GenerateBlocks(blockforProcessing, realStartPosFound);
+                leftOverBlock = new Block(blockforProcessing);
 
-            return null;
+                leftOverBlock.removeBits( realStartPosFound[realStartPosFound.Count-1] ); // discard the part of the packet we already processed
+                return validBlocks;
+            }
+            else // most likely reason for coming here is because it found startpatterns two bits apart and cant figure out the real block to process 
+            {
+                leftOverBlock = blockforProcessing; // keeps on adding packets to leftoverblock so we can gather data to eventually make a decision
+                return validBlocks; // returns 0 blocks
+            }
+        }
+
+        public List<Block> GenerateBlocks(Block blockforProcessing, List<int> realStartPosFound)
+        {
+            List<Block> Blocks = new List<Block>();
+
+            for (int i = 0; i < realStartPosFound.Count-1; i++) // we ignore the last value on purpose since its not the beginning of a valid block
+            {
+                Blocks.Add(new Block(blockforProcessing.Buffer,realStartPosFound[i]));
+            }
+
+            return Blocks;
         }
     }
 }

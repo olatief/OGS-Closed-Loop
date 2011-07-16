@@ -50,7 +50,11 @@ namespace CID_USB_BaseStation
             byte info;
 
             this.buffer = new byte [maxLength];
-            Array.Copy(buffer, this.buffer, maxLength);
+            // reverses packet contents so the bytes are in the right order. Should proly figure out why we need this.
+            for (int i = 0; i < infoIndex; i++)
+            {
+                this.buffer[i] = buffer[infoIndex - i-1];
+            }
 
             info = buffer[infoIndex];
             this.isStimulating = !(((info) & (0x80)) == 0); // if right most bit is set to 1 then its stimulating
