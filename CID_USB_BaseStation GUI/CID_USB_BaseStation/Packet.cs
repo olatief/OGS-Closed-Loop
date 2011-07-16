@@ -33,10 +33,19 @@ namespace CID_USB_BaseStation
         public byte Count { get { return count; } set { count = value; } }
         public bool IsStimulating { get { return isStimulating; } }
 
-        private byte[] buffer;
-        public byte[] Buffer { get { return buffer; } }
-        private int[] adcVals;
-        public int[] AdcVals { get { return adcVals; } }
+        private byte[] rawBuffer; // buffer of all values
+        private byte[] dataBuffer; // buffer of only data
+
+        public byte[] RawBuffer { get { return rawBuffer; } }
+        public byte[] DataBuffer { 
+            get {
+                byte[] retval = new byte[dataBuffer.Length];
+                dataBuffer.CopyTo(retval, 0);
+                return retval; 
+            } }
+
+     //   private int[] adcVals;
+     //  public int[] AdcVals { get { return adcVals; } }
 
         public Packet(EndpointDataEventArgs e) : this(e.Buffer) { }
 
@@ -49,31 +58,38 @@ namespace CID_USB_BaseStation
         {
             byte info;
 
-            this.buffer = new byte [maxLength];
+            this.rawBuffer = new byte [maxLength];
+            this.dataBuffer = new byte[infoIndex];
+            
             // reverses packet contents so the bytes are in the right order. Should proly figure out why we need this.
             for (int i = 0; i < infoIndex; i++)
             {
-                this.buffer[i] = buffer[infoIndex - i-1];
+                this.dataBuffer[i] = buffer[infoIndex - i-1];
             }
 
             info = buffer[infoIndex];
             this.isStimulating = !(((info) & (0x80)) == 0); // if right most bit is set to 1 then its stimulating
             this.count = (byte)( 0x7F & info);
             
-            adcVals = ParsePacket();
+           // adcVals = ParsePacket();
             lastPacket = this;
         }
 
-        public int calculateMissedPacketsBetween(Packet LastPacket)
+        public int calculateMissedPacketsBetween(int lastPacketCount)
         {
-            int missedPackets = this.count - LastPacket.count - 1;
+            int missedPackets = this.count - lastPacketCount - 1;
 
-            if (this.Count <= LastPacket.Count) // check for overflow since count only goes to 128;
+            if (this.Count <= lastPacketCount) // check for overflow since count only goes to 128;
             {
                 missedPackets += 128;
             }
 
             return missedPackets;
+        }
+
+        public int calculateMissedPacketsBetween(Packet LastPacket)
+        {
+            return calculateMissedPacketsBetween(LastPacket.Count);
         }
 
         private int[] ParsePacket()
@@ -82,7 +98,7 @@ namespace CID_USB_BaseStation
             int tempValue;
             for (int i = 0; i < parsedValues.Length; i++)
             {
-                tempValue = this.buffer[2 * i + 1] + (this.buffer[2 * i] << 8);
+                tempValue = this.dataBuffer[2 * i + 1] + (this.dataBuffer[2 * i] << 8);
                 /*  if (tempValue >= 512)
                   {
                       tempValue = -tempValue;

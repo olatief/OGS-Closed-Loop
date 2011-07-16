@@ -32,20 +32,20 @@ namespace BaseStationTests
             buf2[30]=14;
             buf3[30]=15;
 
-            buf1[8]=0x02;
-            buf1[9]=0xAA;
-            buf1[15] = 0x55;
-            buf1[16] = 0x55;
-            buf1[17] = 0x55;
+            buf1[29-8]=0x0A;
+            buf1[29-9]=0xAA;
+            buf1[29-15] = 0x51;
+            buf1[29-16] = 0x15;
+            buf1[29-17] = 0x12;
 
             // 204 bits in between
-            buf2[4]=0x2A;
-            buf2[5]=0xA0;
+            buf2[29-4]=0xAA;
+            buf2[29-5]=0xA0;
 
-            buf2[29] = 0x02;
-            buf3[0] = 0xAA;
-            buf3[25] = 0x2A;
-            buf3[26] = 0xA0;
+            buf2[29-29] = 0x0A;
+            buf3[29-0] = 0xAA;
+            buf3[29-25] = 0xAA;
+            buf3[29-26] = 0xA0;
 
             Packet pkt1 = new Packet(buf1);
             Packet pkt2 = new Packet(buf2);
@@ -53,16 +53,14 @@ namespace BaseStationTests
 
             Parser testParser = new Parser();
             
-
-/*
-            List<byte[]> blocks1 = testParser.ExtractBlocks(pkt1);
-            List<byte[]> blocks2 = testParser.ExtractBlocks(pkt2);
-            List<byte[]> blocks3 = testParser.ExtractBlocks(pkt3);
+            List<Block> blocks1 = testParser.ParseNewPacket(pkt1);
+            List<Block> blocks2 = testParser.ParseNewPacket(pkt2);
+            List<Block> blocks3 = testParser.ParseNewPacket(pkt3);
 
             Assert.AreEqual(0, blocks1.Count);
-            Assert.AreEqual(2, blocks2.Count);
+            Assert.AreEqual(1, blocks2.Count);
+            Assert.AreEqual(2, blocks3.Count);
            // Assert.AreEqual(0x55, blocks2[1][8]);
-            */
         }
         
         /*[Test]
@@ -78,6 +76,19 @@ namespace BaseStationTests
                 realStartPos = testParser.realStartPositions(startPos);
             }
         }*/
+        [Test]
+        public void realStartPositionTestSimple()
+        {
+            Parser testParser = new Parser();
+            List<int> startPos = new List<int> { 68,272};
+            List<int> realStartPos;
+            realStartPos = testParser.realStartPositions(startPos);
+
+            Assert.AreEqual(2, realStartPos.Count);
+            Assert.AreEqual(68, realStartPos[0]);
+            Assert.AreEqual(272, realStartPos[1]);
+        }
+
         [Test]
         public void realStartPositionTests()
         {
@@ -106,6 +117,25 @@ namespace BaseStationTests
             Assert.AreEqual(0, realStartPos.Count); 
         }
         [Test]
+        public void findStartPatterninBlockTest()
+        {
+            byte[] testBuffer = new byte[30]; // initialize to all 0x00
+            Parser testParser = new Parser();
+
+            testBuffer[0] = 0xAA;
+            testBuffer[1] = 0xA0;
+            testBuffer[25] = 0x0A;
+            testBuffer[26] = 0xAA;
+            testBuffer[29] = 0xE1;
+
+            List<int> results = testParser.findStartPatterninBlock(new Block(testBuffer.ToList(),0));
+
+            Assert.AreEqual(2, results.Count);
+            Assert.AreEqual(0, results[0]);
+            Assert.AreEqual(204, results[1]);
+        }
+
+        [Test]
         public void findStartPatterninPacketTestRealData()
         {
             byte[] testBuffer = new byte[32]; // initialize to all 0x00
@@ -124,20 +154,40 @@ namespace BaseStationTests
         public void findStartPositionsTest()
         {
             Parser test = new Parser();
-            
+
+
+
+            //bit pattern at 0 offset
+            List<int>  temp = test.findStartPositions(new byte[] { 0xAA, 0xA0, 0x04, 0x02 });
+            Assert.AreEqual(1, temp.Count);
+            Assert.AreEqual(0, temp[0]);
+
+
+            //bit pattern in the middle
+            temp = test.findStartPositions(new byte[] { 0x00, 0xAA, 0xA0, 0x15 });
+            Assert.AreEqual(1, temp.Count);
+            Assert.AreEqual(8, temp[0]);
+
+            //bit pattern at the end
+            temp = test.findStartPositions(new byte[] { 0x00, 0xA0, 0x0A, 0xAA });
+            Assert.AreEqual(1, temp.Count);
+            Assert.AreEqual(20, temp[0]);
+
             // lots of start patterns
-            List<int> temp = test.findStartPositions( new byte[]{0x02, 0xAA, 0xAA, 0x09});
-            Assert.AreEqual(5, temp.Count);
+            temp = test.findStartPositions( new byte[]{0x02, 0xAA, 0xAA, 0x09});
+            Assert.AreEqual(4, temp.Count);
             Assert.AreEqual(6, temp[0]);
+            Assert.AreEqual(10, temp[2]);
             Assert.AreEqual(12, temp[3]);
-            Assert.AreEqual(14, temp[4]);
             // No Start bits
             temp = test.findStartPositions(new byte[] { 0x02, 0xA5, 0xA5, 0x09 });
             Assert.AreEqual(0, temp.Count);
 
-            //shifted by 1 
+            // no start bits shifted by 1 
             temp = test.findStartPositions(new byte[] { 0x05, 0x54, 0x04, 0x02 });
-            Assert.AreEqual(5, temp[0]);
+            Assert.AreEqual(0, temp.Count);
+
+
         }
 
         [Test]
@@ -146,19 +196,19 @@ namespace BaseStationTests
             byte[] testBuffer = new byte[32]; // initialize to all 0x00
             Parser testParser = new Parser();
             
-            testBuffer[10] = 0x02;
-            testBuffer[11] = 0xAA;
+            testBuffer[29-10] = 0x0A;
+            testBuffer[29-11] = 0xAA;
 
             // same pattern shifted left 1 bit
-            testBuffer[20] = 0x05;
-            testBuffer[21] = 0x54;
-            testBuffer[22] = 0x04;
+            testBuffer[29-20] = 0x15;
+            testBuffer[29-21] = 0x54;
+            testBuffer[29-22] = 0x04;
 
             List<int> results = testParser.findStartPatterninPacket(new Packet(testBuffer));
 
             Assert.AreEqual(2, results.Count);
-            Assert.AreEqual(10 * 8 + 6, results[0]);
-            Assert.AreEqual(20 * 8 + 5, results[1]);
+            Assert.AreEqual(10 * 8 + 4, results[0]);
+            Assert.AreEqual(20 * 8 +3, results[1]);
 
         }
 

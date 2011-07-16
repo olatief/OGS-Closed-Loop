@@ -64,7 +64,7 @@ namespace CID_USB_BaseStation
                 if (buffer != null)
                 {
                     Packet rxPacket = new Packet(buffer);
-                    SixteenChanParser.ParseNewPacket(rxPacket);
+                    
                     ParseNewPacket(rxPacket);
                 }
             }
@@ -72,7 +72,8 @@ namespace CID_USB_BaseStation
 
         public void ParseNewPacket(Packet receivedPacket)
         {
-            int [] parsedValues;
+            List<int> parsedValues = new List<int>();
+
             if (lastPacket != null)
             {
                 
@@ -97,20 +98,25 @@ namespace CID_USB_BaseStation
                     ++WirelessStats.Instance.NumSuccessRxPackets; // we still need to count the last packet we received as a successful packet
                 }
 
-                parsedValues = receivedPacket.AdcVals;
-
+                // parsedValues = receivedPacket.ParsePacket();
+                List<Block> validBlocks = SixteenChanParser.ParseNewPacket(receivedPacket);
+                foreach (Block block in validBlocks)
+                {
+                    parsedValues.Add(block.Parse()[6]);
+                }
+                
                // Scope.CurrentScope.AddRawADCtoQueue(parsedValues);
             }
             else
             {
-                parsedValues = new int[0];
+                parsedValues = new List<int>();
             }
             
             lastPacket = receivedPacket;
 
             if (processingDone != null)
             {
-                processingDone(this, new ProcessingDoneEventArgs(parsedValues, lastPacket.IsStimulating));
+                processingDone(this, new ProcessingDoneEventArgs(parsedValues.ToArray(), lastPacket.IsStimulating));
             }
         }
 
@@ -127,7 +133,7 @@ namespace CID_USB_BaseStation
             int tempValue;
             for (int i = 0; i < parsedValues.Length; i++)
             {
-                tempValue = pkt.Buffer[2*i+1] + (pkt.Buffer[2*i] << 8);
+                tempValue = pkt.DataBuffer[2*i+1] + (pkt.DataBuffer[2*i] << 8);
               /*  if (tempValue >= 512)
                 {
                     tempValue = -tempValue;

@@ -17,8 +17,8 @@ namespace BaseStationTests
             byte[] buf = new byte[Packet.MaxLength];
             for (int i = 0; i < 14; i++)
             {
-                buf[2*i+1] = (byte)(testVal & 0xFF);
-                buf[2 * i ] = (byte)(testVal >> 8);
+                buf[2*i] = (byte)(testVal & 0xFF);
+                buf[2 * i+1 ] = (byte)(testVal >> 8);
             }
 
             Packet testPacket = new Packet(buf);
