@@ -54,6 +54,17 @@ namespace CID_USB_BaseStation
             // init Empty Packet;
         }
 
+        public byte reverseBits(byte val)
+        {
+            int retVal = 0;
+
+            for (int i = 0; i < 8; i++) // we only care about the lfirst 10 bits
+            {
+                retVal += (int)(((val >> i) & 1) << (7 - i)); // reverse the bit order
+            }
+
+            return (byte)retVal;
+        }
         public Packet( byte [] buffer)
         {
             byte info;
@@ -61,10 +72,10 @@ namespace CID_USB_BaseStation
             this.rawBuffer = new byte [maxLength];
             this.dataBuffer = new byte[infoIndex];
             
-            // reverses packet contents so the bytes are in the right order. Should proly figure out why we need this.
+            // reverses each byte in the packet contents so the bytes are in the right order.
             for (int i = 0; i < infoIndex; i++)
             {
-                this.dataBuffer[i] = buffer[infoIndex - i-1];
+                this.dataBuffer[i] = reverseBits(buffer[i]);
             }
 
             info = buffer[infoIndex];

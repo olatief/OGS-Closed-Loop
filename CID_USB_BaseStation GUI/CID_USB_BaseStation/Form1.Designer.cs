@@ -910,6 +910,7 @@
             this.cboChannelDisplay.Name = "cboChannelDisplay";
             this.cboChannelDisplay.Size = new System.Drawing.Size(121, 21);
             this.cboChannelDisplay.TabIndex = 2;
+            this.cboChannelDisplay.SelectedIndexChanged += new System.EventHandler(this.cboChannelDisplay_SelectedIndexChanged);
             // 
             // label23
             // 

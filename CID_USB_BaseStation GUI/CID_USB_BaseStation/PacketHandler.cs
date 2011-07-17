@@ -30,6 +30,9 @@ namespace CID_USB_BaseStation
         private static DataLogger logger = DataLogger.Instance;
         private Packet lastPacket = null;
         private int missedPackets;
+        private int currentChannel = 1;
+
+        public int CurrentChannel { get { return currentChannel; } set { currentChannel = value; } }
 
         public BlockingCollection<byte[]> bcWorkQueue = new BlockingCollection<byte[]>(new ConcurrentQueue<byte[]>());
         public static DataLogger Logger { get { return PacketHandler.logger; } }
@@ -102,7 +105,7 @@ namespace CID_USB_BaseStation
                 List<Block> validBlocks = SixteenChanParser.ParseNewPacket(receivedPacket);
                 foreach (Block block in validBlocks)
                 {
-                    parsedValues.Add(block.Parse()[6]);
+                    parsedValues.Add(block.Parse()[currentChannel]);
                 }
                 
                // Scope.CurrentScope.AddRawADCtoQueue(parsedValues);

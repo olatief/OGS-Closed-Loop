@@ -109,6 +109,24 @@ namespace BaseStationTests
         }
 
         [Test]
+        public void Convert12bitTo10TestNegValues()
+        {
+            Block testBlock = new Block();
+
+            int val1 = testBlock.Convert12bitToAdcVal(4092);
+            int val2 = testBlock.Convert12bitToAdcVal(2976);
+            int val3 = testBlock.Convert12bitToAdcVal(3488);
+            int val4 = testBlock.Convert12bitToAdcVal(3872);
+
+            Assert.AreEqual(23, val1);
+            Assert.AreEqual(23, val2);
+            Assert.AreEqual(22, val3);
+
+            Assert.AreEqual(19, val4);
+
+        }
+
+        [Test]
         public void RealignTest()
         {
 

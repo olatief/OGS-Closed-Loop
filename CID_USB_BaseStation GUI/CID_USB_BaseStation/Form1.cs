@@ -567,5 +567,10 @@ namespace CID_USB_BaseStation
                 pnlChannelSelect.Enabled = true;
             }
         }
+
+        private void cboChannelDisplay_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            pktHandler.CurrentChannel = cboChannelDisplay.SelectedIndex;
+        }
     }
 }

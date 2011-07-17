@@ -52,15 +52,17 @@ namespace CID_USB_BaseStation
 
         public int Convert12bitToAdcVal(int rawVal)
         {
-            int tempVal = 0;
+            int tempVal = rawVal >> 2 ;
+            /*
             for (int i = 0; i < 10; i++) // we only care about the lfirst 10 bits
             {
                 tempVal += ((rawVal >> i) & 1)<<(9-i); // reverse the bit order
             }
-
+            */
+            
             if( tempVal>512 ) // negative # (2's complement)
             {
-                tempVal = -1 * tempVal;
+                tempVal = (512-tempVal);
             }
 
             return tempVal;
