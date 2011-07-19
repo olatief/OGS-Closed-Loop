@@ -570,7 +570,7 @@ namespace CID_USB_BaseStation
 
         private void cboChannelDisplay_SelectedIndexChanged(object sender, EventArgs e)
         {
-            pktHandler.CurrentChannel = cboChannelDisplay.SelectedIndex;
+            pktHandler.CurrentChannel = cboChannelDisplay.SelectedIndex+1;
         }
     }
 }

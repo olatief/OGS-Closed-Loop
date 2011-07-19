@@ -103,22 +103,16 @@ namespace CID_USB_BaseStation
             return calculateMissedPacketsBetween(LastPacket.Count);
         }
 
-        private int[] ParsePacket()
+        private List<int> ParsePacket()
         {
-            int[] parsedValues = new int[15];
+            List<int> parsedValues = new List<int>();
+
             int tempValue;
-            for (int i = 0; i < parsedValues.Length; i++)
+            for (int i = 0; i < maxLength/2; i++)
             {
                 tempValue = this.dataBuffer[2 * i + 1] + (this.dataBuffer[2 * i] << 8);
-                /*  if (tempValue >= 512)
-                  {
-                      tempValue = -tempValue;
-                  }
-                 * */
 
                 parsedValues[i] = 2048 - tempValue;
-
-                DataLogger.Instance.LogLine(parsedValues[i]);
             }
 
             return parsedValues;

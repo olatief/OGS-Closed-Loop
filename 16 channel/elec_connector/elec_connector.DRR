@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+NCDrill File Report For: elec_connector.PcbDoc   7/17/2011  1:36:06 PM
+---------------------------------------------------------------------------
+
+Layer Pair : Top Layer to Bottom Layer
+ASCII RoundHoles File : elec_connector.TXT
+EIA File   : elec_connector.DRL
+
+Tool         Hole Size           Hole Type     Hole Count Plated       Tool Travel
+---------------------------------------------------------------------------
+T1        40mil (1.016mm)          Round          20               3.10 Inch (78.74 mm)
+---------------------------------------------------------------------------
+Totals                                            20               3.10 Inch (78.74 mm)
+
+Total Processing Time (hh:mm:ss) : 00:00:00

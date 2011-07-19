@@ -75,38 +75,15 @@ namespace CID_USB_BaseStation
 
         public void ParseNewPacket(Packet receivedPacket)
         {
-            List<int> parsedValues = new List<int>();
+            List<int> parsedValues;
 
             if (lastPacket != null)
             {
+
+                UpdateWirelessStats(receivedPacket);
+
+                parsedValues = parseSixteenChan(receivedPacket);
                 
-                // missedPackets = receivedPacket.calculateMissedPacketsBetween(lastPacket);
-                missedPackets = receivedPacket.Count - lastPacket.Count - 1;
-                if (receivedPacket.Count <= lastPacket.Count) // check for overflow since count only goes to 128;
-                {
-                    if (missedPackets == 0)
-                    {
-                       // throw new InvalidOperationException();
-                    }
-                    missedPackets += 128;
-                }
-
-                if (missedPackets == 0)
-                {
-                    ++WirelessStats.Instance.NumSuccessRxPackets;
-                }
-                else
-                {
-                    WirelessStats.Instance.NumDroppedPackets += missedPackets;
-                    ++WirelessStats.Instance.NumSuccessRxPackets; // we still need to count the last packet we received as a successful packet
-                }
-
-                // parsedValues = receivedPacket.ParsePacket();
-                List<Block> validBlocks = SixteenChanParser.ParseNewPacket(receivedPacket);
-                foreach (Block block in validBlocks)
-                {
-                    parsedValues.Add(block.Parse()[currentChannel]);
-                }
                 
                // Scope.CurrentScope.AddRawADCtoQueue(parsedValues);
             }
@@ -123,17 +100,47 @@ namespace CID_USB_BaseStation
             }
         }
 
-        public int[] parseSixteenChan(Packet pkt)
+        private void UpdateWirelessStats(Packet receivedPacket)
         {
+            // missedPackets = receivedPacket.calculateMissedPacketsBetween(lastPacket);
+            missedPackets = receivedPacket.Count - lastPacket.Count - 1;
+            if (receivedPacket.Count <= lastPacket.Count) // check for overflow since count only goes to 128;
+            {
+                if (missedPackets == 0)
+                {
+                    // throw new InvalidOperationException();
+                }
+                missedPackets += 128;
+            }
 
-            return null;
+            if (missedPackets == 0)
+            {
+                ++WirelessStats.Instance.NumSuccessRxPackets;
+            }
+            else
+            {
+                WirelessStats.Instance.NumDroppedPackets += missedPackets;
+                ++WirelessStats.Instance.NumSuccessRxPackets; // we still need to count the last packet we received as a successful packet
+            }
+        }
+
+        public List<int> parseSixteenChan(Packet receivedPacket)
+        {
+            List<int> parsedValues = new List<int>();
+            List<Block> validBlocks = SixteenChanParser.ParseNewPacket(receivedPacket);
+
+            foreach (Block block in validBlocks)
+            {
+                parsedValues.Add(block.Parse()[currentChannel]);
+            }
+            return parsedValues;
         }
 
 
-        public int[] parseSingleChan(Packet pkt)
+        public int[] parseSingleChan(Packet receivedPacket)
         {
-            int[] parsedValues = new int[15];
-            int tempValue;
+            List<int> parsedValues = new List<int>();
+
             for (int i = 0; i < parsedValues.Length; i++)
             {
                 tempValue = pkt.DataBuffer[2*i+1] + (pkt.DataBuffer[2*i] << 8);

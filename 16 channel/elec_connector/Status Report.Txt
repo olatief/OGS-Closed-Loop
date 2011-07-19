@@ -1,0 +1,13 @@
+Output: NC Drill Files
+Type  : NC Drill
+From  : PCB Document [elec_connector.PcbDoc]
+   Generated File[elec_connector.TXT]
+   Generated File[elec_connector.DRL]
+   Generated File[elec_connector.LDP]
+   Generated File[elec_connector.DRR]
+
+
+Files Generated   : 4
+Documents Printed : 0
+
+Finished Output Generation At 1:36:06 PM On 7/17/2011
