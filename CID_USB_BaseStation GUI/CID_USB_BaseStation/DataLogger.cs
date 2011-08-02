@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 using System.Windows.Forms;
 
@@ -54,14 +51,7 @@ namespace CID_USB_BaseStation
 
         public static DataLogger Instance
         {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new DataLogger();
-                }
-                return instance;
-            }
+            get { return instance ?? (instance = new DataLogger()); }
         }
 
         public void LogLine<T>(T data)

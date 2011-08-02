@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using LibUsbDotNet.Main;
 
 namespace CID_USB_BaseStation
@@ -79,7 +77,7 @@ namespace CID_USB_BaseStation
             }
 
             info = buffer[infoIndex];
-            this.isStimulating = !(((info) & (0x80)) == 0); // if right most bit is set to 1 then its stimulating
+            this.isStimulating = ((info) & (0x80)) != 0; // if right most bit is set to 1 then its stimulating
             this.count = (byte)( 0x7F & info);
             
            // adcVals = ParsePacket();

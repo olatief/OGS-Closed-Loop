@@ -236,12 +236,12 @@ app_states_t app_init(void)
   	INTEXP = 0x01; //Slave SPI Interrupt
 	SPI = 1; // Enable SPI Interrupt
 	 */
-	hal_nrf_enable_ack_payload(1);
-	hal_nrf_enable_dynamic_payload(1);
-	hal_nrf_setup_dynamic_payload(1 << 0); // Set up PIPE 0 to handle dynamic lengths
+//	hal_nrf_enable_ack_payload(0); // lets us use the no_ack command
+//	hal_nrf_enable_dynamic_payload(1);
+	//hal_nrf_setup_dynamic_payload(1 << 0); // Set up PIPE 0 to handle dynamic lengths
 	hal_nrf_set_rf_channel(125); // 2525 MHz
 	hal_nrf_set_operation_mode(HAL_NRF_PRX);  		// Configure radio as primary receiver (PTX) 
-	//hal_nrf_set_rx_payload_width(HAL_NRF_PIPE0, 30);	// Set payload width to 30 bytes
+	hal_nrf_set_rx_payload_width(HAL_NRF_PIPE0, 31);	// Set payload width to 30 bytes
 	hal_nrf_set_power_mode(HAL_NRF_PWR_UP);	 		// Power up radio
 	CE_HIGH();	   // Enable receiver
 	
@@ -271,23 +271,7 @@ app_states_t app_susp_we(void)
    
   return APP_SUSP_WE;      
 } 
-	
-	void slave_spi() interrupt INTERRUPT_SPI
-	{
-	 // P0_5 = 1;
-	  
-	  if(byteCnt==0)
-	  {
-		byteCnt = PKTLENGTH;
-		block^=0x01; // switch block
-		blockNeedsSending = 1;
-	  }
-	
-	  byteCnt = (byteCnt - 1);
-	 
-	  payload[block][byteCnt] = SSDATA;
-	//  P0_5 = 0;
-	}  				
+	 				
 // Rado interrupt 
 void rf_irq() interrupt INTERRUPT_RFIRQ
 {
@@ -361,7 +345,7 @@ void rf_irq() interrupt INTERRUPT_RFIRQ
 	
   }
   P0_5=0;
-}
+ }
 																	  
 static void radio_init()
 {

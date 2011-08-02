@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace CID_USB_BaseStation
 {
     public class Block
     {
         private int offset = 0; // which bit of the first byte does the start pattern begin.
-        private int[] adcVals = null;
+        private List<int> adcVals = null;
         private List<byte> buffer = new List<byte>();
 
         public int Offset { get { return offset; } set { offset = value; } }
@@ -20,7 +17,7 @@ namespace CID_USB_BaseStation
 
         public List<int> Parse()
         {
-            List <int> adcVals = new List<int>();
+            adcVals = new List<int>();
 
             if(offset > 8)
                 throw new ArgumentOutOfRangeException("Offset should be less than 8 to parse block");
@@ -126,7 +123,7 @@ namespace CID_USB_BaseStation
         
         public static Block combineBlocks(Block block1, IList<byte> buffer)
         {
-            Block retBlock = new Block();
+            var retBlock = new Block();
             retBlock.buffer.AddRange(block1.buffer);
             retBlock.buffer.AddRange(buffer);
 
@@ -141,7 +138,7 @@ namespace CID_USB_BaseStation
 
 
 
-        public int[] extract16ChanValues()
+        public List<int> extract16ChanValues()
         {
             if (adcVals != null) // dont bother recalculating it if we already figured it out
             {

@@ -54,7 +54,7 @@
         <AsmSymb>1</AsmSymb>
         <AsmXref>0</AsmXref>
         <CCond>1</CCond>
-        <CCode>0</CCode>
+        <CCode>1</CCode>
         <CListInc>0</CListInc>
         <CSymb>0</CSymb>
         <LinkerCodeListing>0</LinkerCodeListing>
@@ -203,10 +203,10 @@
       <FileType>1</FileType>
       <tvExp>1</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>44</ColumnNumber>
+      <ColumnNumber>25</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>45</TopLine>
-      <CurrentLine>62</CurrentLine>
+      <TopLine>97</TopLine>
+      <CurrentLine>97</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\main.c</PathWithFileName>
       <FilenameWithoutPath>main.c</FilenameWithoutPath>
@@ -215,7 +215,7 @@
 
   <Group>
     <GroupName>HAL</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <File>
@@ -224,10 +224,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>9</ColumnNumber>
+      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
+      <TopLine>83</TopLine>
+      <CurrentLine>116</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>C:\Nordic Semiconductor\nRFgo SDK 2.2.0.270\source_code\hal\nrf24le1\hal_spi.c</PathWithFileName>
       <FilenameWithoutPath>hal_spi.c</FilenameWithoutPath>
@@ -238,10 +238,10 @@
       <FileType>1</FileType>
       <tvExp>1</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>41</ColumnNumber>
+      <ColumnNumber>8</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
+      <TopLine>712</TopLine>
+      <CurrentLine>712</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>C:\Nordic Semiconductor\nRFgo SDK 2.2.0.270\source_code\hal\nrf24l01p\hal_nrf.c</PathWithFileName>
       <FilenameWithoutPath>hal_nrf.c</FilenameWithoutPath>
@@ -252,10 +252,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>59</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
+      <TopLine>1</TopLine>
+      <CurrentLine>30</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>C:\Nordic Semiconductor\nRFgo SDK 2.2.0.270\source_code\hal\nrf24le1\hal_nrf_hw.c</PathWithFileName>
       <FilenameWithoutPath>hal_nrf_hw.c</FilenameWithoutPath>
@@ -263,9 +263,87 @@
   </Group>
 
   <AlienFiles>
+    <PathWithFilename>C:\Users\Omar\Dropbox\OGS-Closed-Loop\MCU Code\hal\nrf24l01p\hal_nrf.h</PathWithFilename>
+    <TopLine>445</TopLine>
+    <CurrentLine>445</CurrentLine>
+    <Constant>0</Constant>
+    <WindowPosition>
+      <length>0</length>
+      <flags>0</flags>
+      <showCmd>0</showCmd>
+      <MinPosition>
+        <xPos>0</xPos>
+        <yPos>0</yPos>
+      </MinPosition>
+      <MaxPosition>
+        <xPos>0</xPos>
+        <yPos>0</yPos>
+      </MaxPosition>
+      <NormalPosition>
+        <Top>0</Top>
+        <Left>0</Left>
+        <Right>0</Right>
+        <Bottom>0</Bottom>
+      </NormalPosition>
+    </WindowPosition>
+  </AlienFiles>
+
+  <AlienFiles>
+    <PathWithFilename>C:\Nordic Semiconductor\nRFgo SDK 2.2.0.270\source_code\hal\nrf24l01p\hal_nrf.h</PathWithFilename>
+    <TopLine>421</TopLine>
+    <CurrentLine>445</CurrentLine>
+    <Constant>0</Constant>
+    <WindowPosition>
+      <length>0</length>
+      <flags>0</flags>
+      <showCmd>0</showCmd>
+      <MinPosition>
+        <xPos>0</xPos>
+        <yPos>0</yPos>
+      </MinPosition>
+      <MaxPosition>
+        <xPos>0</xPos>
+        <yPos>0</yPos>
+      </MaxPosition>
+      <NormalPosition>
+        <Top>0</Top>
+        <Left>0</Left>
+        <Right>0</Right>
+        <Bottom>0</Bottom>
+      </NormalPosition>
+    </WindowPosition>
+  </AlienFiles>
+
+  <AlienFiles>
+    <PathWithFilename>C:\Users\Omar\Dropbox\OGS-Closed-Loop\MCU Code\hal\nrf24le1\hal_nrf_hw.h</PathWithFilename>
+    <TopLine>35</TopLine>
+    <CurrentLine>52</CurrentLine>
+    <Constant>0</Constant>
+    <WindowPosition>
+      <length>0</length>
+      <flags>0</flags>
+      <showCmd>0</showCmd>
+      <MinPosition>
+        <xPos>0</xPos>
+        <yPos>0</yPos>
+      </MinPosition>
+      <MaxPosition>
+        <xPos>0</xPos>
+        <yPos>0</yPos>
+      </MaxPosition>
+      <NormalPosition>
+        <Top>0</Top>
+        <Left>0</Left>
+        <Right>0</Right>
+        <Bottom>0</Bottom>
+      </NormalPosition>
+    </WindowPosition>
+  </AlienFiles>
+
+  <AlienFiles>
     <PathWithFilename>C:\Users\Omar\Dropbox\OGS-Closed-Loop\MCU Code\compiler\c51\reg24le1.h</PathWithFilename>
-    <TopLine>36</TopLine>
-    <CurrentLine>59</CurrentLine>
+    <TopLine>1</TopLine>
+    <CurrentLine>17</CurrentLine>
     <Constant>0</Constant>
     <WindowPosition>
       <length>0</length>
@@ -289,9 +367,9 @@
   </AlienFiles>
 
   <AlienFiles>
-    <PathWithFilename>C:\Keil\C51\INC\Nordic\reg24le1.h</PathWithFilename>
-    <TopLine>155</TopLine>
-    <CurrentLine>186</CurrentLine>
+    <PathWithFilename>C:\Nordic Semiconductor\nRFgo SDK 2.2.0.270\source_code\hal\nrf24le1\hal_spi.h</PathWithFilename>
+    <TopLine>35</TopLine>
+    <CurrentLine>35</CurrentLine>
     <Constant>0</Constant>
     <WindowPosition>
       <length>0</length>
@@ -315,9 +393,9 @@
   </AlienFiles>
 
   <AlienFiles>
-    <PathWithFilename>C:\Users\Omar\Dropbox\OGS-Closed-Loop\MCU Code\hal\nrf24le1\hal_spi.h</PathWithFilename>
-    <TopLine>53</TopLine>
-    <CurrentLine>56</CurrentLine>
+    <PathWithFilename>C:\Keil\C51\INC\intrins.h</PathWithFilename>
+    <TopLine>1</TopLine>
+    <CurrentLine>22</CurrentLine>
     <Constant>0</Constant>
     <WindowPosition>
       <length>0</length>
@@ -345,31 +423,67 @@
     <ActiveMDIGroup>0</ActiveMDIGroup>
     <MDIGroup>
       <Size>100</Size>
-      <ActiveTab>3</ActiveTab>
+      <ActiveTab>0</ActiveTab>
       <Documents>
         <Doc>
           <Name>.\main.c</Name>
-          <ColumnNumber>44</ColumnNumber>
-          <TopLine>45</TopLine>
-          <CurrentLine>62</CurrentLine>
+          <ColumnNumber>25</ColumnNumber>
+          <TopLine>97</TopLine>
+          <CurrentLine>97</CurrentLine>
+        </Doc>
+        <Doc>
+          <Name>..\hal\nrf24le1\hal_nrf_hw.h</Name>
+          <ColumnNumber>8</ColumnNumber>
+          <TopLine>35</TopLine>
+          <CurrentLine>52</CurrentLine>
+        </Doc>
+        <Doc>
+          <Name>C:\Nordic Semiconductor\nRFgo SDK 2.2.0.270\source_code\hal\nrf24l01p\hal_nrf.c</Name>
+          <ColumnNumber>8</ColumnNumber>
+          <TopLine>712</TopLine>
+          <CurrentLine>712</CurrentLine>
+        </Doc>
+        <Doc>
+          <Name>C:\Nordic Semiconductor\nRFgo SDK 2.2.0.270\source_code\hal\nrf24l01p\hal_nrf.h</Name>
+          <ColumnNumber>68</ColumnNumber>
+          <TopLine>421</TopLine>
+          <CurrentLine>445</CurrentLine>
+        </Doc>
+        <Doc>
+          <Name>C:\Nordic Semiconductor\nRFgo SDK 2.2.0.270\source_code\hal\nrf24le1\hal_nrf_hw.c</Name>
+          <ColumnNumber>59</ColumnNumber>
+          <TopLine>1</TopLine>
+          <CurrentLine>30</CurrentLine>
+        </Doc>
+        <Doc>
+          <Name>..\hal\nrf24l01p\hal_nrf.h</Name>
+          <ColumnNumber>62</ColumnNumber>
+          <TopLine>445</TopLine>
+          <CurrentLine>445</CurrentLine>
+        </Doc>
+        <Doc>
+          <Name>C:\Nordic Semiconductor\nRFgo SDK 2.2.0.270\source_code\hal\nrf24le1\hal_spi.c</Name>
+          <ColumnNumber>0</ColumnNumber>
+          <TopLine>83</TopLine>
+          <CurrentLine>116</CurrentLine>
         </Doc>
         <Doc>
           <Name>..\compiler\c51\reg24le1.h</Name>
-          <ColumnNumber>12</ColumnNumber>
-          <TopLine>36</TopLine>
-          <CurrentLine>59</CurrentLine>
+          <ColumnNumber>1</ColumnNumber>
+          <TopLine>1</TopLine>
+          <CurrentLine>17</CurrentLine>
         </Doc>
         <Doc>
-          <Name>C:\Keil\C51\INC\Nordic\reg24le1.h</Name>
-          <ColumnNumber>25</ColumnNumber>
-          <TopLine>155</TopLine>
-          <CurrentLine>186</CurrentLine>
+          <Name>C:\Nordic Semiconductor\nRFgo SDK 2.2.0.270\source_code\hal\nrf24le1\hal_spi.h</Name>
+          <ColumnNumber>51</ColumnNumber>
+          <TopLine>35</TopLine>
+          <CurrentLine>35</CurrentLine>
         </Doc>
         <Doc>
-          <Name>..\hal\nrf24le1\hal_spi.h</Name>
-          <ColumnNumber>3</ColumnNumber>
-          <TopLine>53</TopLine>
-          <CurrentLine>56</CurrentLine>
+          <Name>C:\Keil\C51\INC\intrins.h</Name>
+          <ColumnNumber>46</ColumnNumber>
+          <TopLine>1</TopLine>
+          <CurrentLine>22</CurrentLine>
         </Doc>
       </Documents>
     </MDIGroup>

@@ -24,7 +24,7 @@ namespace BaseStationTests
             Packet testPacket = new Packet(buf);
             PacketHandler pkthandleTest = new PacketHandler();
 
-            int [] results = pkthandleTest.parseSingleChan(testPacket);
+            List<int> results = pkthandleTest.parseSingleChan(testPacket);
 
         //    Assert.AreEqual(2048-testVal, results[3]);
 

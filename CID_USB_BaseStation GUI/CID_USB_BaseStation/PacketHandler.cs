@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
-using System.Linq;
-using System.Text;
-using Signal_Project;
-using System.Windows.Forms;
 using System.Threading.Tasks;
 
 namespace CID_USB_BaseStation
@@ -54,7 +49,7 @@ namespace CID_USB_BaseStation
        
         public void processQueue()
         {
-            while (!bcWorkQueue.IsCompleted || disposed == true)
+            while (!bcWorkQueue.IsCompleted || disposed)
             {
                 byte[] buffer = null;
 
@@ -79,11 +74,8 @@ namespace CID_USB_BaseStation
 
             if (lastPacket != null)
             {
-
-                UpdateWirelessStats(receivedPacket);
-
                 parsedValues = parseSixteenChan(receivedPacket);
-                
+
                 
                // Scope.CurrentScope.AddRawADCtoQueue(parsedValues);
             }
@@ -126,24 +118,42 @@ namespace CID_USB_BaseStation
 
         public List<int> parseSixteenChan(Packet receivedPacket)
         {
+
+            string lineToLog = "";
             List<int> parsedValues = new List<int>();
             List<Block> validBlocks = SixteenChanParser.ParseNewPacket(receivedPacket);
 
+           // logger.LogLine(receivedPacket.Count);
+            UpdateWirelessStats(receivedPacket);
             foreach (Block block in validBlocks)
             {
-                parsedValues.Add(block.Parse()[currentChannel]);
+                List<int> values = block.Parse();
+                parsedValues.Add(values[currentChannel]);
+
+                lineToLog = "";
+             /*   foreach (int val in values)
+                {
+                    lineToLog += " " + Convert.ToString(val);
+                }
+                */
+                // lineToLog += " " + Convert.ToString(receivedPacket.Count);
+                // logger.LogLine(lineToLog);
+                logger.LogLine(receivedPacket.Count);
             }
+
+            
             return parsedValues;
         }
 
 
-        public int[] parseSingleChan(Packet receivedPacket)
+        public List<int> parseSingleChan(Packet receivedPacket)
         {
             List<int> parsedValues = new List<int>();
+            int tempValue;
 
-            for (int i = 0; i < parsedValues.Length; i++)
+            for (int i = 0; i < parsedValues.Count; i++)
             {
-                tempValue = pkt.DataBuffer[2*i+1] + (pkt.DataBuffer[2*i] << 8);
+                tempValue = receivedPacket.DataBuffer[2 * i + 1] + (receivedPacket.DataBuffer[2 * i] << 8);
               /*  if (tempValue >= 512)
                 {
                     tempValue = -tempValue;

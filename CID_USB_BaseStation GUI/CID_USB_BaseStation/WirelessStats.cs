@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.ComponentModel;
-using System.Linq.Expressions;
 
 namespace CID_USB_BaseStation
 {
@@ -40,7 +35,7 @@ namespace CID_USB_BaseStation
 
         public void Reset()
         {
-            startTime = System.DateTime.Now.Ticks;
+            startTime = DateTime.Now.Ticks;
             stopTime = -1;
 
             NumDroppedPackets = 0;

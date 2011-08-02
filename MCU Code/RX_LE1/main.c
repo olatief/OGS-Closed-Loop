@@ -21,24 +21,21 @@ void init_pwm();
   sbit P1_6 = P1^6;
   sbit P0_7 = P0^7;
   sbit P1_4 = P1^4;
-  sbit P1_5 = P1^5;
-  sbit P1_7 = P1^7;
 
 data uint8_t g_Amplitude = 0;
 data uint8_t g_acq_block;	 // current block thats acquiring data
-data uint8_t blockToSend;
-data uint8_t volatile data payload[2][MAXLENGTH+1];
+data uint8_t payload[2][MAXLENGTH+1];
 
-uint8_t volatile data * volatile ptr_payload;
-uint8_t volatile data g_cnt;
-uint8_t volatile data g_dataNeedsTx;
+data uint8_t *ptr_payload;
+data volatile uint8_t g_cnt;
+data volatile uint8_t g_dataNeedsTx;
 
  // Global variables
 bool radio_busy;
 
 //#define DEBUG
 //#define FOURPIN
-uint8_t data pktCount = 0;
+uint8_t pktCount = 0;
 
 #ifdef DEBUG
 
@@ -53,9 +50,7 @@ void main()
 	#ifdef FOURPIN
 	P0DIR &= ~(1<<4);
 	#else
-	P1DIR &= ~( (1<<0) | (1<<5) | (1<<4) );	   			// SMISO, LED6
-	P1_5 = 0;
-	P1_4 = 0;
+	P1DIR &= ~( (1<<0) );	   			// SMISO, LED6
 	#endif
 //	P0DIR &= ~( (1<<7) | (1<<5) );  	// SMOSI, SSCK
 
@@ -101,18 +96,19 @@ void main()
 		if(1 == g_dataNeedsTx)
 		{
 
-			P1_5 = 1;
+//			P1_4 = 1;
 			++pktCount;
-			blockToSend = ((g_acq_block^(0x01))&(0x01));
-			payload[blockToSend][MAXLENGTH] = (pktCount&(0x7F));
-			hal_nrf_write_tx_payload_noack(payload[blockToSend],MAXLENGTH+1);
-			P1_5 = 0;
+			payload[((g_acq_block^(0x01))&(0x01))][MAXLENGTH] = (pktCount&(0x7F));
+			hal_nrf_write_tx_payload(payload[((g_acq_block^(0x01))&(0x01))],MAXLENGTH+1);
+//			P1_4 = 0;
 	
 			radio_busy = true;
 	
 			CE_PULSE();
 	
-			while(radio_busy);			\
+			while(radio_busy);
+	
+	    	_nop_();
 	
 			g_dataNeedsTx = 0;
 		}
@@ -124,34 +120,45 @@ void init_pwm()
 {
     PWMDC0 =  0x0F; // 50% Duty Cycle for 5 bit period
 	PWMDC1 =  0x0F; // 50% Duty Cycle for 5 bit period
-	PWMCON |= (0<<2); // set prescaler to (0+1)=1. same as ~516kHz square wave
+	PWMCON |= (1<<2); // set prescaler to (1+1)=2. same as ~258kHz square wave
 	PWMCON |= 0x01; // Enables PWM0, freq=CCLK/31, 5 bit period
 	
-}	
+}					 
+// sbit P0_2 = P0^2;
+T2_ISR()
+{
+	P0 ^= (1<<2);
+	//P0_2 ^= 1;
+	TF2=0;
+}
 
 #ifdef DEBUG
 T2_ISR()
 {
-   volatile uint8_t data test = 0x55;
+volatile uint8_t test = 0x55;
 
-	P1_4=1;
-	test = SPISSTAT;
+//	test = SPISSTAT;
 
- //	test = ;// hal_spi_slave_rw(0xAA);
-//	test = SPISDAT;
-	*ptr_payload = SPISDAT;
+// 	test = hal_spi_slave_rw(0xAA);
+
+	*ptr_payload = test;
 	++ptr_payload;
 
-	--g_cnt;
+	g_cnt--;
 
 	if(0 == g_cnt)
 	{
-		g_cnt = MAXLENGTH;
-		g_acq_block = (g_acq_block&(0x01))^(0x01); // toggle current acquisition block
+		g_cnt = 30;
+		g_acq_block &= 1;
+		g_acq_block ^= 1; // toggle current acquisition block
 		ptr_payload = payload[g_acq_block];
 		g_dataNeedsTx = 1;
+//		P1 ^= (1<<4);
 	}
-	P1_4 = 0;
+
+//	P1 ^= (1<<6);
+ 	_nop_();
+
 
 	
 		CRCL = timer_low&0xFF;
@@ -176,26 +183,28 @@ void progTimer(uint8_t Freq, uint8_t DC)
 
 SER_ISR()
 {
-	uint8_t volatile data test;
-	
-	P1_4=1;
+	volatile uint8_t test = 0;
+
 	test = SPISSTAT;
 
-	*ptr_payload = (uint8_t)SPISDAT;
+ 	test = SPISDAT;// hal_spi_slave_rw(0xAA);
+
+	*ptr_payload = test;
 	++ptr_payload;
 
-	--g_cnt;
+	g_cnt--;
 
 	if(0 == g_cnt)
 	{
 		g_cnt = MAXLENGTH;
-		g_acq_block = (g_acq_block&(0x01))^(0x01); // toggle current acquisition block
+		g_acq_block &= 1;
+		g_acq_block ^= 1; // toggle current acquisition block
 		ptr_payload = payload[g_acq_block];
 		g_dataNeedsTx = 1;
-
 	}
-	P1_4 = 0;
+
 //	P1 ^= (1<<6);
+ 	_nop_();
 }
 
 void init_radio()
@@ -207,12 +216,11 @@ void init_radio()
     // Power up radio
   hal_nrf_set_power_mode(HAL_NRF_PWR_UP);
 
-  	hal_nrf_enable_ack_payload(0);
-	hal_nrf_enable_dynamic_ack(1);	// Lets us use the no_ack cmd
-//	hal_nrf_enable_dynamic_payload(1);
-//	hal_nrf_setup_dynamic_payload(1); // Set up PIPE 0 to handle dynamic lengths
+  	hal_nrf_enable_ack_payload(1);
+	hal_nrf_enable_dynamic_payload(1);
+	hal_nrf_setup_dynamic_payload(1); // Set up PIPE 0 to handle dynamic lengths
 	hal_nrf_set_rf_channel(125); // 2525 MHz
-   	hal_nrf_set_auto_retr(0, 250); // Retry 5x
+   	hal_nrf_set_auto_retr(20, 250); // Retry 5x
  
     // Configure radio as primary receiver (PTX) 
   hal_nrf_set_operation_mode(HAL_NRF_PTX);
@@ -226,66 +234,48 @@ void init_radio()
 void rf_irq() interrupt INTERRUPT_RFIRQ
 {
   uint8_t irq_flags;
-  //uint8_t retval;
-	  uint8_t dummy;
-  P1_5 = 1;
+
   // Read and clear IRQ flags from radio
-  /** irq_flags = hal_nrf_get_clear_irq_flags();  **/
-  /**   retval = hal_nrf_write_reg (STATUS, (BIT_6|BIT_5|BIT_4)); **/
+  irq_flags = hal_nrf_get_clear_irq_flags(); 
 
-/*lint -esym(550,dummy) symbol not accessed*/
-/*lint -esym(438,dummy) last assigned value not used*/
-/*lint -esym(838,dummy) previously assigned value not used*/
-  
-
-  CSN_LOW();
-
-  HAL_NRF_HW_SPI_WRITE((W_REGISTER + STATUS));
-  while(HAL_NRF_HW_SPI_BUSY) {}
-  irq_flags = HAL_NRF_HW_SPI_READ();
-
-  HAL_NRF_HW_SPI_WRITE((BIT_6|BIT_5|BIT_4));
-  while(HAL_NRF_HW_SPI_BUSY) {}
-  dummy = HAL_NRF_HW_SPI_READ();
-
-  CSN_HIGH();
-
-  irq_flags = irq_flags & (BIT_6|BIT_5|BIT_4);
-  /* end */
-  switch(irq_flags)
+  // If data received
+  if(irq_flags & (1<<HAL_NRF_RX_DR))
   {
-    // Transmission success
-    case ( (1 << HAL_NRF_RX_DR) | (1 << HAL_NRF_TX_DS) ):	  // We rx payload packet
-//	   	procPayload = true;
-	   	// Read payload
-		while(!hal_nrf_rx_fifo_empty())
-  	 	{
-	    //	hal_nrf_read_rx_payload(progPayload);
-		}
-	  	radio_busy = false;
-		break;
-	case (1 << HAL_NRF_TX_DS):
-      radio_busy = false;
-      // Data has been sent
-      break;
-    // Transmission failed (maximum re-transmits)
-    case (1 << HAL_NRF_MAX_RT):
-      // When a MAX_RT interrupt occurs the TX payload will not be removed from the TX FIFO. 
-      // If the packet is to be discarded this must be done manually by flushing the TX FIFO.
-      // Alternatively, CE_PULSE() can be called re-starting transmission of the payload.
-      // (Will only be possible after the radio irq flags are cleared) 
-     
-	 /* hal_nrf_flush_tx();	*/
-	 CSN_LOW();
-	  SPIRDAT = FLUSH_TX;
-  while(!(SPIRSTAT & 0x02)) // wait for byte transfer finished
-  {
+    // Read payload
+   // while(!hal_nrf_rx_fifo_empty())
+   // {
+	     // hal_nrf_read_rx_payload(payload[0]);
+		 //hal_nrf_read_multibyte_reg( (uint8_t)HAL_NRF_RX_PLOAD, payload[0]);
+		if( (hal_nrf_get_rx_data_source()) < 7)
+	      {
+	        ctr = hal_nrf_read_rx_payload_width();
+	        CSN_LOW();
+	        hal_nrf_rw(R_RX_PAYLOAD);
+	      }
+	      else
+	      {
+	        ctr = 0;
+	      }
+	  
+		   
+		 while(ctr--)
+	  	{
+			RFDAT = 0;
+  			RFSPIF = 0;     // ! IMPORTANT ! Clear RF SPI ready flag
+                  // after data written to RFDAT..
+  			while(!RFSPIF); // wait for byte transfer finished
+    
+  		  //return RFDAT;   // return SPI read value
+	    	*pbuf++ = RFDAT;
+	  	}
+
+  		CSN_HIGH();
+		
+    // Write received payload[0] to port 0
+//	P0=(payload[0]&(1<<5));
+	   blockNeedsSending = 1;
+	//}
+	
   }
-  CSN_HIGH();
-  /* end */
-      radio_busy = false;
-      break;
-  }
-  
-  P1_5 = 0;
+  P0_5=0;
 }

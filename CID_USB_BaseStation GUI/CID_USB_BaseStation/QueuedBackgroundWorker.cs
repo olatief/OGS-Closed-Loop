@@ -69,7 +69,7 @@ namespace CID_USB_BaseStation
             {
                 if (doWork != null)
                 {
-                    args.Result = (K)doWork((T)args.Argument);
+                    args.Result = doWork((T)args.Argument);
                 }
             };
 

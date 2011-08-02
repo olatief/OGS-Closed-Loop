@@ -442,7 +442,7 @@ void hal_nrf_write_tx_payload(const uint8_t *tx_pload, uint8_t length);
  * @param *tx_pload pointer to buffer in which TX payload are present
  * @param length number of bytes to write
 */
-void hal_nrf_write_tx_payload_noack(const uint8_t *tx_pload, uint8_t length);
+void hal_nrf_write_tx_payload_noack(const uint8_t data * data tx_pload, uint8_t data length);
 
 /** Reuse TX payload.
  * Use this function to set that the radio is using

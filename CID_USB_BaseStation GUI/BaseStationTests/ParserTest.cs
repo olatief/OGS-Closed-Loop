@@ -32,20 +32,20 @@ namespace BaseStationTests
             buf2[30]=14;
             buf3[30]=15;
 
-            buf1[29-8]=0x0A;
-            buf1[29-9]=0xAA;
-            buf1[29-15] = 0x51;
-            buf1[29-16] = 0x15;
-            buf1[29-17] = 0x12;
+            buf1[8]=0x50;
+            buf1[9]=0x55;
+            buf1[15] = 0x21;
+            buf1[16] = 0x15;
+            buf1[17] = 0x12;
 
             // 204 bits in between
-            buf2[29-4]=0xAA;
-            buf2[29-5]=0xA0;
+            buf2[4]=0x55;
+            buf2[5]=0x05;
 
-            buf2[29-29] = 0x0A;
-            buf3[29-0] = 0xAA;
-            buf3[29-25] = 0xAA;
-            buf3[29-26] = 0xA0;
+            buf2[29] = 0x50;
+            buf3[0] = 0x55;
+            buf3[25] = 0x55;
+            buf3[26] = 0x05;
 
             Packet pkt1 = new Packet(buf1);
             Packet pkt2 = new Packet(buf2);
@@ -57,25 +57,26 @@ namespace BaseStationTests
             List<Block> blocks2 = testParser.ParseNewPacket(pkt2);
             List<Block> blocks3 = testParser.ParseNewPacket(pkt3);
 
-        //    Assert.AreEqual(0, blocks1.Count);
-         //   Assert.AreEqual(1, blocks2.Count);
-         //   Assert.AreEqual(2, blocks3.Count);
-           // Assert.AreEqual(0x55, blocks2[1][8]);
+            Assert.AreEqual(0, blocks1.Count);
+            Assert.AreEqual(1, blocks2.Count);
+            Assert.AreEqual(2, blocks3.Count);
+            Assert.AreEqual(0x0A, blocks2[0].Buffer[0]);
         }
         
-        /*[Test]
+        [Test]
         public void realStartPositionPerfTests()
         {
             Parser testParser = new Parser();
             List<int> startPos;
             List<int> realStartPos;
 
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 10000; i++)
             {
                 startPos = new List<int> { 0, 10, 12, 214, 216, 418, 422 };
                 realStartPos = testParser.realStartPositions(startPos);
             }
-        }*/
+        }
+
         [Test]
         public void realStartPositionTestSimple()
         {

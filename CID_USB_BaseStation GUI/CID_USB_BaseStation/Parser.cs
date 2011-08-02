@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace CID_USB_BaseStation
 {
@@ -58,7 +56,7 @@ namespace CID_USB_BaseStation
         // We assume that the input positions are pre-sorted in ascending order
         public List<int> realStartPositions(List<int> startPositions)
         {
-            List<int> realStartPos = new List<int> { };
+            List<int> realStartPos = new List<int>();
             List<int> longestChain = new List<int>();
             List<int> nextLongestChain = new List<int>();
 
@@ -74,7 +72,7 @@ namespace CID_USB_BaseStation
             for (int i = 0; i < startPositions.Count-1; i++)
             {
                 
-                int resultidx = startPositions.FindIndex(i,delegate(int val) { return val == startPositions[i] + blockSize; });
+                int resultidx = startPositions.FindIndex(i, val => val == startPositions[i] +blockSize );
                 if (resultidx != -1)
                 {
                     List<int> chain = new List<int>();
@@ -82,7 +80,7 @@ namespace CID_USB_BaseStation
                     do
                     {
                         chain.Add(startPositions[resultidx]);
-                        resultidx = startPositions.FindIndex(resultidx, delegate(int val) { return val == startPositions[resultidx] + blockSize; });
+                        resultidx = startPositions.FindIndex(resultidx, val => val == startPositions[resultidx] + blockSize);
                     } while(resultidx != -1);
                     chains.Add(chain);
                 }
