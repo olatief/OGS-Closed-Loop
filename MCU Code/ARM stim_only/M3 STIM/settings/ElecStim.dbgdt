@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<Project>
+  <Desktop>
+    <Static>
+      <Debug-Log>
+        
+        
+      <ColumnWidth0>20</ColumnWidth0><ColumnWidth1>728</ColumnWidth1></Debug-Log>
+      <Build>
+        <ColumnWidth0>20</ColumnWidth0>
+        <ColumnWidth1>546</ColumnWidth1>
+        <ColumnWidth2>145</ColumnWidth2>
+        <ColumnWidth3>36</ColumnWidth3>
+      </Build>
+      <Workspace>
+        <ColumnWidths>
+          
+          
+          
+          
+        <Column0>333</Column0><Column1>27</Column1><Column2>27</Column2><Column3>27</Column3></ColumnWidths>
+      </Workspace>
+      <Disassembly>
+        <col-names>
+          
+          
+        <item>Disassembly</item><item>_I0</item></col-names>
+        <col-widths>
+          
+          
+        <item>500</item><item>20</item></col-widths>
+        <DisasmHistory/>
+        
+        
+      <ShowCodeCoverage>0</ShowCodeCoverage><ShowInstrProfiling>0</ShowInstrProfiling></Disassembly>
+    <CallStack><col-names><item>Frame</item><item>_I0</item></col-names><col-widths><item>400</item><item>20</item></col-widths></CallStack><Find-in-Files><ColumnWidth0>554</ColumnWidth0><ColumnWidth1>79</ColumnWidth1><ColumnWidth2>951</ColumnWidth2></Find-in-Files></Static>
+    <Windows>
+      
+      
+      
+    <Wnd0>
+        <Tabs>
+          <Tab>
+            <Identity>TabID-15928-28190</Identity>
+            <TabName>Debug Log</TabName>
+            <Factory>Debug-Log</Factory>
+            <Session/>
+          </Tab>
+          <Tab>
+            <Identity>TabID-15405-28200</Identity>
+            <TabName>Build</TabName>
+            <Factory>Build</Factory>
+            <Session/>
+          </Tab>
+        <Tab><Identity>TabID-32425-2157</Identity><TabName>Find in Files</TabName><Factory>Find-in-Files</Factory><Session/></Tab></Tabs>
+        
+      <SelectedTab>0</SelectedTab></Wnd0><Wnd1>
+        <Tabs>
+          <Tab>
+            <Identity>TabID-26676-28194</Identity>
+            <TabName>Workspace</TabName>
+            <Factory>Workspace</Factory>
+            <Session>
+              
+            <NodeDict><ExpandedNode>ElecStim</ExpandedNode><ExpandedNode>ElecStim/Nordic</ExpandedNode></NodeDict></Session>
+          </Tab>
+        </Tabs>
+        
+      <SelectedTab>0</SelectedTab></Wnd1><Wnd2>
+        <Tabs>
+          <Tab>
+            <Identity>TabID-4656-28197</Identity>
+            <TabName>Disassembly</TabName>
+            <Factory>Disassembly</Factory>
+            <Session/>
+          </Tab>
+        </Tabs>
+        
+      <SelectedTab>0</SelectedTab></Wnd2><Wnd3><Tabs><Tab><Identity>TabID-8333-21457</Identity><TabName>Call Stack</TabName><Factory>CallStack</Factory></Tab></Tabs><SelectedTab>0</SelectedTab></Wnd3></Windows>
+    <Editor>
+      
+      
+      
+      
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\main.c</Filename><XPos>0</XPos><YPos>22</YPos><SelStart>1019</SelStart><SelEnd>1019</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\stim.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>236</SelStart><SelEnd>236</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\stim.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>54</SelStart><SelEnd>54</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\prog_types.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>92</SelStart><SelEnd>92</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\radio.c</Filename><XPos>0</XPos><YPos>18</YPos><SelStart>762</SelStart><SelEnd>762</SelEnd></Tab><ActiveTab>4</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\common\nrf24l01p\hardware.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>534</SelStart><SelEnd>534</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\common\nrf24l01p\hal_nrf.c</Filename><XPos>0</XPos><YPos>123</YPos><SelStart>567</SelStart><SelEnd>567</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\common\efm32lib\src\efm32_dac.c</Filename><XPos>0</XPos><YPos>61</YPos><SelStart>3054</SelStart><SelEnd>3054</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\..\..\..\..\Program Files (x86)\IAR Systems\Embedded Workbench 6.0 Kickstart\arm\inc\c\stdbool.h</Filename><XPos>0</XPos><YPos>3</YPos><SelStart>369</SelStart><SelEnd>369</SelEnd></Tab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
+    <Positions>
+      
+      
+      
+      
+      
+    <Top><Row0><Sizes><Toolbar-0108eef8><key>iaridepm.enu1</key></Toolbar-0108eef8></Sizes></Row0><Row1><Sizes><Toolbar-1b50d950><key>debuggergui.enu1</key></Toolbar-1b50d950></Sizes></Row1><Row2><Sizes><Toolbar-1b50c5c8><key>armjlink.enu1</key></Toolbar-1b50c5c8></Sizes></Row2></Top><Left><Row0><Sizes><Wnd1><Rect><Top>-2</Top><Left>-2</Left><Bottom>714</Bottom><Right>407</Right><x>-2</x><y>-2</y><xscreen>409</xscreen><yscreen>203</yscreen><sizeHorzCX>254512</sizeHorzCX><sizeHorzCY>201389</sizeHorzCY><sizeVertCX>254512</sizeVertCX><sizeVertCY>710317</sizeVertCY></Rect></Wnd1></Sizes></Row0><Row1><Sizes><Wnd3><Rect><Top>-2</Top><Left>405</Left><Bottom>714</Bottom><Right>605</Right><x>405</x><y>-2</y><xscreen>200</xscreen><yscreen>200</yscreen><sizeHorzCX>124456</sizeHorzCX><sizeHorzCY>198413</sizeHorzCY><sizeVertCX>124456</sizeVertCX><sizeVertCY>710317</sizeVertCY></Rect></Wnd3></Sizes></Row1></Left><Right><Row0><Sizes><Wnd2><Rect><Top>-2</Top><Left>-2</Left><Bottom>714</Bottom><Right>407</Right><x>-2</x><y>-2</y><xscreen>409</xscreen><yscreen>203</yscreen><sizeHorzCX>254512</sizeHorzCX><sizeHorzCY>201389</sizeHorzCY><sizeVertCX>254512</sizeVertCX><sizeVertCY>710317</sizeVertCY></Rect></Wnd2></Sizes></Row0></Right><Bottom><Row0><Sizes><Wnd0><Rect><Top>-2</Top><Left>-2</Left><Bottom>201</Bottom><Right>1609</Right><x>-2</x><y>-2</y><xscreen>1611</xscreen><yscreen>203</yscreen><sizeHorzCX>1002489</sizeHorzCX><sizeHorzCY>201389</sizeHorzCY><sizeVertCX>254512</sizeVertCX><sizeVertCY>201389</sizeVertCY></Rect></Wnd0></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
+  </Desktop>
+</Project>
+
+

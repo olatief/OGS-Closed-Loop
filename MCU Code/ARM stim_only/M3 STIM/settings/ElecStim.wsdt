@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<Workspace>
+  <ConfigDictionary>
+    
+  <CurrentConfigs><Project>ElecStim/Debug</Project></CurrentConfigs></ConfigDictionary>
+  <Desktop>
+    <Static>
+      <Workspace>
+        <ColumnWidths>
+          
+          
+          
+          
+        <Column0>283</Column0><Column1>27</Column1><Column2>27</Column2><Column3>27</Column3></ColumnWidths>
+      </Workspace>
+      <Build>
+        
+        
+        
+        
+      <ColumnWidth0>20</ColumnWidth0><ColumnWidth1>888</ColumnWidth1><ColumnWidth2>237</ColumnWidth2><ColumnWidth3>59</ColumnWidth3></Build>
+    <Debug-Log><ColumnWidth0>20</ColumnWidth0><ColumnWidth1>728</ColumnWidth1></Debug-Log><TerminalIO/><Find-in-Files><ColumnWidth0>427</ColumnWidth0><ColumnWidth1>61</ColumnWidth1><ColumnWidth2>733</ColumnWidth2></Find-in-Files><Breakpoints><col-names><item>Breakpoint</item><item>_I0</item></col-names><col-widths><item>500</item><item>35</item></col-widths><PreferedWindows><Position>3</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows/></PreferedWindows></Breakpoints></Static>
+    <Windows>
+      
+      
+    <Wnd0>
+        <Tabs>
+          <Tab>
+            <Identity>TabID-17803-22033</Identity>
+            <TabName>Workspace</TabName>
+            <Factory>Workspace</Factory>
+            <Session>
+              
+            <NodeDict><ExpandedNode>ElecStim</ExpandedNode><ExpandedNode>ElecStim/Drivers</ExpandedNode><ExpandedNode>ElecStim/EFM32Lib</ExpandedNode><ExpandedNode>ElecStim/Nordic</ExpandedNode><ExpandedNode>ElecStim/Source</ExpandedNode></NodeDict></Session>
+          </Tab>
+        </Tabs>
+        
+      <SelectedTab>0</SelectedTab></Wnd0><Wnd1>
+        <Tabs>
+          <Tab>
+            <Identity>TabID-3814-23113</Identity>
+            <TabName>Build</TabName>
+            <Factory>Build</Factory>
+            <Session/>
+          </Tab>
+        <Tab><Identity>TabID-8316-28128</Identity><TabName>Debug Log</TabName><Factory>Debug-Log</Factory><Session/></Tab><Tab><Identity>TabID-3020-30015</Identity><TabName>Find in Files</TabName><Factory>Find-in-Files</Factory><Session/></Tab></Tabs>
+        
+      <SelectedTab>0</SelectedTab></Wnd1><Wnd2><Tabs><Tab><Identity>TabID-283-23655</Identity><TabName>Breakpoints</TabName><Factory>Breakpoints</Factory></Tab></Tabs><SelectedTab>0</SelectedTab></Wnd2></Windows>
+    <Editor>
+      
+      
+      
+      
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\stim.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>182</SelStart><SelEnd>182</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\stim.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>54</SelStart><SelEnd>54</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\common\nrf24l01p\hardware.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>534</SelStart><SelEnd>534</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\common\nrf24l01p\hal_nrf.c</Filename><XPos>0</XPos><YPos>123</YPos><SelStart>567</SelStart><SelEnd>567</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\common\efm32lib\src\efm32_dac.c</Filename><XPos>0</XPos><YPos>61</YPos><SelStart>3054</SelStart><SelEnd>3054</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\..\..\..\..\Program Files (x86)\IAR Systems\Embedded Workbench 6.0 Kickstart\arm\inc\c\stdbool.h</Filename><XPos>0</XPos><YPos>3</YPos><SelStart>369</SelStart><SelEnd>369</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\common\efm32lib\src\efm32_letimer.c</Filename><XPos>0</XPos><YPos>440</YPos><SelStart>14240</SelStart><SelEnd>14240</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\common\efm32lib\inc\efm32_cmu.h</Filename><XPos>0</XPos><YPos>82</YPos><SelStart>4141</SelStart><SelEnd>4156</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\prog_types.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>92</SelStart><SelEnd>92</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\main.c</Filename><XPos>0</XPos><YPos>63</YPos><SelStart>1753</SelStart><SelEnd>1753</SelEnd></Tab><ActiveTab>9</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\radio.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>201</SelStart><SelEnd>201</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\radio.c</Filename><XPos>0</XPos><YPos>12</YPos><SelStart>762</SelStart><SelEnd>762</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\common\efm32lib\src\efm32_emu.c</Filename><XPos>0</XPos><YPos>169</YPos><SelStart>7977</SelStart><SelEnd>7977</SelEnd></Tab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
+    <Positions>
+      
+      
+      
+      
+      
+    <Top><Row0><Sizes><Toolbar-029feef8><key>iaridepm.enu1</key></Toolbar-029feef8></Sizes></Row0></Top><Left><Row0><Sizes><Wnd0><Rect><Top>-2</Top><Left>-2</Left><Bottom>523</Bottom><Right>374</Right><x>-2</x><y>-2</y><xscreen>454</xscreen><yscreen>64</yscreen><sizeHorzCX>282514</sizeHorzCX><sizeHorzCY>63492</sizeHorzCY><sizeVertCX>233976</sizeVertCX><sizeVertCY>520833</sizeVertCY></Rect></Wnd0></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes><Wnd1><Rect><Top>-2</Top><Left>-2</Left><Bottom>242</Bottom><Right>1609</Right><x>-2</x><y>-2</y><xscreen>1611</xscreen><yscreen>244</yscreen><sizeHorzCX>1002489</sizeHorzCX><sizeHorzCY>242063</sizeHorzCY><sizeVertCX>282514</sizeVertCX><sizeVertCY>63492</sizeVertCY></Rect></Wnd1></Sizes></Row0><Row1><Sizes><Wnd2><Rect><Top>240</Top><Left>-2</Left><Bottom>440</Bottom><Right>1609</Right><x>-2</x><y>240</y><xscreen>1611</xscreen><yscreen>200</yscreen><sizeHorzCX>1002489</sizeHorzCX><sizeHorzCY>198413</sizeHorzCY><sizeVertCX>124456</sizeVertCX><sizeVertCY>198413</sizeVertCY></Rect></Wnd2></Sizes></Row1></Bottom><Float><Sizes/></Float></Positions>
+  </Desktop>
+</Workspace>
+
+

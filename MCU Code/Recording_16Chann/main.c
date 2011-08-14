@@ -53,7 +53,7 @@ void main()
 	#ifdef FOURPIN
 	P0DIR &= ~(1<<4);
 	#else
-	P1DIR &= ~( (1<<0) | (1<<5) | (1<<4) );	   			// SMISO, LED6
+	
 	P1_5 = 0;
 	P1_4 = 0;
 	#endif

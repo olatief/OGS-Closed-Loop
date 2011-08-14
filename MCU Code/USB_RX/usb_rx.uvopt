@@ -203,10 +203,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>88</ColumnNumber>
+      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>199</TopLine>
-      <CurrentLine>221</CurrentLine>
+      <CurrentLine>213</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\main.c</PathWithFileName>
       <FilenameWithoutPath>main.c</FilenameWithoutPath>
@@ -463,9 +463,9 @@
         </Doc>
         <Doc>
           <Name>.\main.c</Name>
-          <ColumnNumber>88</ColumnNumber>
+          <ColumnNumber>0</ColumnNumber>
           <TopLine>199</TopLine>
-          <CurrentLine>221</CurrentLine>
+          <CurrentLine>213</CurrentLine>
         </Doc>
         <Doc>
           <Name>.\STARTUP.A51</Name>

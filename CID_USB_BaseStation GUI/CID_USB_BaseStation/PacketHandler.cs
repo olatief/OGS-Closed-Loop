@@ -121,26 +121,27 @@ namespace CID_USB_BaseStation
 
             string lineToLog = "";
             List<int> parsedValues = new List<int>();
-            List<Block> validBlocks = SixteenChanParser.ParseNewPacket(receivedPacket);
+           // List<Block> validBlocks = SixteenChanParser.ParseNewPacket(receivedPacket);
 
            // logger.LogLine(receivedPacket.Count);
             UpdateWirelessStats(receivedPacket);
-            foreach (Block block in validBlocks)
+            
+           /* foreach (Block block in validBlocks)
             {
                 List<int> values = block.Parse();
                 parsedValues.Add(values[currentChannel]);
 
                 lineToLog = "";
-             /*   foreach (int val in values)
+                foreach (int val in values)
                 {
                     lineToLog += " " + Convert.ToString(val);
                 }
-                */
-                // lineToLog += " " + Convert.ToString(receivedPacket.Count);
-                // logger.LogLine(lineToLog);
-                logger.LogLine(receivedPacket.Count);
+                
+                 lineToLog += " " + Convert.ToString(receivedPacket.Count);
+            //     logger.LogLine(lineToLog);
+                
             }
-
+            */
             
             return parsedValues;
         }

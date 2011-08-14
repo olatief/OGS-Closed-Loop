@@ -316,7 +316,9 @@ namespace CID_USB_BaseStation
 
             byte[] buffer = (byte[])e.Buffer.Clone(); // so we dont process duplicates
 
-            if (this.IsDisposed) // stop everything
+            DataLogger.Instance.LogLine(buffer[30]);
+
+          /*  if (this.IsDisposed) // stop everything
             {
                 // This prevents the process from waiting for the processing thread to get done
                 pktHandler.bcWorkQueue.CompleteAdding();
@@ -325,7 +327,9 @@ namespace CID_USB_BaseStation
             {
                 // So we can keep on receiveing USB Packets as fast as possible without being blocked by UI thread
                 pktHandler.bcWorkQueue.Add(buffer);
+                
             }
+           * */
         }
 
         void ProcessUSBpacket_Done(object sender, ProcessingDoneEventArgs e)
