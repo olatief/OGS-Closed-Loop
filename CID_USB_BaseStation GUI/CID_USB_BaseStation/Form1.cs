@@ -31,9 +31,9 @@ namespace CID_USB_BaseStation
         private UsbRegDeviceList mRegDevices;
         private Oscilloscope oScope;
 
-        progAll pAll = new progAll();
-        progStim pStim = new progStim();
-        progAlgo pAlgo = new progAlgo();
+        ProgAll pAll = new ProgAll();
+        ProgStim pStim = new ProgStim();
+        ProgAlgo pAlgo = new ProgAlgo();
 
         DataLogger dataLogger = DataLogger.Instance;
         PacketHandler pktHandler=new PacketHandler();
@@ -371,12 +371,12 @@ namespace CID_USB_BaseStation
 
         private void btnProgAll_Click(object sender, EventArgs e)
         {
-            pAll.pType = pktType.All;
+            pAll.pType = PktType.All;
 
             pAll.pStim = pStim;
             pAll.pAlgo = pAlgo;
 
-            sendProg(pAll);
+            sendProg(StructureToByteArray(pAll));
         }
 
         public static byte[] StructureToByteArray(object obj)
@@ -392,26 +392,38 @@ namespace CID_USB_BaseStation
 
         private void btnProgStim_Click(object sender, EventArgs e)
         {
-            pAll.pType = pktType.Stim;
+            pAll.pType = PktType.Stim;
             pAll.pStim = pStim;
             pAll.pAlgo = pAlgo;
 
-            sendProg(pAll);
+            sendProg(StructureToByteArray(pAll));
         }
 
         private void btnProgAlgo_Click(object sender, EventArgs e)
         {
-            pAll.pType = pktType.Algo;
+            pAll.pType = PktType.Algo;
             pAll.pStim = pStim;
             pAll.pAlgo = pAlgo;
 
-            sendProg(pAll);
+            sendProg(StructureToByteArray(pAll));
         }
 
-        private void sendProg(progAll pAll)
+
+        private void btnProgSingleChan_Click(object sender, EventArgs e)
+        {
+            ProgElecStim pElecStim;
+            pElecStim.pktInfo = (byte) SystemType.ElecStimOnly;
+            pElecStim.Amplitude = Convert.ToUInt16(txtSingleAmplitude.Text);
+            pElecStim.Period = Convert.ToUInt16(txtSinglePeriod.Text);
+            pElecStim.PosPulse = Convert.ToUInt16(txtSinglePosPulse.Text);
+            pElecStim.NegPulse = Convert.ToUInt16(txtSingleNegPulse.Text);
+
+            sendProg(StructureToByteArray(pElecStim));
+        }
+
+        private void sendProg(byte[] bytesToWrite)
         {
             ErrorCode wError;
-            byte[] bytesToWrite = StructureToByteArray(pAll);
 
             int uiTransmitted = 2;
             if (mEpWriter != null)
@@ -423,7 +435,7 @@ namespace CID_USB_BaseStation
                 if (wError == ErrorCode.None)
                 {
                     tsStatus.Text = uiTransmitted + " bytes written.";
-                }
+                } 
                 else
                 {   
                     tsStatus.Text = "Write failed!";
@@ -560,7 +572,7 @@ namespace CID_USB_BaseStation
         {
             if (rdoSingle.Checked)
             {
-                pnlChannelSelect.Enabled = false;
+               
             }
         }
 
@@ -569,6 +581,26 @@ namespace CID_USB_BaseStation
             if (rdoSixteen.Checked)
             {
                 pnlChannelSelect.Enabled = true;
+            } else
+            {
+                pnlChannelSelect.Enabled = false;
+            }
+        }
+
+
+        private void rdoElecStim_CheckedChanged(object sender, EventArgs e)
+        {
+            if(rdoElecStim.Checked)
+            {
+                tabProgram.SelectTab(tabElecStim);
+                tabElecStim.Enabled = true;
+                tabSingle.Enabled = false;
+            }
+            else
+            {
+                tabProgram.SelectTab(tabSingle);
+                tabElecStim.Enabled = false;
+                tabSingle.Enabled = true;
             }
         }
 
@@ -576,5 +608,8 @@ namespace CID_USB_BaseStation
         {
             pktHandler.CurrentChannel = cboChannelDisplay.SelectedIndex+1;
         }
+
+
+
     }
 }

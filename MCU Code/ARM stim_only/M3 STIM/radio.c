@@ -4,8 +4,8 @@
 
 #define SPI_BAUDRATE 500000
 
-uint8_t progPayload[32];
-uint8_t procPayload = false;
+volatile uint8_t progPayload[32];
+uint8_t volatile procPayload = false;
 
 /* Buffer pointers and indexes */
 char* slaveTxBuffer;
@@ -19,12 +19,14 @@ int masterRxBufferSize;
 volatile int masterRxBufferIndex;
 uint8_t payloadAddr[30];
 bool radio_busy = false;
+bool is_reuse = false;
 /* Prototypes */
 void SPI_setup(uint8_t spiNumber, uint8_t location, bool master);
 
 void GPIO_ODD_IRQHandler(void)
 { 
   uint8_t irq_flags;
+  DEBUGPIN_SET;
   /* clear flag for RF_IRQ interrupt */
   GPIO_IntClear(RFIRQ);
   
@@ -54,16 +56,18 @@ void GPIO_ODD_IRQHandler(void)
       // (Will only be possible after the radio irq flags are cleared) 
       hal_nrf_flush_tx();
       radio_busy = false;
+      is_reuse = false;
       break;
   }
-  
+  DEBUGPIN_CLEAR;
   // Wake up MCU to do some processing
 }
 
 void RADIO_TX(uint8_t* payload, uint8_t length)
 {
-  
-  hal_nrf_write_tx_payload(payload,length);
+  DEBUGPIN_SET;
+    hal_nrf_write_tx_payload(payload,length);
+  DEBUGPIN_CLEAR;
   radio_busy = true;
   // Toggle radio CE signal to start transmission 
   CE_PULSE();
@@ -75,6 +79,7 @@ void RADIO_setup(void)
 {
   uint8_t status;
   procPayload = false; 
+  is_reuse = false;
   /* Enable clock for GPIO module */
   CMU_ClockEnable(cmuClock_GPIO, true);
   
@@ -98,13 +103,15 @@ void RADIO_setup(void)
   hal_nrf_set_power_mode(HAL_NRF_PWR_UP);
   
   hal_nrf_enable_ack_payload(1);
-	hal_nrf_enable_dynamic_payload(1);
-	hal_nrf_setup_dynamic_payload(1); // Set up PIPE 0 to handle dynamic lengths
-	hal_nrf_set_rf_channel(125); // 2525 MHz
-   	hal_nrf_set_auto_retr(5, 250); // Retry 5x
+  
+  hal_nrf_enable_dynamic_payload(1);
+  hal_nrf_setup_dynamic_payload(1); // Set up PIPE 0 to handle dynamic lengths
+  hal_nrf_set_rf_channel(125); // 2525 MHz
+  hal_nrf_set_auto_retr(5, 250); // Retry 5x
   
   status = hal_nrf_read_reg(SETUP_RETR);
- 
+// hal_nrf_flush_tx();
+// hal_nrf_flush_rx();
     // Configure radio as primary(PTX) 
   hal_nrf_set_operation_mode(HAL_NRF_PTX);
 
@@ -112,7 +119,7 @@ void RADIO_setup(void)
  // CE_HIGH();
  //hal_nrf_nop();
     
-  RADIO_TX(payloadAddr,2);
+//  RADIO_TX(payloadAddr,2);
   __NOP();
 }
 

@@ -1,5 +1,5 @@
 ---------------------------------------------------------------------------
-NCDrill File Report For: OGS_Headstage.PcbDoc   7/29/2011  4:37:41 PM
+NCDrill File Report For: OGS_Headstage.PcbDoc   8/30/2011  3:43:10 PM
 ---------------------------------------------------------------------------
 
 Layer Pair : Top Layer to Bottom Layer
@@ -8,10 +8,9 @@ EIA File   : OGS_Headstage.DRL
 
 Tool         Hole Size           Hole Type     Hole Count Plated       Tool Travel
 ---------------------------------------------------------------------------
-T1        11.8mil (0.29972mm)      Round          12               1.59 Inch (40.27 mm)
+T1        11.8mil (0.29972mm)      Round          13               2.09 Inch (53.00 mm)
 T2        45mil (1.143mm)          Round          2                0.08 Inch (1.93 mm)
-T3        82.7mil (2.10058mm)      Round          1                0.00 Inch (0.00 mm)
 ---------------------------------------------------------------------------
-Totals                                            15               1.66 Inch (42.20 mm)
+Totals                                            15               2.16 Inch (54.93 mm)
 
 Total Processing Time (hh:mm:ss) : 00:00:00

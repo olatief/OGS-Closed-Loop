@@ -1,0 +1,3 @@
+DE_SIM_FILE_PATH=.\data;
+DESIGN_KIT_MODEL_PATH=C:\Modelithics\Library\MDLX_SELECT_dk_Library\bin\win32
+DESIGN_KIT_SIM_FILE_PATH=C:\Modelithics\Library\MDLX_SELECT_dk_Library\circuit\models;C:\ADS2009\custom\Panasonic_DK_web\circuit\models

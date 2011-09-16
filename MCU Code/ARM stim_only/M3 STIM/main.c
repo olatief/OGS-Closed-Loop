@@ -14,7 +14,7 @@
 #include "radio.h"
 #include "prog_types.h"
 
-#define TXTIMER_PERIOD (5-1)
+#define TXTIMER_PERIOD (2-1)
 
 /* Max number of HFCycles for higher accuracy */
 #define HFCYCLES            24576
@@ -37,12 +37,20 @@ void setupSWO(void);
 PROG_TypeDef currentProg;
 uint8_t state_TXPKT = 0;
 
+PROG_TypeDef default_prog = { 0x03, 100,0,0,0,0};
+
+void DEBUG_setup()
+{
+  /* Set DEBUG_PIN as output */
+  GPIO_PinModeSet(DEBUGPIN_PORT, DEBUGPIN_N, gpioModePushPull, 0);
+}
+
 int main()
 {
   /* Chip errata */
   CHIP_Init();
   
-  // setupSWO();
+ // setupSWO();
   /* Calibrate HFRCO with HFXO as a reference */
   CMU_OscillatorEnable(cmuOsc_HFXO, true, true);
   CMU_HFRCOBandSet(cmuHFRCOBand_1MHz);
@@ -51,11 +59,10 @@ int main()
   
   
   RADIO_setup();
-  
- // TIMER_setup();
+ TIMER_setup();
  
  LETIMER_setup();
-  
+   DEBUG_setup(); 
  // CMU_ClockSelectSet(cmuClock_HF,cmuSelect_LFRCO);
  // CMU_ClockDivSet(cmuClock_HFPER, cmuClkDiv_1);
   /* Initialise the DAC */
@@ -75,22 +82,39 @@ int main()
     if(state_TXPKT == true) // We have to transmit a packet to check if there's any messages for us
     {
       state_TXPKT = false;
-      
+     
       RADIO_TX((uint8_t*)(&currentProg), sizeof(currentProg));
+      
     }
     
     if(procPayload)
     {
       procPayload = false;
       PROG_TypeDef *prog =  (PROG_TypeDef *)progPayload;
+      
+      /*
+      prog->amplitude = __REV16(prog->amplitude);
+      prog->period = __REV16(prog->period);
+      prog->posPulseWidth = __REV16(prog->posPulseWidth);
+      prog->negPulseWidth = __REV16(prog->negPulseWidth);
+      */
+      if( 0 == prog->period )
+      {
+        prog->enable = false;
+      } else
+      {
+        prog->enable = true;
+      }
+      
       reprogStimTimers( *prog );
+      
       if(prog->enable == false)
       {
         DAC_Enable(DAC0, 0, false);
       }
       else
       {
-        DAC_WriteData(DAC0, prog->amplitude , 0);
+        DAC_WriteData(DAC0, (prog->amplitude<<12)/1250 , 0); // convert from mV to LSB for DAC input
         DAC_Enable(DAC0, 0, true);
       }
       
@@ -113,15 +137,15 @@ int main()
  * @brief TIMER0_IRQHandler
  * Interrupt Service Routine TIMER0 Interrupt Line
  *****************************************************************************/
-void TIMER0_IRQHandler(void)
+void TIMER1_IRQHandler(void)
 { 
   uint32_t compareValue;
    uint32_t compareValue1;
   /* clear flag for TIMER0 overflow interrupt */
-  TIMER_IntClear(TIMER0, TIMER_IF_OF);
+  TIMER_IntClear(TIMER1, TIMER_IF_OF);
 
   
-  compareValue = TIMER_CaptureGet(TIMER0, 1);
+  compareValue = TIMER_CaptureGet(TIMER1, 1);
   ++compareValue;
   /* increment duty-cycle or reset if reached TOP value */
   if( compareValue == 500)
@@ -141,13 +165,13 @@ void TIMER_setup(void)
    /* Enable clock for GPIO module */
   CMU_ClockEnable(cmuClock_GPIO, true);
   
-  /* Enable clock for TIMER0 module */
-  CMU_ClockEnable(cmuClock_TIMER0, true);
+  /* Enable clock for TIMER1 module */
+  CMU_ClockEnable(cmuClock_TIMER1, true);
    
-  /* Set CC0 location 3 pin (PD1) as output */
-  GPIO_PinModeSet(gpioPortD, 1, gpioModePushPull, 0);
-  /* Set CC1 location 3 pin (PD1) as output */
-  GPIO_PinModeSet(gpioPortD, 2, gpioModePushPull, 0);
+  /* Set CC0 location 0 pin (PC13) as output */
+  GPIO_PinModeSet(gpioPortC, 13, gpioModePushPull, 0);
+  /* Set CC1 location 0 pin (PC14) as output */
+  GPIO_PinModeSet(gpioPortC, 14, gpioModePushPull, 0);
   /* Select CC0 channel parameters */
   TIMER_InitCC_TypeDef timerCC0Init = 
   {
@@ -165,10 +189,10 @@ void TIMER_setup(void)
   };
   
   /* Configure CC channel 0 */
-  TIMER_InitCC(TIMER0, 0, &timerCC0Init);
+  TIMER_InitCC(TIMER1, 0, &timerCC0Init);
 
   /* Route CC0 to location 3 (PD1) and enable pin */  
-  TIMER0->ROUTE |= (TIMER_ROUTE_CC0PEN | TIMER_ROUTE_LOCATION_LOC3); 
+  TIMER1->ROUTE |= (TIMER_ROUTE_CC0PEN | TIMER_ROUTE_LOCATION_LOC0); 
  
    /* Select CC1 channel parameters */
   TIMER_InitCC_TypeDef timerCC1Init = 
@@ -187,19 +211,19 @@ void TIMER_setup(void)
   };
   
   /* Configure CC channel 1 */
-  TIMER_InitCC(TIMER0, 1, &timerCC1Init);
+  TIMER_InitCC(TIMER1, 1, &timerCC1Init);
 
   /* Route CC1 to location 3 (PD1) and enable pin */  
-  TIMER0->ROUTE |= (TIMER_ROUTE_CC1PEN | TIMER_ROUTE_LOCATION_LOC3); 
+  TIMER1->ROUTE |= (TIMER_ROUTE_CC1PEN | TIMER_ROUTE_LOCATION_LOC0); 
   
   /* Set Top Value */
-  TIMER_TopSet(TIMER0, 1000);
+  TIMER_TopSet(TIMER1, 1000);
   
   /* Set compare value starting at 0 - it will be incremented in the interrupt handler */
-  TIMER_CompareBufSet(TIMER0, 0, 0);
+  TIMER_CompareBufSet(TIMER1, 0, 0);
 
   /* Set compare value starting at 0 - it will be incremented in the interrupt handler */
-  TIMER_CompareBufSet(TIMER0, 1, 0);
+  TIMER_CompareBufSet(TIMER1, 1, 0);
   /* Select timer parameters */  
   TIMER_Init_TypeDef timerInit =
   {
@@ -217,13 +241,13 @@ void TIMER_setup(void)
   };
   
   /* Enable overflow interrupt */
-  TIMER_IntEnable(TIMER0, TIMER_IF_OF);
+  TIMER_IntEnable(TIMER1, TIMER_IF_OF);
   
   /* Enable TIMER0 interrupt vector in NVIC */
-  NVIC_EnableIRQ(TIMER0_IRQn);
+  NVIC_EnableIRQ(TIMER1_IRQn);
   
   /* Configure timer */
-  TIMER_Init(TIMER0, &timerInit);
+  TIMER_Init(TIMER1, &timerInit);
 }
 /**************************************************************************//**
  * @brief  Setup DAC

@@ -2,16 +2,24 @@
 #include "efm32_cmu.h"
 #include "efm32_timer.h"
 #include "intrinsics.h"
+#include "hardware.h"
 
 void reprogStimTimers(PROG_TypeDef prog)
 {
   if(prog.enable)
   {
-    stopStim();
-  } else {
-    calcTimerParams(prog.period, prog.posPulseWidth);
+    calcTimerParams(1000*prog.period, prog.posPulseWidth);
     startStim();
+  } else {
+    stopStim();
   }
+}
+uint16_t preCalc[16] = {0, 1, 2, 2, 3,3,3,3,4,4,4,4,4,4,4,4}; 
+
+uint32_t calcTimerPS(uint32_t count)
+{
+  count >>= 16;
+  return preCalc[count];
 }
 
 /* all parameter inputs are in us */
@@ -25,33 +33,30 @@ TIMER_CCParams_TypeDef calcTimerParams(uint32_t period, uint32_t pulseWidth)
   
   TIMER_CCParams_TypeDef ret; 
   
-  uint32_t oldTimerPS = ((TIMER0->CTRL & _TIMER_CTRL_PRESC_MASK)>>_TIMER_CTRL_PRESC_SHIFT);
-  uint32_t newTimerPS = oldTimerPS;
+ // uint32_t oldTimerPS = ((STIM_TIMER->CTRL & _TIMER_CTRL_PRESC_MASK)>>_TIMER_CTRL_PRESC_SHIFT);
+  uint32_t newTimerPS;
   
-  if(period > 1000000)
-    period = 1000000;
+  if(period > 10000000)
+    period = 10000000;
   if(pulseWidth > period/2)
     pulseWidth = period/2;
   
-  timerFreq = CMU_ClockFreqGet(cmuClock_TIMER0) >> oldTimerPS;
+  timerFreq = CMU_ClockFreqGet(cmuClock_TIMER1);
   
   topCount = (uint64_t)period * (uint64_t)timerFreq/1000000;
   
-  durationCount = pulseWidth * timerFreq/1000000;
+  durationCount = (uint64_t)pulseWidth * (uint64_t)timerFreq/1000000;
 
   /* check if timer will overflow with given parameters */
-  newTimerPS = topCount >> 16;
-  
-  if( newTimerPS != 0 ) /* checks if > 2^16) */
-  {
+    newTimerPS = calcTimerPS(topCount);
+    
     topCount >>= newTimerPS;
     durationCount >>= newTimerPS;
-    newTimerPS += oldTimerPS;
     
-  TIMER0->CTRL &= ~(_TIMER_CTRL_PRESC_MASK); // clear current prescaler
-  TIMER0->CTRL |= (newTimerPS << _TIMER_CTRL_PRESC_SHIFT); // set new prescaler
+    STIM_TIMER->CTRL &= ~(_TIMER_CTRL_PRESC_MASK); // clear current prescaler
+    STIM_TIMER->CTRL |= (newTimerPS << _TIMER_CTRL_PRESC_SHIFT); // set new prescaler
 
-  }
+  
   posCount = topCount-durationCount;
   negCount = durationCount;
   
@@ -59,23 +64,23 @@ TIMER_CCParams_TypeDef calcTimerParams(uint32_t period, uint32_t pulseWidth)
   ret.CC0 = posCount;
   ret.CC1 = negCount;
   
-  TIMER_CompareBufSet(TIMER0, 0, posCount-1);
-  TIMER_CompareBufSet(TIMER0, 1, negCount-1);
-  TIMER_TopBufSet(TIMER0, topCount-1);
+  TIMER_CompareBufSet(STIM_TIMER, 0, posCount-1);
+  TIMER_CompareBufSet(STIM_TIMER, 1, negCount-1);
+  TIMER_TopBufSet(STIM_TIMER, topCount-1);
   return ret;
 }
 
 void stopStim(void)
 {
   // TODO: Disable DAC
-  TIMER_Enable(TIMER0, false);
+  TIMER_Enable(STIM_TIMER, false);
 }
 
 
 void startStim(void)
 {
   
-  TIMER_Enable(TIMER0, true);
+  TIMER_Enable(STIM_TIMER, true);
 }
 
 /* TODO: not efficient if statement */

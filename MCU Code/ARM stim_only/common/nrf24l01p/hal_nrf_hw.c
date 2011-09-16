@@ -25,17 +25,4 @@
 #include "efm32.h"
 #include "efm32_gpio.h"
 
-uint8_t hal_nrf_rw(uint8_t value)
-{
-  USART_Tx(NRF_USART_SPI, value);
-  return USART_Rx(NRF_USART_SPI);
-  
-    /*
-  SPIRDAT = value;
-  while(!(SPIRSTAT & 0x02)) // wait for byte transfer finished
-  {
-  }
-  return SPIRDAT;             // return SPI read value
-  */
-  
-}
+

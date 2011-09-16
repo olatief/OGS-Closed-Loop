@@ -84,7 +84,7 @@ void main()
 		prog_led(is);
 	}
 
-  	prog_led(14);
+  	prog_led(0);
 
 	init_radio();
 	init_adc(); 
@@ -192,12 +192,12 @@ void init_adc()
 {
    hal_adc_set_input_channel(HAL_ADC_INP_AIN0);                     
    hal_adc_set_reference(HAL_ADC_REF_VDD);                        
-   hal_adc_set_acq_window(HAL_ADC_AQW_3US);
+   hal_adc_set_acq_window(HAL_ADC_AQW_075US);
    hal_adc_set_input_mode(HAL_ADC_DIFF_AIN2);                             
    hal_adc_set_conversion_mode(HAL_ADC_CONTINOUS);               
-   hal_adc_set_resolution(HAL_ADC_RES_12BIT);                          
+   hal_adc_set_resolution(HAL_ADC_RES_10BIT);                          
    hal_adc_set_data_just(HAL_ADC_JUST_RIGHT);
-   hal_adc_set_sampling_rate(HAL_ADC_16KSPS);
+   hal_adc_set_sampling_rate(HAL_ADC_2KSPS);
    
    MISC = 1; // Enable ADC interrupt through MISC interrupt 
 }
@@ -210,7 +210,7 @@ void init_radio()
   RF = 1;
     // Power up radio
   hal_nrf_set_power_mode(HAL_NRF_PWR_UP);
-
+	hal_nrf_set_output_power(HAL_NRF_18DBM);
   	hal_nrf_enable_ack_payload(1);
 	hal_nrf_enable_dynamic_payload(1);
 	hal_nrf_setup_dynamic_payload(1); // Set up PIPE 0 to handle dynamic lengths

@@ -1,0 +1,5 @@
+jobName=rectifier_emprep_emprep
+jobType=emprep
+designName=rectifier_emprep
+ruleFilePath=
+addInfo="EM preprocessor messages displayed as DRC errors"

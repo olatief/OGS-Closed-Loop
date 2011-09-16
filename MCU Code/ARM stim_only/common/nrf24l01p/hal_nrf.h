@@ -419,7 +419,7 @@ uint8_t hal_nrf_get_rx_data_source(void);
  * @param  *rx_pload pointer to buffer in which RX payload are stored
  * @return pipe number (MSB byte) and packet length (LSB byte)
 */
-uint16_t hal_nrf_read_rx_payload(uint8_t *rx_pload);
+uint16_t hal_nrf_read_rx_payload(volatile uint8_t *rx_pload);
 
 /** Write TX payload to radio.
  * Use this function to write a packet of

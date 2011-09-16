@@ -1,0 +1,16 @@
+simulationMode 1;
+platform ADS;
+mesh_frequency 12.000000000000 GHz;
+mesh_reduction ON;
+no_cells_per_wavelength 20;
+edgemesh_borderwidth AUTO;
+refacet_arcs 45;
+drcLogging ON;
+drcLayer 101;
+overlapextraction ON;
+gppMinFeatureSize -0.5;
+mask 1 expandDir 0 modelType 0;
+Z0_MATRIX OFF;
+DS_DIR "C:\Users\Omar\Dropbox\OGS-Closed-Loop\RF_Powering_Design_prj\data";
+DS_NAME "rectifier_mom";
+matrixSolver 0;

@@ -39,6 +39,8 @@
             this.tRecv = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.tabProgram = new System.Windows.Forms.TabControl();
+            this.tabSingle = new System.Windows.Forms.TabPage();
             this.pnlProg = new System.Windows.Forms.Panel();
             this.btnProgAll = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -76,6 +78,16 @@
             this.tvalAmplitude = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tvalDC = new System.Windows.Forms.TextBox();
+            this.tabElecStim = new System.Windows.Forms.TabPage();
+            this.btnProgSingleChan = new System.Windows.Forms.Button();
+            this.label28 = new System.Windows.Forms.Label();
+            this.txtSingleAmplitude = new System.Windows.Forms.TextBox();
+            this.label27 = new System.Windows.Forms.Label();
+            this.txtSingleNegPulse = new System.Windows.Forms.TextBox();
+            this.label26 = new System.Windows.Forms.Label();
+            this.txtSinglePosPulse = new System.Windows.Forms.TextBox();
+            this.label24 = new System.Windows.Forms.Label();
+            this.txtSinglePeriod = new System.Windows.Forms.TextBox();
             this.btnConvert = new System.Windows.Forms.Button();
             this.txtFilename = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -113,14 +125,18 @@
             this.cboChannelDisplay = new System.Windows.Forms.ComboBox();
             this.label23 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.rdoElecStim = new System.Windows.Forms.RadioButton();
             this.rdoSixteen = new System.Windows.Forms.RadioButton();
             this.rdoSingle = new System.Windows.Forms.RadioButton();
             this.statusStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.tabProgram.SuspendLayout();
+            this.tabSingle.SuspendLayout();
             this.pnlProg.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.tabElecStim.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.groupBox5.SuspendLayout();
             this.groupBox6.SuspendLayout();
@@ -199,22 +215,44 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.pnlProg);
+            this.groupBox2.Controls.Add(this.tabProgram);
             this.groupBox2.Location = new System.Drawing.Point(26, 106);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(417, 521);
+            this.groupBox2.Size = new System.Drawing.Size(417, 534);
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Programming Controls";
+            // 
+            // tabProgram
+            // 
+            this.tabProgram.Controls.Add(this.tabSingle);
+            this.tabProgram.Controls.Add(this.tabElecStim);
+            this.tabProgram.Location = new System.Drawing.Point(7, 19);
+            this.tabProgram.Name = "tabProgram";
+            this.tabProgram.SelectedIndex = 0;
+            this.tabProgram.Size = new System.Drawing.Size(404, 509);
+            this.tabProgram.TabIndex = 3;
+            this.tabProgram.TabStop = false;
+            // 
+            // tabSingle
+            // 
+            this.tabSingle.Controls.Add(this.pnlProg);
+            this.tabSingle.Location = new System.Drawing.Point(4, 22);
+            this.tabSingle.Name = "tabSingle";
+            this.tabSingle.Padding = new System.Windows.Forms.Padding(3);
+            this.tabSingle.Size = new System.Drawing.Size(396, 483);
+            this.tabSingle.TabIndex = 0;
+            this.tabSingle.Text = "Single Channel";
+            this.tabSingle.UseVisualStyleBackColor = true;
             // 
             // pnlProg
             // 
             this.pnlProg.Controls.Add(this.btnProgAll);
             this.pnlProg.Controls.Add(this.groupBox4);
             this.pnlProg.Controls.Add(this.groupBox3);
-            this.pnlProg.Location = new System.Drawing.Point(14, 28);
+            this.pnlProg.Location = new System.Drawing.Point(6, 6);
             this.pnlProg.Name = "pnlProg";
-            this.pnlProg.Size = new System.Drawing.Size(397, 487);
+            this.pnlProg.Size = new System.Drawing.Size(397, 474);
             this.pnlProg.TabIndex = 0;
             // 
             // btnProgAll
@@ -569,6 +607,103 @@
             this.tvalDC.Validating += new System.ComponentModel.CancelEventHandler(this.OnValidationTest);
             this.tvalDC.Validated += new System.EventHandler(this.OnValidated);
             // 
+            // tabElecStim
+            // 
+            this.tabElecStim.Controls.Add(this.btnProgSingleChan);
+            this.tabElecStim.Controls.Add(this.label28);
+            this.tabElecStim.Controls.Add(this.txtSingleAmplitude);
+            this.tabElecStim.Controls.Add(this.label27);
+            this.tabElecStim.Controls.Add(this.txtSingleNegPulse);
+            this.tabElecStim.Controls.Add(this.label26);
+            this.tabElecStim.Controls.Add(this.txtSinglePosPulse);
+            this.tabElecStim.Controls.Add(this.label24);
+            this.tabElecStim.Controls.Add(this.txtSinglePeriod);
+            this.tabElecStim.Location = new System.Drawing.Point(4, 22);
+            this.tabElecStim.Name = "tabElecStim";
+            this.tabElecStim.Padding = new System.Windows.Forms.Padding(3);
+            this.tabElecStim.Size = new System.Drawing.Size(396, 483);
+            this.tabElecStim.TabIndex = 1;
+            this.tabElecStim.Text = "Electrical Stimulation";
+            this.tabElecStim.UseVisualStyleBackColor = true;
+            // 
+            // btnProgSingleChan
+            // 
+            this.btnProgSingleChan.Location = new System.Drawing.Point(145, 227);
+            this.btnProgSingleChan.Name = "btnProgSingleChan";
+            this.btnProgSingleChan.Size = new System.Drawing.Size(115, 44);
+            this.btnProgSingleChan.TabIndex = 16;
+            this.btnProgSingleChan.Text = "Program Stimulation Parameters";
+            this.btnProgSingleChan.UseVisualStyleBackColor = true;
+            this.btnProgSingleChan.Click += new System.EventHandler(this.btnProgSingleChan_Click);
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(6, 35);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(75, 13);
+            this.label28.TabIndex = 15;
+            this.label28.Text = "Amplitude (μA)";
+            // 
+            // txtSingleAmplitude
+            // 
+            this.txtSingleAmplitude.Location = new System.Drawing.Point(87, 32);
+            this.txtSingleAmplitude.Name = "txtSingleAmplitude";
+            this.txtSingleAmplitude.Size = new System.Drawing.Size(49, 20);
+            this.txtSingleAmplitude.TabIndex = 14;
+            this.txtSingleAmplitude.Text = "100";
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(6, 160);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(163, 13);
+            this.label27.TabIndex = 13;
+            this.label27.Text = "Negative Phase Pulse Width (μs)";
+            // 
+            // txtSingleNegPulse
+            // 
+            this.txtSingleNegPulse.Location = new System.Drawing.Point(175, 156);
+            this.txtSingleNegPulse.Name = "txtSingleNegPulse";
+            this.txtSingleNegPulse.Size = new System.Drawing.Size(49, 20);
+            this.txtSingleNegPulse.TabIndex = 12;
+            this.txtSingleNegPulse.Text = "50";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(6, 134);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(157, 13);
+            this.label26.TabIndex = 11;
+            this.label26.Text = "Positive Phase Pulse Width (μs)";
+            // 
+            // txtSinglePosPulse
+            // 
+            this.txtSinglePosPulse.Location = new System.Drawing.Point(175, 127);
+            this.txtSinglePosPulse.Name = "txtSinglePosPulse";
+            this.txtSinglePosPulse.Size = new System.Drawing.Size(49, 20);
+            this.txtSinglePosPulse.TabIndex = 10;
+            this.txtSinglePosPulse.Text = "100";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(6, 69);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(59, 13);
+            this.label24.TabIndex = 7;
+            this.label24.Text = "Period (ms)";
+            // 
+            // txtSinglePeriod
+            // 
+            this.txtSinglePeriod.Location = new System.Drawing.Point(71, 66);
+            this.txtSinglePeriod.Name = "txtSinglePeriod";
+            this.txtSinglePeriod.Size = new System.Drawing.Size(49, 20);
+            this.txtSinglePeriod.TabIndex = 6;
+            this.txtSinglePeriod.Text = "10";
+            // 
             // btnConvert
             // 
             this.btnConvert.Location = new System.Drawing.Point(745, 28);
@@ -881,7 +1016,7 @@
             this.pnlChannelSelect.Controls.Add(this.cboChannelDisplay);
             this.pnlChannelSelect.Controls.Add(this.label23);
             this.pnlChannelSelect.Enabled = false;
-            this.pnlChannelSelect.Location = new System.Drawing.Point(9, 88);
+            this.pnlChannelSelect.Location = new System.Drawing.Point(9, 115);
             this.pnlChannelSelect.Name = "pnlChannelSelect";
             this.pnlChannelSelect.Size = new System.Drawing.Size(160, 80);
             this.pnlChannelSelect.TabIndex = 2;
@@ -923,12 +1058,24 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.rdoElecStim);
             this.panel1.Controls.Add(this.rdoSixteen);
             this.panel1.Controls.Add(this.rdoSingle);
             this.panel1.Location = new System.Drawing.Point(6, 24);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(126, 47);
+            this.panel1.Size = new System.Drawing.Size(136, 73);
             this.panel1.TabIndex = 0;
+            // 
+            // rdoElecStim
+            // 
+            this.rdoElecStim.AutoSize = true;
+            this.rdoElecStim.Location = new System.Drawing.Point(3, 50);
+            this.rdoElecStim.Name = "rdoElecStim";
+            this.rdoElecStim.Size = new System.Drawing.Size(122, 17);
+            this.rdoElecStim.TabIndex = 2;
+            this.rdoElecStim.Text = "Electrical Stimulation";
+            this.rdoElecStim.UseVisualStyleBackColor = true;
+            this.rdoElecStim.CheckedChanged += new System.EventHandler(this.rdoElecStim_CheckedChanged);
             // 
             // rdoSixteen
             // 
@@ -982,11 +1129,15 @@
             this.statusStrip1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
+            this.tabProgram.ResumeLayout(false);
+            this.tabSingle.ResumeLayout(false);
             this.pnlProg.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.tabElecStim.ResumeLayout(false);
+            this.tabElecStim.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
@@ -1011,49 +1162,12 @@
         private System.Windows.Forms.TextBox tRecv;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Panel pnlProg;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.Button btnProgStim;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox tvalAmplitude;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox tvalDC;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Button btnProgAlgo;
-        private System.Windows.Forms.Label lblHigh;
-        private System.Windows.Forms.TextBox tvalHighThresh;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox tvalLowThresh;
-        private System.Windows.Forms.CheckBox chkLockHigh;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox tvalIEI;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox tvalNstage;
-        private System.Windows.Forms.Button btnProgAll;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox tvalFreq;
         private System.Windows.Forms.Button btnConvert;
         private System.Windows.Forms.TextBox txtFilename;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button btnFile;
         private System.Windows.Forms.ToolStripStatusLabel tslStatus;
         private System.Windows.Forms.ErrorProvider errorProvider1;
-        private System.Windows.Forms.Label lblPulseOff;
-        private System.Windows.Forms.TextBox tvalPulseOff;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox tvalPulseOn;
-        private System.Windows.Forms.Label lblCycles;
-        private System.Windows.Forms.TextBox tvalCycles;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox tvalDelay;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox tEstLedCurrent;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TextBox testTotalTime;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox testTimeOff;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox testTimeOn;
         private System.Windows.Forms.Timer tmrStats;
         private System.Windows.Forms.Button cmdDraw;
         private System.Windows.Forms.ToolStripStatusLabel tslStimulating;
@@ -1089,6 +1203,56 @@
         private System.Windows.Forms.Panel pnlChannelSelect;
         private System.Windows.Forms.ComboBox cboChannelDisplay;
         private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.RadioButton rdoElecStim;
+        private System.Windows.Forms.TabControl tabProgram;
+        private System.Windows.Forms.TabPage tabSingle;
+        private System.Windows.Forms.Panel pnlProg;
+        private System.Windows.Forms.Button btnProgAll;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.TextBox tvalDelay;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.CheckBox chkLockHigh;
+        private System.Windows.Forms.Button btnProgAlgo;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox tvalIEI;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox tvalNstage;
+        private System.Windows.Forms.Label lblHigh;
+        private System.Windows.Forms.TextBox tvalHighThresh;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox tvalLowThresh;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox testTotalTime;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox testTimeOff;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox testTimeOn;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox tEstLedCurrent;
+        private System.Windows.Forms.Label lblCycles;
+        private System.Windows.Forms.TextBox tvalCycles;
+        private System.Windows.Forms.Label lblPulseOff;
+        private System.Windows.Forms.TextBox tvalPulseOff;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox tvalPulseOn;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox tvalFreq;
+        private System.Windows.Forms.Button btnProgStim;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox tvalAmplitude;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox tvalDC;
+        private System.Windows.Forms.TabPage tabElecStim;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.TextBox txtSinglePosPulse;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.TextBox txtSinglePeriod;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.TextBox txtSingleAmplitude;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.TextBox txtSingleNegPulse;
+        private System.Windows.Forms.Button btnProgSingleChan;
     }
 }
 

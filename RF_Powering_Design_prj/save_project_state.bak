@@ -1,0 +1,22 @@
+{
+    decl winInstP, dsnPtr;
+    de_load_design ("rectifier", 0);
+    winInstP = de_create_window(SCHEMATIC_WINDOW, NULL, 80, 80, 1607, 1028);
+    dsnPtr = de_load_design("rectifier", 0);
+    if (dsnPtr != NULL && winInstP != NULL)
+    {
+        deutil_file_open_update_window(winInstP, dsnPtr, "rectifier");
+    }
+    winInstP = de_create_window(SCHEMATIC_WINDOW, NULL, 65, -8, 1607, 1028);
+    dsnPtr = de_load_design("rectifier", 0);
+    if (dsnPtr != NULL && winInstP != NULL)
+    {
+        deutil_file_open_update_window(winInstP, dsnPtr, "rectifier");
+    }
+    winInstP = de_create_window(LAYOUT_WINDOW, NULL, 30, 30, 1607, 808);
+    dsnPtr = de_load_design("rectifier", 0);
+    if (dsnPtr != NULL && winInstP != NULL)
+    {
+        deutil_file_open_update_window(winInstP, dsnPtr, "rectifier");
+    }
+}

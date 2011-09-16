@@ -1,0 +1,7 @@
+(resolution 2000)
+(line 101
+  (data -111260 -383685 -111260 -364000)
+  (label "drc_result/000000/ Polyline(s) and/or wire(s) containing edge (-55.6300,-191.8425) -> (-55.6300,-182.0000) on STRIP layer <mask 1> have been ignored_1" 126 -111260 -373842))
+(line 101
+  (data -111260 -285260 -111260 -265575)
+  (label "drc_result/000000/ Polyline(s) and/or wire(s) containing edge (-55.6300,-142.6300) -> (-55.6300,-132.7875) on STRIP layer <mask 1> have been ignored_2" 126 -111260 -275417))

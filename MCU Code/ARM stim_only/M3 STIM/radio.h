@@ -9,7 +9,7 @@
 void RADIO_setup(void);
 void RADIO_TX(uint8_t* payload, uint8_t length);
 
-extern uint8_t progPayload[32];
-extern uint8_t procPayload;
+extern volatile uint8_t progPayload[32];
+extern uint8_t volatile procPayload;
 
 #endif /* __RADIO_H */

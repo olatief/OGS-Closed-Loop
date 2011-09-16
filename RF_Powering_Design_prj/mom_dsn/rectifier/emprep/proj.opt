@@ -1,0 +1,18 @@
+platform ADS;
+simulationMode 1;
+mesh_reduction ON;
+no_cells_per_wavelength 20;
+edgemesh_borderwidth AUTO;
+refacet_arcs 45.000000;
+overlapextraction ON;
+mask 1 expansion 0 modelType 0;
+Z0_MATRIX OFF;
+DS_DIR C:\Users\Omar\Dropbox\OGS-Closed-Loop\RF_Powering_Design_prj\data;
+DS_NAME rectifier_mom;
+gppMinFeatureSize -0.5;
+drcLogging ON;
+drcLayer 101;
+matrixsolver 0;
+wavelengthestimation FAST;
+overlapextraction OFF;
+gppEdgeSplitFactor 0;

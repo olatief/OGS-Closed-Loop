@@ -895,7 +895,7 @@ uint16_t USART_RxExt(USART_TypeDef *usart)
  * @param[in] data
  *   Data to transmit. See details above for further info.
  ******************************************************************************/
-void USART_Tx(USART_TypeDef *usart, uint8_t data)
+ void USART_Tx(USART_TypeDef *usart, uint8_t data)
 {
   /* Check that transmit buffer is empty */
   while (!(usart->STATUS & USART_STATUS_TXBL))

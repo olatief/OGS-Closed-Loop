@@ -1,0 +1,31 @@
+
+Options ResourceUsage=yes UseNutmegFormat=no TopDesignName="C:\Users\Omar\Dropbox\OGS-Closed-Loop\RF_Powering_Design_prj\networks\rectifier"
+Port:Term2  _net445 0 Num=2 Z=50 Ohm Noise=yes 
+#uselib "TY_Lib","TY_model_TY_Lib"
+SC1_1005_sp:C2  _net421 _net440 item=12 
+#uselib "HfDiodeLibrary" , "di_hp_HSMS286R_20000301"
+di_hp_HSMS286R_20000301:D2  _net422 _net423 _net427 _net424 _net425 _net426 
+Port:PORT1  _net421 0 Num=1  Z=50 Ohm  Freq[1]=3.6 GHz    P[1]=dbmtow(0) Noise=yes Pac=dbmtow(0) 
+#uselib "HfDiodeLibrary" , "di_hp_HSMS286R_20000301"
+di_hp_HSMS286R_20000301:D1  _net440 _net404 _net408 _net405 _net406 _net445 
+model PCSub1 PCSUB N=3 H[1]=25.0 mil H[2]=25.0 mil Er=10.0 Cond=1.0E+50 Hu=100.0 mil Hl=100.0 mil T=1.0 mil W=500.0 mil Sigma=0 TanD=0 
+HB:HB1 MaxOrder=4 Freq[1]=3.6 GHz Order[1]=3 StatusLevel=2 CalcS_Params=yes OutputPlan="HB1_Output" 
+
+OutputPlan:HB1_Output \
+      Type="Output" \
+      UseEquationNestLevel=yes \
+      EquationNestLevel=2 \
+      UseSavedEquationNestLevel=yes \
+      SavedEquationNestLevel=2
+
+
+
+;##### Panasonic_DK_web_LIB model files BEGIN ##### 
+#ifndef Panasonic_DK_web_LIB
+#define Panasonic_DK_web_LIB
+#include "C:/ADS2009/custom/Panasonic_DK_web/circuit/models/Panasonic_Model.ads"
+#endif
+;##### Panasonic_DK_web_LIB model files END ##### 
+
+
+;#@# autodisplay="S_Params_Quad_dB_Smith_Log"

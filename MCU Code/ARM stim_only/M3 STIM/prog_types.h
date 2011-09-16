@@ -2,14 +2,16 @@
 #define __PROGTYPES_H
 
 #include <stdint.h>
+#include <stdbool.h>
 
-typedef struct
+typedef __packed struct
 {
-  uint8_t enable;
+  uint8_t pkt_info;
+  uint16_t amplitude;
   uint16_t period;
   uint16_t posPulseWidth;
   uint16_t negPulseWidth;
-  uint16_t amplitude;
+  bool enable;
 } PROG_TypeDef;
 
 #endif /* __PROGTYPES_H */

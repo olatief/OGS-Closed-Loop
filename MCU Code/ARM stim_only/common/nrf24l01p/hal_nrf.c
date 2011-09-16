@@ -25,6 +25,7 @@
 
 #include "nordic_common.h"
 #include "hal_nrf.h"
+#include "efm32.h"
 
 #define SET_BIT(pos) ((uint8_t) (1<<( (uint8_t) (pos) )))
 #define UINT8(t) ((uint8_t) (t))
@@ -59,7 +60,7 @@ uint8_t hal_nrf_write_reg(uint8_t reg, uint8_t value);
  * @return length of read data (LSB), either for hal_nrf_read_rx_pload or
  * for hal_nrf_get_address.
 */
-uint16_t hal_nrf_read_multibyte_reg(uint8_t reg, uint8_t *pbuf);
+uint16_t hal_nrf_read_multibyte_reg(uint8_t reg, volatile uint8_t *pbuf);
 
 /** Basis function, write_multibyte register.
  * Use this function to write multiple bytes to
@@ -69,7 +70,7 @@ uint16_t hal_nrf_read_multibyte_reg(uint8_t reg, uint8_t *pbuf);
  * @param *pbuf pointer to buffer in which data to write is
  * @param length \# of bytes to write
 */
-void hal_nrf_write_multibyte_reg(uint8_t reg, const uint8_t *pbuf, uint8_t length);
+static __INLINE void hal_nrf_write_multibyte_reg(uint8_t reg, const uint8_t *pbuf, uint8_t length);
 
 /**
  * Typedef for the CONFIG register. Contains all the bitaddressable
@@ -185,6 +186,21 @@ typedef union {
 		const uint8_t : 5;
 	} bits;
 } feature_t;
+
+static __INLINE uint8_t hal_nrf_rw(uint8_t value)
+{
+  USART_Tx(NRF_USART_SPI, value);
+  return USART_Rx(NRF_USART_SPI);
+  
+    /*
+  SPIRDAT = value;
+  while(!(SPIRSTAT & 0x02)) // wait for byte transfer finished
+  {
+  }
+  return SPIRDAT;             // return SPI read value
+  */
+  
+}
 
 void hal_nrf_set_operation_mode(hal_nrf_operation_mode_t op_mode)
 {
@@ -673,7 +689,7 @@ uint8_t hal_nrf_read_rx_payload_width()
   return hal_nrf_read_reg(R_RX_PL_WID);
 }
 
-uint16_t hal_nrf_read_rx_payload(uint8_t *rx_pload)
+uint16_t hal_nrf_read_rx_payload(volatile uint8_t *rx_pload)
 {
   return hal_nrf_read_multibyte_reg(UINT8(HAL_NRF_RX_PLOAD), rx_pload);
 }
@@ -685,9 +701,12 @@ uint8_t hal_nrf_get_rx_data_source(void)
 
 void hal_nrf_reuse_tx(void)
 {
+    DEBUGPIN_SET;
   CSN_LOW();
   hal_nrf_rw(REUSE_TX_PL);
+  
   CSN_HIGH();
+    DEBUGPIN_CLEAR;
 }
 
 bool hal_nrf_get_reuse_tx_status(void)
@@ -740,7 +759,7 @@ void hal_nrf_enable_continious_wave (bool enable)
 
 uint8_t hal_nrf_read_reg(uint8_t reg)
 {
-  uint8_t temp;
+  uint8_t volatile temp;
 
   CSN_LOW();
 
@@ -753,7 +772,7 @@ uint8_t hal_nrf_read_reg(uint8_t reg)
   return temp;
 }
 
-uint8_t hal_nrf_write_reg(uint8_t reg, uint8_t value)
+static __INLINE uint8_t hal_nrf_write_reg(uint8_t reg, uint8_t value)
 {
   uint8_t volatile retval;
 /*lint -esym(550,dummy) symbol not accessed*/
@@ -800,7 +819,7 @@ uint8_t hal_nrf_write_reg(uint8_t reg, uint8_t value)
     } while (--ctr); \
     *buf = read_byte;
 
-uint16_t hal_nrf_read_multibyte_reg(uint8_t reg, uint8_t *pbuf)
+uint16_t hal_nrf_read_multibyte_reg(uint8_t reg, volatile uint8_t *buf)
 {
   uint8_t ctr, length;
   uint8_t read_byte; /*lint -esym(530,read_byte) symbol not initialized*/
@@ -835,8 +854,6 @@ uint16_t hal_nrf_read_multibyte_reg(uint8_t reg, uint8_t *pbuf)
       break;
   }
   
-    uint8_t *buf = (uint8_t *)pbuf;
-  
   do 
     { 
       HAL_NRF_HW_SPI_WRITE(0); 
@@ -867,27 +884,51 @@ uint16_t hal_nrf_read_multibyte_reg(uint8_t reg, uint8_t *pbuf)
     dummy = HAL_NRF_HW_SPI_READ(); \
     HAL_NRF_HW_SPI_WRITE(next); \
   } while (--length);
+
 /*lint -esym(550,dummy) symbol not accessed*/ \
 /*lint -esym(438,dummy) last assigned value not used*/ \
 /*lint -esym(838,dummy) previously assigned value not used*/ \
-void hal_nrf_write_multibyte_reg(uint8_t cmd, const uint8_t *pbuf, uint8_t length)
+static void hal_nrf_write_multibyte_reg(uint8_t cmd, const uint8_t *buf, uint8_t length)
 {
   uint8_t next;
-  uint8_t volatile dummy;
+  uint16_t volatile dummy;
   
   CSN_LOW();
   HAL_NRF_HW_SPI_WRITE(cmd);
-
-  const uint8_t *buf = (const uint8_t *)pbuf;
+  
+  while (!(NRF_USART_SPI->STATUS & USART_STATUS_RXDATAV)) ;
+    dummy = (uint8_t)(NRF_USART_SPI->RXDATA);
+    
+  if(length & 0x01) // check if odd
+  {
+    next = *buf; 
+    buf++;
+    
+      /* Check that transmit buffer is empty */
+    while (!(NRF_USART_SPI->STATUS & USART_STATUS_TXBL)) ;
+    NRF_USART_SPI->TXDATA = (uint32_t)next;
+    
+        while (!(NRF_USART_SPI->STATUS & USART_STATUS_RXDATAV)) ;
+    dummy = (uint16_t)(NRF_USART_SPI->RXDATA);
+    --length;
+  }
+  
   do 
   { 
     next = *buf; 
-    buf++; 
-    dummy = HAL_NRF_HW_SPI_READ();
-    HAL_NRF_HW_SPI_WRITE(next);
-  } while (--length);
 
-  dummy = HAL_NRF_HW_SPI_READ();
+    
+      /* Check that transmit buffer is empty */
+    while (!(NRF_USART_SPI->STATUS & USART_STATUS_TXBL)) ;
+    NRF_USART_SPI->TXDOUBLE = (uint32_t)( *((uint16_t *)buf) ) ;
+    buf++; 
+    while (!(NRF_USART_SPI->STATUS & USART_STATUS_RXFULL)) ;
+    dummy = (uint16_t)(NRF_USART_SPI->RXDOUBLE);
+    // HAL_NRF_HW_SPI_WRITE(next);
+    length -= 2;
+  } while (length);
+
+//  dummy = HAL_NRF_HW_SPI_READ();
   
   CSN_HIGH();
 }

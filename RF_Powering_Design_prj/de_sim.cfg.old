@@ -1,0 +1,9 @@
+PROJECT_VERSION=1000
+
+DETECH_PROJ_TECH_FILE_DEFAULT=ADS,mil
+DETECH_PROJ_TECH_FILE_HISTORY=ADS,mil;
+SCHEM_FILE_OPEN_HISTORY_1=rectifier
+SCHEM_FILE_OPEN_HISTORY_2=untitled1
+LAYOUT_FILE_OPEN_HISTORY_1=rectifier
+LAYOUT_FILE_OPEN_HISTORY_2=rectifier_emprep
+DESIGN_KIT_SYSTEM_CUSTOM_CIRCUIT_SYMBOLS=C:\Modelithics\Library\MDLX_SELECT_dk_Library\circuit\symbols;C:\ADS2009\custom\Panasonic_DK_web\circuit\symbols;C:\ADS2009\custom\TY_Lib\circuit\symbols
