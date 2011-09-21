@@ -1,0 +1,45 @@
+Protel Design System Design Rule Check
+PCB File : C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\OGS_Headstage_NORDIC_LED.PcbDoc
+Date     : 9/21/2011
+Time     : 10:41:08 AM
+
+Processing Rule : Clearance Constraint (Gap=6mil) (All),(All)
+Rule Violations :0
+
+Processing Rule : Room Main_4x4 (Bounding Region = (0mil, 0mil, 2000mil, 1000mil) (Disabled)(InComponentClass('Main_4x4'))
+Rule Violations :0
+
+Processing Rule : Room LED_SOP (Bounding Region = (2666mil, 913mil, 2951mil, 1048mil) (Disabled)(InComponentClass('LED_SOP'))
+Rule Violations :0
+
+Processing Rule : Net Antennae (Tolerance=0mil) (All)
+Rule Violations :0
+
+Processing Rule : Hole To Hole Clearance (Gap=6mil) (All),(All)
+Rule Violations :0
+
+Processing Rule : Height Constraint (Min=0mil) (Max=1000mil) (Prefered=500mil) (Disabled)(All)
+Rule Violations :0
+
+Processing Rule : Hole Size Constraint (Min=10mil) (Max=100mil) (All)
+Rule Violations :0
+
+Processing Rule : Un-Routed Net Constraint ( (All) )
+   Violation between Un-Routed Net Constraint: Net NetU5_15 Between Pad U5-15 (1743.74,1731.158mil) And Pad U11-4 (1770.63,1724.535mil)
+Rule Violations :1
+
+Processing Rule : Short-Circuit Constraint (Allowed=Yes) (All),(All)
+Rule Violations :0
+
+Processing Rule : Power Plane Connect Rule(Direct Connect )(Expansion=20mil) (Conductor Width=10mil) (Air Gap=10mil) (Entries=4) (All)
+Rule Violations :0
+
+Processing Rule : Width Constraint (Min=6mil) (Max=30mil) (Preferred=6mil) (All)
+Rule Violations :0
+
+Processing Rule : Width Constraint (Min=6mil) (Max=50mil) (Preferred=10mil) (InNet('V3P0'))
+Rule Violations :0
+
+
+Violations Detected : 1
+Time Elapsed        : 00:00:00

@@ -1,19 +1,14 @@
-Output: Gerber Files
-Type  : Gerber
-From  : Variant [[No Variations]] of PCB Document [OGS_Headstage_tiny.PcbDoc]
-   Generated File[OGS_Headstage_tiny.GTL]
-   Generated File[OGS_Headstage_tiny.GP1]
-   Generated File[OGS_Headstage_tiny.GBL]
-   Generated File[OGS_Headstage_tiny.GTS]
-   Generated File[OGS_Headstage_tiny.GP2]
-   Generated File[OGS_Headstage_tiny.GBS]
-   Generated File[OGS_Headstage_tiny.GM1]
-   Generated File[OGS_Headstage_tiny.RUL]
-   Generated File[OGS_Headstage_tiny.EXTREP]
-   Generated File[OGS_Headstage_tiny.REP]
+Project Outputs Generation Report
+---------------------------------
+Start Output Generation At 4:06:01 PM On 9/21/2011
+
+Output: Bill of Materials
+Type  : BOM
+From  : Variant [[No Variations]] of Project [OGS_Tiny_NORDIC_LED.PrjPCB]
+   Generated File[Bill of Materials-OGS_Tiny_NORDIC_LED.xls]
 
 
-Files Generated   : 10
+Files Generated   : 1
 Documents Printed : 0
 
-Finished Output Generation At 5:36:46 PM On 7/11/2011
+Finished Output Generation At 4:06:11 PM On 9/21/2011

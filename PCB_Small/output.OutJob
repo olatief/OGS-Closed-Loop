@@ -2,13 +2,13 @@
 Version=1.0
 
 [OutputGroup1]
-Name=
+Name=output.OutJob
 Description=
 TargetOutputMedium=New Folder Structure
 VariantName=[No Variations]
 VariantScope=1
 CurrentConfigurationName=
-TargetPrinter=HP LaserJet 3052 PCL5
+TargetPrinter=Use Mac Printer
 PrinterOptions=Record=PrinterOptions|Copies=1|Duplex=1|TrueTypeOptions=3|Collate=1|PrintWhat=1
 OutputMedium1=Print Job
 OutputMedium1_Type=Printer
@@ -25,7 +25,7 @@ OutputMedium5_Type=GeneratedFiles
 OutputType1=PCB Print
 OutputName1=PCB Prints
 OutputCategory1=Documentation
-OutputDocumentPath1=OGS_Headstage_tiny.PcbDoc
+OutputDocumentPath1=
 OutputVariantName1=
 OutputEnabled1=0
 OutputEnabled1_OutputMedium1=0
@@ -62,18 +62,18 @@ OutputName2=Bill of Materials
 OutputCategory2=Report
 OutputDocumentPath2=
 OutputVariantName2=
-OutputEnabled2=0
+OutputEnabled2=1
 OutputEnabled2_OutputMedium1=0
 OutputEnabled2_OutputMedium2=0
 OutputEnabled2_OutputMedium3=1
 OutputEnabled2_OutputMedium4=0
-OutputEnabled2_OutputMedium5=0
+OutputEnabled2_OutputMedium5=1
 OutputDefault2=0
 PageOptions2=Record=PageOptions|CenterHorizontal=True|CenterVertical=True|PrintScale=1.00|XCorrection=1.00|YCorrection=1.00|PrintKind=0|BorderSize=5000000|LeftOffset=0|BottomOffset=0|Orientation=2|PaperLength=1000|PaperWidth=1000|Scale=100|PaperSource=7|PrintQuality=-4|MediaType=1|DitherType=10|PaperKind=Letter|PrintScaleMode=1
 Configuration2_Name1=Filter
 Configuration2_Item1=545046300E5446696C74657257726170706572000D46696C7465722E416374697665090F46696C7465722E43726974657269610A04000000000000000000
 Configuration2_Name2=General
-Configuration2_Item2=OpenExported=True|AddToProject=True|ForceFit=False|NotFitted=False|Database=False|IncludePCBData=False|ShowExportOptions=True|TemplateFilename=|BatchMode=5|FormWidth=1284|FormHeight=641|SupplierProdQty=20|SupplierAutoQty=True|SupplierUseCachedPricing=True|SupplierCurrency=<none>
+Configuration2_Item2=OpenExported=True|AddToProject=True|ForceFit=False|NotFitted=False|Database=False|IncludePCBData=False|ShowExportOptions=True|TemplateFilename=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\|BatchMode=5|FormWidth=1284|FormHeight=641|SupplierProdQty=20|SupplierAutoQty=True|SupplierUseCachedPricing=True|SupplierCurrency=<none>
 Configuration2_Name3=GroupOrder
 Configuration2_Item3=Comment=True|Supplier Part Number 1=True|Footprint=True
 Configuration2_Name4=OutputConfigurationParameter1
@@ -81,35 +81,49 @@ Configuration2_Item4=cludeUnconnectedMidLayerPads=False|LeadingAndTrailingZeroes
 Configuration2_Name5=SortOrder
 Configuration2_Item5=Supplier Unit Price 1=Down
 Configuration2_Name6=VisibleOrder
-Configuration2_Item6=Comment=83|Description=83|Designator=83|Footprint=83|LibRef=83|Pricing 1=161|Quantity=57|Supplier Order Qty 1=69|Supplier Part Number 1=57|Supplier Subtotal 1=60|Supplier Unit Price 1=69
+Configuration2_Item6=Comment=83|Description=83|Designator=83|Footprint=83|LibRef=83|Pricing 1=161|Quantity=57|Supplier Order Qty 1=69|Supplier Part Number 1=57|Supplier Subtotal 1=60|Supplier Unit Price 1=69|Value=100
 OutputType3=Gerber
 OutputName3=Gerber Files
 OutputCategory3=Fabrication
-OutputDocumentPath3=OGS_Headstage_tiny.PcbDoc
+OutputDocumentPath3=
 OutputVariantName3=
-OutputEnabled3=1
+OutputEnabled3=0
 OutputEnabled3_OutputMedium1=0
 OutputEnabled3_OutputMedium2=0
 OutputEnabled3_OutputMedium3=0
 OutputEnabled3_OutputMedium4=0
-OutputEnabled3_OutputMedium5=2
+OutputEnabled3_OutputMedium5=0
 OutputDefault3=0
 Configuration3_Name1=OutputConfigurationParameter1
-Configuration3_Item1=AddToAllPlots.Set=SerializeLayerHash.Version~2,ClassName~TLayerToBoolean|CentrePlots=False|DrillDrawingSymbol=GraphicsSymbol|DrillDrawingSymbolSize=500000|EmbeddedApertures=True|FilmBorderSize=10000000|FilmXSize=200000000|FilmYSize=160000000|FlashAllFills=False|FlashPadShapes=True|G54OnApertureChange=False|GenerateDRCRulesFile=True|GenerateReliefShapes=True|GerberUnit=Imperial|IncludeUnconnectedMidLayerPads=False|LeadingAndTrailingZeroesMode=SuppressLeadingZeroes|MaxApertureSize=2500000|MinusApertureTolerance=50|Mirror.Set=SerializeLayerHash.Version~2,ClassName~TLayerToBoolean|MirrorDrillDrawingPlots=False|MirrorDrillGuidePlots=False|NumberOfDecimals=4|OptimizeChangeLocationCommands=True|OriginPosition=Absolute|Panelize=False|Plot.Set=SerializeLayerHash.Version~2,ClassName~TLayerToBoolean,16973834~1,16777217~1,16842753~1,16842754~1,16842751~1,16973835~1,16908289~1|PlotPositivePlaneLayers=False|PlotUsedDrillDrawingLayerPairs=False|PlotUsedDrillGuideLayerPairs=False|PlusApertureTolerance=50|Record=GerberView|SoftwareArcs=False|Sorted=False
+Configuration3_Item1=AddToAllPlots.Set=SerializeLayerHash.Version~2,ClassName~TLayerToBoolean|CentrePlots=False|DrillDrawingSymbol=GraphicsSymbol|DrillDrawingSymbolSize=500000|EmbeddedApertures=True|FilmBorderSize=10000000|FilmXSize=200000000|FilmYSize=160000000|FlashAllFills=False|FlashPadShapes=True|G54OnApertureChange=False|GenerateDRCRulesFile=True|GenerateReliefShapes=True|GerberUnit=Imperial|IncludeUnconnectedMidLayerPads=False|LeadingAndTrailingZeroesMode=SuppressLeadingZeroes|MaxApertureSize=2500000|MinusApertureTolerance=50|Mirror.Set=SerializeLayerHash.Version~2,ClassName~TLayerToBoolean|MirrorDrillDrawingPlots=False|MirrorDrillGuidePlots=False|NumberOfDecimals=4|OptimizeChangeLocationCommands=True|OriginPosition=Absolute|Panelize=False|Plot.Set=SerializeLayerHash.Version~2,ClassName~TLayerToBoolean,16973834~1,16777217~1,16842753~1,16842754~1,16842751~1,16973835~1,16908290~1|PlotPositivePlaneLayers=False|PlotUsedDrillDrawingLayerPairs=False|PlotUsedDrillGuideLayerPairs=False|PlusApertureTolerance=50|Record=GerberView|SoftwareArcs=False|Sorted=False
 OutputType4=NC Drill
 OutputName4=NC Drill Files
 OutputCategory4=Fabrication
-OutputDocumentPath4=OGS_Headstage_tiny.PcbDoc
+OutputDocumentPath4=
 OutputVariantName4=
-OutputEnabled4=1
+OutputEnabled4=0
 OutputEnabled4_OutputMedium1=0
 OutputEnabled4_OutputMedium2=0
 OutputEnabled4_OutputMedium3=0
 OutputEnabled4_OutputMedium4=0
-OutputEnabled4_OutputMedium5=1
+OutputEnabled4_OutputMedium5=0
 OutputDefault4=0
 Configuration4_Name1=OutputConfigurationParameter1
 Configuration4_Item1=BoardEdgeRoutToolDia=2000000|GenerateBoardEdgeRout=False|GenerateDrilledSlotsG85=False|GenerateSeparatePlatedNonPlatedFiles=False|NumberOfDecimals=4|NumberOfUnits=2|OptimizeChangeLocationCommands=True|OriginPosition=Absolute|Record=DrillView|Units=Imperial|ZeroesMode=SuppressTrailingZeroes
+OutputType5=Gerber
+OutputName5=Copy of Gerber Files
+OutputCategory5=Fabrication
+OutputDocumentPath5=Array_OGS_Headstage_NORDIC_LED.PcbDoc
+OutputVariantName5=
+OutputEnabled5=0
+OutputEnabled5_OutputMedium1=0
+OutputEnabled5_OutputMedium2=0
+OutputEnabled5_OutputMedium3=0
+OutputEnabled5_OutputMedium4=0
+OutputEnabled5_OutputMedium5=0
+OutputDefault5=0
+Configuration5_Name1=OutputConfigurationParameter1
+Configuration5_Item1=AddToAllPlots.Set=SerializeLayerHash.Version~2,ClassName~TLayerToBoolean|CentrePlots=False|DrillDrawingSymbol=GraphicsSymbol|DrillDrawingSymbolSize=500000|EmbeddedApertures=True|FilmBorderSize=10000000|FilmXSize=200000000|FilmYSize=160000000|FlashAllFills=False|FlashPadShapes=True|G54OnApertureChange=False|GenerateDRCRulesFile=True|GenerateReliefShapes=True|GerberUnit=Imperial|IncludeUnconnectedMidLayerPads=False|LeadingAndTrailingZeroesMode=SuppressLeadingZeroes|MaxApertureSize=2500000|MinusApertureTolerance=50|Mirror.Set=SerializeLayerHash.Version~2,ClassName~TLayerToBoolean|MirrorDrillDrawingPlots=False|MirrorDrillGuidePlots=False|NumberOfDecimals=4|OptimizeChangeLocationCommands=True|OriginPosition=Absolute|Panelize=False|Plot.Set=SerializeLayerHash.Version~2,ClassName~TLayerToBoolean,16973834~1,16777217~1,16842753~1,16842754~1,16842751~1,16973835~1,16908290~1|PlotPositivePlaneLayers=False|PlotUsedDrillDrawingLayerPairs=False|PlotUsedDrillGuideLayerPairs=False|PlusApertureTolerance=50|Record=GerberView|SoftwareArcs=False|Sorted=False
 
 [PublishSettings]
 OutputFilePath2=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\PCB Prints
@@ -136,9 +150,9 @@ OutputPathMedia3=
 OutputPathOutputer3=[Output Type]
 OutputFileName3=
 OpenOutput3=1
-OutputFilePath4=\
+OutputFilePath4=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\Project Outputs for OGS_Tiny_NORDIC_LED\
 ReleaseManaged4=1
-OutputBasePath4=
+OutputBasePath4=Project Outputs for OGS_Tiny_NORDIC_LED
 OutputPathMedia4=
 OutputPathOutputer4=[Output Type]
 OutputFileName4=
@@ -167,7 +181,7 @@ FFmpegPixelFormat4=0
 FFmpegQuality4=80
 WmvVideoCodecName4=Windows Media Video V7
 WmvQuality4=80
-OutputFilePath5=Project Outputs for OGS_Headstage_Tiny\Gerbers\
+OutputFilePath5=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\Project Outputs for OGS_Headstage_Tiny\Gerbers\
 ReleaseManaged5=0
 OutputBasePath5=Project Outputs for OGS_Headstage_Tiny\
 OutputPathMedia5=Gerbers
@@ -188,9 +202,9 @@ OpenGerberOutput3=0
 OpenNCDrillOutput3=0
 OpenIPCOutput3=0
 EnableReload3=0
-RelativeOutputPath4=\
+RelativeOutputPath4=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\Project Outputs for OGS_Tiny_NORDIC_LED\
 OpenOutputs4=1
-RelativeOutputPath5=Project Outputs for OGS_Headstage_Tiny\Gerbers\
+RelativeOutputPath5=C:\Users\Omar\Dropbox\OGS-Closed-Loop\PCB_Small\Project Outputs for OGS_Headstage_Tiny\Gerbers\
 OpenOutputs5=1
 AddToProject5=1
 TimestampFolder5=0

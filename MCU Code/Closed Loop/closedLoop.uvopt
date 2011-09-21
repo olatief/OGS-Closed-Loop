@@ -215,10 +215,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>13</ColumnNumber>
+      <ColumnNumber>41</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>82</TopLine>
-      <CurrentLine>87</CurrentLine>
+      <TopLine>183</TopLine>
+      <CurrentLine>198</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\main.c</PathWithFileName>
       <FilenameWithoutPath>main.c</FilenameWithoutPath>
@@ -489,7 +489,7 @@
   <AlienFiles>
     <PathWithFilename>C:\Users\Omar\Dropbox\OGS-Closed-Loop\MCU Code\hal\nrf24le1\hal_adc.h</PathWithFilename>
     <TopLine>157</TopLine>
-    <CurrentLine>168</CurrentLine>
+    <CurrentLine>179</CurrentLine>
     <Constant>0</Constant>
     <WindowPosition>
       <length>0</length>
@@ -553,15 +553,15 @@
         </Doc>
         <Doc>
           <Name>.\main.c</Name>
-          <ColumnNumber>40</ColumnNumber>
+          <ColumnNumber>39</ColumnNumber>
           <TopLine>183</TopLine>
           <CurrentLine>198</CurrentLine>
         </Doc>
         <Doc>
           <Name>..\hal\nrf24le1\hal_adc.h</Name>
-          <ColumnNumber>19</ColumnNumber>
+          <ColumnNumber>18</ColumnNumber>
           <TopLine>157</TopLine>
-          <CurrentLine>168</CurrentLine>
+          <CurrentLine>179</CurrentLine>
         </Doc>
         <Doc>
           <Name>led.h</Name>
