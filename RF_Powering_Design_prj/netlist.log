@@ -1,17 +1,21 @@
 
-Options ResourceUsage=yes UseNutmegFormat=no TopDesignName="C:\Users\Omar\Dropbox\OGS-Closed-Loop\RF_Powering_Design_prj\networks\rectifier"
-Port:Term2  _net445 0 Num=2 Z=50 Ohm Noise=yes 
-#uselib "TY_Lib","TY_model_TY_Lib"
-SC1_1005_sp:C2  _net421 _net440 item=12 
-#uselib "HfDiodeLibrary" , "di_hp_HSMS286R_20000301"
-di_hp_HSMS286R_20000301:D2  _net422 _net423 _net427 _net424 _net425 _net426 
-Port:PORT1  _net421 0 Num=1  Z=50 Ohm  Freq[1]=3.6 GHz    P[1]=dbmtow(0) Noise=yes Pac=dbmtow(0) 
-#uselib "HfDiodeLibrary" , "di_hp_HSMS286R_20000301"
-di_hp_HSMS286R_20000301:D1  _net440 _net404 _net408 _net405 _net406 _net445 
-model PCSub1 PCSUB N=3 H[1]=25.0 mil H[2]=25.0 mil Er=10.0 Cond=1.0E+50 Hu=100.0 mil Hl=100.0 mil T=1.0 mil W=500.0 mil Sigma=0 TanD=0 
-HB:HB1 MaxOrder=4 Freq[1]=3.6 GHz Order[1]=3 StatusLevel=2 CalcS_Params=yes OutputPlan="HB1_Output" 
+Options ResourceUsage=yes UseNutmegFormat=no TopDesignName="C:\Users\Omar\Dropbox\OGS-Closed-Loop\RF_Powering_Design_prj\networks\matching"
+define DA_SmithChartMatch1_matching ( _net7  _net26 ) 
+parameters  Fp=1 GHz  SourceType=0  SourceEnable=0  Rg=50 Ohm  Lg=1 nH  Cg=1 pF  Zg=(50+j*50) Ohm  SourceFile="ZSource.s1p"    SourceImpType=0  LoadType=5  LoadEnable=0  RL=50 Ohm  LL=1 nH  CL=1 pF  ZL=(100-j*100) Ohm  LoadFile="ZLoad.s1p"    LoadImpType=0  Z0=50 Ohm 
+C:C1  _net24 _net26 C=-940.241188 fF 
+L:L2  _net24 0 L=-5.737319 nH R=1e-12 Ohm Noise=yes  
+L:L1  _net7 _net24 L=-5.971436 nH R=1e-12 Ohm Noise=yes  
+end DA_SmithChartMatch1_matching
+DA_SmithChartMatch1_matching:DA_SmithChartMatch1  _net114 _net115 Fp=2.76 GHz SourceType=0 SourceEnable=0 Rg=50 Ohm Lg=1 nH Cg=1 pF Zg=50 Ohm SourceFile="ZSource.snp" SourceImpType=0 LoadType=7 LoadEnable=1 RL=50 Ohm LL=1 nH CL=1 pF ZL=(10.18-j*7.48) Ohm LoadFile="C:\Users\Omar\Downloads\2450AT18B100_withmatchingckt.s1p" LoadImpType=0 Z0=50 Ohm 
+Port:Term1  _net114 0 Num=1 Z=50 Ohm Noise=yes 
+#uselib "ckt" , "S1P"
+S1P:SNP1  _net115 0 File="C:\Users\Omar\Downloads\2450AT18B100_withmatchingckt.s1p" Type="touchstone" InterpMode="linear" InterpDom="" ExtrapMode="constant" Temp=27.0 CheckPassivity=0 
+S_Param:SP1 CalcS=yes CalcY=no CalcZ=no GroupDelayAperture=1e-4 FreqConversion=no FreqConversionPort=1 StatusLevel=2 CalcNoise=no SortNoise=0 BandwidthForNoise=1.0 Hz DevOpPtLevel=0 \
+SweepVar="freq" SweepPlan="SP1_stim" OutputPlan="SP1_Output" 
 
-OutputPlan:HB1_Output \
+SweepPlan: SP1_stim Start=1.0 GHz Stop=4 GHz Lin=101 
+
+OutputPlan:SP1_Output \
       Type="Output" \
       UseEquationNestLevel=yes \
       EquationNestLevel=2 \
@@ -19,13 +23,4 @@ OutputPlan:HB1_Output \
       SavedEquationNestLevel=2
 
 
-
-;##### Panasonic_DK_web_LIB model files BEGIN ##### 
-#ifndef Panasonic_DK_web_LIB
-#define Panasonic_DK_web_LIB
-#include "C:/ADS2009/custom/Panasonic_DK_web/circuit/models/Panasonic_Model.ads"
-#endif
-;##### Panasonic_DK_web_LIB model files END ##### 
-
-
-;#@# autodisplay="S_Params_Quad_dB_Smith_Log"
+;#@# autodisplay="S_Params_Quad_dB_Smith"

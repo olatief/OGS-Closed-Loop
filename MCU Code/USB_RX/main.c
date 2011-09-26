@@ -272,7 +272,7 @@ app_states_t app_susp_we(void)
   return APP_SUSP_WE;      
 } 
 	 				
-// Rado interrupt 
+// Radio interrupt 
 void rf_irq() interrupt INTERRUPT_RFIRQ
 {
   uint8_t irq_flags;

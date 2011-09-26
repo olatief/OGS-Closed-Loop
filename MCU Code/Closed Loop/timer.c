@@ -85,6 +85,8 @@ void progTimer(progStim *pStim)
 {
 	xdata uint32_t period = 0;
 	xdata uint32_t period_us = (uint32_t)1e6/((uint32_t)pStim->Freq);
+
+
 	period = (uint32_t)period_us*(uint32_t)2/3; // its (2/3)/8
 	timer_high = pStim->DC*period/100;
 	timer_low = (period - timer_high);

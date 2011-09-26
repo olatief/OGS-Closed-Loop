@@ -492,6 +492,7 @@
             this.tEstLedCurrent.Size = new System.Drawing.Size(49, 20);
             this.tEstLedCurrent.TabIndex = 13;
             this.tEstLedCurrent.Text = "20";
+            this.tEstLedCurrent.TextChanged += new System.EventHandler(this.tEstLedCurrent_TextChanged);
             // 
             // lblCycles
             // 

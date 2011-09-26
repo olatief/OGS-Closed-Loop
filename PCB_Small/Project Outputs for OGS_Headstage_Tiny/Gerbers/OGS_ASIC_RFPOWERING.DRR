@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+NCDrill File Report For: OGS_ASIC_RFPOWERING.PcbDoc   9/24/2011  2:25:50 PM
+---------------------------------------------------------------------------
+
+Layer Pair : Top Layer to Bottom Layer
+ASCII RoundHoles File : OGS_ASIC_RFPOWERING.TXT
+EIA File   : OGS_ASIC_RFPOWERING.DRL
+
+Tool         Hole Size           Hole Type     Hole Count Plated       Tool Travel
+---------------------------------------------------------------------------
+T1        12mil (0.3048mm)         Round          9                0.95 Inch (24.06 mm)
+---------------------------------------------------------------------------
+Totals                                            9                0.95 Inch (24.06 mm)
+
+Total Processing Time (hh:mm:ss) : 00:00:00

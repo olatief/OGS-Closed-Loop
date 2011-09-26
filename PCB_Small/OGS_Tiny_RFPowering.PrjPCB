@@ -159,6 +159,10 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 
 [GeneratedDocument1]
+DocumentPath=Project Outputs for OGS_Tiny_RFPowering\Design Rule Check - OGS_ASIC_RFPOWERING.html
+DItemRevisionGUID=
+
+[GeneratedDocument2]
 DocumentPath=Project Outputs for OGS_Tiny\Design Rule Check - OGS_Headstage_tiny.html
 DItemRevisionGUID=
 

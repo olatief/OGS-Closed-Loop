@@ -79,11 +79,7 @@ void main()
 //   hal_digi_write(0);
 
 
-	for(is = 1; is <= 14; ++is)
-	{
-		prog_led(is);
-	}
-
+	prog_led(14);
   	prog_led(0);
 
 	init_radio();
@@ -95,12 +91,18 @@ void main()
 	procPayload = false;
 
 	for(;;)
-	{
+	{	
+		if(!isStimulating)
+		{
+	//		PWRDWN = 0x07;
+		}
+
 		if(dataNeedsTx)
 		{
 			P1_4 = 1;
 			++pktCount;
 			payload[((acq_block^(0x01))&(0x01))][MAXLENGTH] = (isStimulating) + (pktCount&(0x7F)); 
+		//	hal_nrf_set_power_mode(HAL_NRF_PWR_UP);
 			hal_nrf_write_tx_payload(payload[((acq_block^(0x01))&(0x01))],MAXLENGTH+1);
 			P1_4 = 0;
 			radio_busy = true;
@@ -112,6 +114,7 @@ void main()
 		    // Wait for radio operation to finish
 		    while(radio_busy);
 			
+	//		hal_nrf_set_power_mode(HAL_NRF_PWR_DOWN);
 			if(procPayload)
 			{
 				procPayload = false;
@@ -123,9 +126,10 @@ void main()
 					
 					// g_Amplitude = pStim.Amplitude;
 
-					if(0 == pStim.Freq)
+					if(0 == pStim.Freq || 0 == pStim.Amplitude)
 					{
 					   ET2 = 0;	  // disable timer2 interrupt
+					   isStimulating = 0;
 					   prog_led(pStim.Amplitude);	
 					}
 					else
@@ -154,12 +158,12 @@ void adc_irq() interrupt INTERRUPT_MISCIRQ	// should only be called for ADC, RNG
 { 	
 	uint16_t tempVal;
 		
-		*ptr_payload = ADCDATH;
-		++ptr_payload;
+	//	*ptr_payload = ADCDATH;
+	//	++ptr_payload;
 		*ptr_payload = ADCDATL;	   // big-endian storage
 	  	++ptr_payload;
 
-		tempVal = (ADCDATH << 8) + ADCDATL;
+		tempVal = ADCDATL;
 
 		if( tempVal > low_thresh)
 		{
@@ -176,7 +180,7 @@ void adc_irq() interrupt INTERRUPT_MISCIRQ	// should only be called for ADC, RNG
 				lowThreshPassed = 0;
 				highThreshPassed = 1;
 		}
-		cnt -= 2; 
+		cnt--; 
 	
 		if(cnt==0)
 		{
@@ -201,7 +205,7 @@ void init_adc()
    
    MISC = 1; // Enable ADC interrupt through MISC interrupt 
 }
-
+											 
 void init_radio()
 {
   // Enable the radio clock
@@ -210,12 +214,12 @@ void init_radio()
   RF = 1;
     // Power up radio
   hal_nrf_set_power_mode(HAL_NRF_PWR_UP);
-	hal_nrf_set_output_power(HAL_NRF_18DBM);
+	hal_nrf_set_output_power(HAL_NRF_0DBM);
   	hal_nrf_enable_ack_payload(1);
 	hal_nrf_enable_dynamic_payload(1);
 	hal_nrf_setup_dynamic_payload(1); // Set up PIPE 0 to handle dynamic lengths
 	hal_nrf_set_rf_channel(125); // 2525 MHz
-   	hal_nrf_set_auto_retr(20, 250); // Retry 5x
+   	hal_nrf_set_auto_retr(5, 250); // Retry 5x
     // Configure radio as primary receiver (PTX) 
   hal_nrf_set_operation_mode(HAL_NRF_PTX);
  
@@ -255,7 +259,7 @@ void rf_irq() interrupt INTERRUPT_RFIRQ
       // Alternatively, CE_PULSE() can be called re-starting transmission of the payload.
       // (Will only be possible after the radio irq flags are cleared) 
       hal_nrf_flush_tx();
-	  TEST_PIN ^= 1;
+	 // TEST_PIN ^= 1;
       radio_busy = false;
       break;
   }

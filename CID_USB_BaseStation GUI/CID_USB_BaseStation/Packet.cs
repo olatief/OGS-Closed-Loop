@@ -71,11 +71,12 @@ namespace CID_USB_BaseStation
             this.dataBuffer = new byte[infoIndex];
             
             // reverses each byte in the packet contents so the bytes are in the right order.
+            /*
             for (int i = 0; i < infoIndex; i++)
             {
                 this.dataBuffer[i] = reverseBits(buffer[i]);
             }
-
+            */
             info = buffer[infoIndex];
             this.isStimulating = ((info) & (0x80)) != 0; // if right most bit is set to 1 then its stimulating
             this.count = (byte)( 0x7F & info);

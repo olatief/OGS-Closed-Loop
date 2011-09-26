@@ -316,9 +316,9 @@ namespace CID_USB_BaseStation
 
             byte[] buffer = (byte[])e.Buffer.Clone(); // so we dont process duplicates
 
-            DataLogger.Instance.LogLine(buffer[30]);
+           // DataLogger.Instance.LogLine(buffer[30]);
 
-          /*  if (this.IsDisposed) // stop everything
+            if (this.IsDisposed) // stop everything
             {
                 // This prevents the process from waiting for the processing thread to get done
                 pktHandler.bcWorkQueue.CompleteAdding();
@@ -329,7 +329,7 @@ namespace CID_USB_BaseStation
                 pktHandler.bcWorkQueue.Add(buffer);
                 
             }
-           * */
+           
         }
 
         void ProcessUSBpacket_Done(object sender, ProcessingDoneEventArgs e)
@@ -607,6 +607,11 @@ namespace CID_USB_BaseStation
         private void cboChannelDisplay_SelectedIndexChanged(object sender, EventArgs e)
         {
             pktHandler.CurrentChannel = cboChannelDisplay.SelectedIndex+1;
+        }
+
+        private void tEstLedCurrent_TextChanged(object sender, EventArgs e)
+        {
+
         }
 
 

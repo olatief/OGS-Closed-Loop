@@ -1,0 +1,55 @@
+set_simulator_type(1);
+create_text_form("StdForm","Standard","StdForm",0,"%v","%v",NULL,NULL,NULL,NULL);
+create_form_set("StdFormSet","StdForm");
+
+create_constant_form("AJ_FilterMatch_ResistiveForm","Resistive","AJ_FilterMatch_ResistiveForm",0,"0","Resistive");
+create_constant_form("AJ_FilterMatch_Series_RLForm","Series RL","AJ_FilterMatch_Series_RLForm",0,"1","Series RL");
+create_constant_form("AJ_FilterMatch_Series_RCForm","Series RC","AJ_FilterMatch_Series_RCForm",0,"2","Series RC");
+create_constant_form("AJ_FilterMatch_Shunt_RLForm","Parallel RL","AJ_FilterMatch_Shunt_RLForm",0,"3","Parallel RL");
+create_constant_form("AJ_FilterMatch_Shunt_RCForm","Parallel RC","AJ_FilterMatch_Shunt_RCForm",0,"4","Parallel RC");
+create_constant_form("AJ_FilterMatch_Series_RLCForm","Series RLC","AJ_FilterMatch_Series_RLCForm",0,"5","Series RLC");
+create_constant_form("AJ_FilterMatch_Shunt_RLCForm","Parallel RLC","AJ_FilterMatch_Shunt_RLCForm",0,"6","Parallel RLC");
+create_constant_form("AJ_FilterMatch_ComplexForm","Complex Impedance","AJ_FilterMatch_ComplexForm",0,"8","Complex Impedance");
+create_constant_form("AJ_FilterMatch_FileForm","S-Parameter File","AJ_FilterMatch_FileForm",0,"7","S-Parameter File");
+create_constant_form("AJ_FilterMatch_ManualForm","Manual Entry","AJ_FilterMatch_ManualForm",0,"9","Manual Entry");
+create_form_set("AJ_FilterMatch_BPLoadFormSet","AJ_FilterMatch_ResistiveForm","AJ_FilterMatch_Series_RLForm","AJ_FilterMatch_Series_RCForm","AJ_FilterMatch_Shunt_RLForm","AJ_FilterMatch_Shunt_RCForm","AJ_FilterMatch_Series_RLCForm","AJ_FilterMatch_Shunt_RLCForm","AJ_FilterMatch_ComplexForm","AJ_FilterMatch_FileForm","AJ_FilterMatch_ManualForm");
+
+create_constant_form("AJ_SmithChart_DisableForm","Disable","AJ_SmithChart_DisableForm",0,"0","False");
+create_constant_form("AJ_SmithChart_EnableForm","Enable","AJ_SmithChart_EnableForm",0,"1","True");
+create_form_set("AJ_SmithChart_EnableFormSet","AJ_SmithChart_DisableForm","AJ_SmithChart_EnableForm");
+
+create_text_form("ReadFileForm","Read a File","ReadFileForm",0,"%d","%v",get_file_name_list_with_ext,NULL,list("DATA_FILES","*"),prefix_path_to_data_file);
+create_text_form("FileBasedForm","File Based","FileBasedForm",0,"%v","%v",NULL,NULL,NULL,NULL);
+create_form_set("ReadFileFormSet","ReadFileForm","FileBasedForm");
+
+create_constant_form("AJ_FilterMatch_ComplexSourceForm","Source Impedance","AJ_FilterMatch_ComplexSourceForm",0,"0","Source Impedance");
+create_constant_form("AJ_FilterMatch_ComplexInputForm","Input Impedance","AJ_FilterMatch_ComplexInputForm",0,"1","Input Impedance");
+create_form_set("AJ_FilterMatch_ComplexSourceFormSet","AJ_FilterMatch_ComplexSourceForm","AJ_FilterMatch_ComplexInputForm");
+
+create_constant_form("AJ_FilterMatch_ComplexLoadForm","Load Impedance","AJ_FilterMatch_ComplexLoadForm",0,"0","Load Impedance");
+create_constant_form("AJ_FilterMatch_ComplexOutputForm","Output Impedance","AJ_FilterMatch_ComplexOutputForm",0,"1","Output Impedance");
+create_form_set("AJ_FilterMatch_ComplexLoadFormSet","AJ_FilterMatch_ComplexLoadForm","AJ_FilterMatch_ComplexOutputForm");
+
+create_item("DA_SmithChartMatch1_matching","Smith Chart Matching Network","DA_SmithChartMatch",16,-1,"SmithChartMatch.bmp","Component Parameters",NULL,"%d:%t %# %44?0%:%31?%C%:_net%c%;%;%e %b%r%8?%29?%:%30?%p %:%k%?[%1i]%;=%p %;%;%;%e%e","DA_SmithChartMatch1_matching","%t%b%r%38?%:\n%39?all_parm%A%:%30?%s%:%k%?[%1i]%;=%s%;%;%;%e%e%;","DA_SmithChartMatch1_matching",3,NULL,0,
+create_parm("Fp","Match Frequency",66048,"StdFormSet",0,prm("StdForm","1 GHz")),
+create_parm("SourceType","Type of Source Impedance",134656,"AJ_FilterMatch_BPLoadFormSet",-1,prm("AJ_FilterMatch_ResistiveForm")),
+create_parm("SourceEnable","Enable Source Network Termination",134656,"AJ_SmithChart_EnableFormSet",-1,prm("AJ_SmithChart_DisableForm")),
+create_parm("Rg","Source Resistance",66048,"StdFormSet",1,prm("StdForm","50 Ohm")),
+create_parm("Lg","Source Inductance",66048,"StdFormSet",3,prm("StdForm","1 nH")),
+create_parm("Cg","Source Capacitance",66048,"StdFormSet",4,prm("StdForm","1 pF")),
+create_parm("Zg","Source Impedance",524800,"StdFormSet",1,prm("StdForm","(50+j*50) Ohm")),
+create_parm("SourceFile","Source S-Parameter File Name",262656,"ReadFileFormSet",-2,prm("ReadFileForm","\"ZSource.s1p\"")),
+create_parm("SourceFileSparm","Source S-Parameter",262720,"StdFormSet",-1,prm("StdForm","\"S(1,1)\"")),
+create_parm("SourceImpType","Complex Source Impedance Interpretation",134656,"AJ_FilterMatch_ComplexSourceFormSet",-1,prm("AJ_FilterMatch_ComplexSourceForm")),
+create_parm("LoadType","Type of Load Impedance",134656,"AJ_FilterMatch_BPLoadFormSet",-1,prm("AJ_FilterMatch_Series_RLCForm")),
+create_parm("LoadEnable","Enable Load Network Termination",134656,"AJ_SmithChart_EnableFormSet",-1,prm("AJ_SmithChart_DisableForm")),
+create_parm("RL","Load Resistance",66048,"StdFormSet",1,prm("StdForm","50 Ohm")),
+create_parm("LL","Load Inductance",66048,"StdFormSet",3,prm("StdForm","1 nH")),
+create_parm("CL","Load Capacitance",66048,"StdFormSet",4,prm("StdForm","1 pF")),
+create_parm("ZL","Load Impedance",524800,"StdFormSet",1,prm("StdForm","(100-j*100) Ohm")),
+create_parm("LoadFile","Load S-Parameter File Name",262656,"ReadFileFormSet",-2,prm("ReadFileForm","\"ZLoad.s1p\"")),
+create_parm("LoadFileSparm","Load S-Parameter",262720,"StdFormSet",-1,prm("StdForm","\"S(1,1)\"")),
+create_parm("LoadImpType","Complex Load Impedance Interpretation",134656,"AJ_FilterMatch_ComplexLoadFormSet",-1,prm("AJ_FilterMatch_ComplexLoadForm")),
+create_parm("Z0","Characteristic Impedance",66048,"StdFormSet",1,prm("StdForm","50 Ohm")));
+set_design_type(1);
+library_group("*", "*", 1, "DA_SmithChartMatch1_matching");
